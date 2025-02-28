@@ -31,6 +31,10 @@ public class UserEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private GenderEnum gender;
 
+    @ManyToOne(targetEntity = UserRoleEntity.class)
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    private UserRoleEntity role;
+
     @Column(name = "active", nullable = false)
     private boolean active;
 
@@ -107,6 +111,15 @@ public class UserEntity extends BaseEntity {
 
     public UserEntity setGender(GenderEnum gender) {
         this.gender = gender;
+        return this;
+    }
+
+    public UserRoleEntity getRole() {
+        return role;
+    }
+
+    public UserEntity setRole(UserRoleEntity role) {
+        this.role = role;
         return this;
     }
 
