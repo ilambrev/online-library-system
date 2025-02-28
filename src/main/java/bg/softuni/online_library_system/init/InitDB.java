@@ -31,7 +31,7 @@ public class InitDB implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         if (this.userRoleRepository.count() == 0) {
             List<UserRoleEntity> roles = Arrays.stream(UserRoleEnum.values())
                     .map(UserRoleEntity::new)
