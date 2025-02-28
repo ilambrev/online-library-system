@@ -1,7 +1,5 @@
 package bg.softuni.online_library_system.util;
 
-import bg.softuni.online_library_system.model.enums.GenderEnum;
-
 public final class AdministratorDataConstants {
     public static final String FIRST_NAME = "Old";
     public static final String LAST_NAME = "Librarian";
