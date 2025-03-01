@@ -9,6 +9,12 @@ body {
     height: 100vh;
 }
 
+a {
+    text-decoration: none;
+}
+
+/* Header */
+
 header {
     display: flex;
     justify-content: space-between;
@@ -23,6 +29,10 @@ header {
 .logo-container {
     display: flex;
     align-items: center;
+}
+
+.logo-container a {
+    height: 100%;
 }
 
 .logo {
@@ -47,14 +57,15 @@ header {
     gap: 40px;
 }
 
-a {
-    text-decoration: none;
+.header-navigation a {
     color: #f9d342;
 }
 
-a:hover {
+.header-navigation a:hover {
     color: #e9bd0c;
 }
+
+/* Main */
 
 main {
     display: flex;
@@ -70,6 +81,8 @@ main {
     display: flex;
     width: 100%;
 }
+
+/* Footer */
 
 footer {
     display: flex;
