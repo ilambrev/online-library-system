@@ -50,14 +50,17 @@ header {
 a {
     text-decoration: none;
     color: #f9d342;
-
 }
 
 a:hover {
-    color: #d6ac02
+    color: #e9bd0c;
 }
 
 main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     flex-grow: 1;
     background-image: url('/images/background-library.jpg');
     background-size: cover;
@@ -77,4 +80,100 @@ footer {
     height: 50px;
     font-size: 18px;
     color: #f9d342;
+}
+
+/* Form */
+
+.form-container {
+    width: 30%;
+}
+
+form {
+    background-image: linear-gradient(to bottom right, rgba(134, 164, 182, 0.6), rgba(7, 76, 116, 0.8));
+    padding: 20px 30px 10px 30px;
+    border-radius: 20px;
+    color: #f9d342;
+    font-size: 18px;
+    font-weight: 700;
+    width: 100%;
+}
+
+.form-heading {
+    display: block;
+    font-size: 36px;
+    color: #f9d342;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.form-row-container {
+    display: flex;
+    gap: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+.input-filed-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+form input[type="text"],
+input[type="password"],
+input[type="email"] {
+    display: block;
+    width: 100%;
+    padding: 6px;
+    font-size: 16px;
+    color: #323538;
+    border-radius: 6px;
+    border: 1px solid #074c74;
+    margin-top: 6px;
+    outline: none;
+}
+
+form input:focus {
+    background-color: lightblue;
+}
+
+.radio-input-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 6px;
+    width: 100%;
+    height: 100%;
+}
+
+.radio-input-container label {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.radio-input-container input[type="radio"] {
+    accent-color: #074c74;
+    cursor: pointer;
+    height: 18px;
+    width: 18px;
+}
+
+.submit-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+form input[type="submit"] {
+    background-color: #138496;
+    border-color: #117a8b;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 22px;
+    font-weight: 500;
+    color: #f9d342;
+    cursor: pointer;
 }
