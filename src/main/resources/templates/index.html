@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Library System</title>
-    <link rel="icon" type="image/x-icon" href="/images/logo.png">
-    <link rel="stylesheet" href="/styles/reset.css">
-    <link rel="stylesheet" href="/styles/library-system.css">
+    <link rel="icon" type="image/x-icon" th:ref="@{/images/logo.png}">
+    <link rel="stylesheet" th:href="@{/styles/reset.css}">
+    <link rel="stylesheet" th:href="@{/styles/library-system.css}">
 </head>
 
 <body>
     <header>
         <div class="logo-container">
-            <img class="logo" src="/images/logo.png" alt="Logo image">
+            <img class="logo" th:src="@{/images/logo.png}" alt="Logo image">
             <h1 class="header-heading">Online Library System</h1>
         </div>
         <nav class="header-navigation">
@@ -22,8 +22,8 @@
                 <li><a href="#">Authors</a></li>
                 <li><a href="#">Books</a></li>
                 <li><a href="#">Contacts</a></li>
-                <li><a href="#">Register</a></li>
-                <li><a href="#">Login</a></li>
+                <li><a th:href="@{/users/register}">Register</a></li>
+                <li><a th:href="@{/users/login}">Login</a></li>
             </ul>
         </nav>
     </header>
