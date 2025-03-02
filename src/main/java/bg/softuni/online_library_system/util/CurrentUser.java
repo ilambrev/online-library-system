@@ -72,4 +72,12 @@ public class CurrentUser {
 
         return fullName.isEmpty() ? this.username : fullName;
     }
+
+    public void logout() {
+        this.username = null;
+        this.firstName = null;
+        this.lastName = null;
+        this.role = null;
+        this.isLogged = false;
+    }
 }

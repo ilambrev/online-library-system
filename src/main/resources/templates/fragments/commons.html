@@ -24,8 +24,21 @@
                 <li><a href="#">Authors</a></li>
                 <li><a href="#">Books</a></li>
                 <li><a href="#">Contacts</a></li>
-                <li><a th:href="@{/users/register}">Register</a></li>
-                <li><a th:href="@{/users/login}">Login</a></li>
+                <li th:unless="${@currentUser.isLogged()}">
+                    <a th:href="@{/users/register}">Register</a>
+                </li>
+                <li th:unless="${@currentUser.isLogged()}">
+                    <a th:href="@{/users/login}">Login</a>
+                </li>
+                <li class="user-space" th:if="${@currentUser.isLogged()}">
+                    <div>
+                        <p>Welcome, <span th:text="${@currentUser.getFullName()}">User</span></p>
+                    </div>
+                    <a href="#">Profile</a>
+                    <form th:action="@{/users/logout}" method="post">
+                        <button type="submit">Logout</button>
+                    </form>
+                </li>
             </ul>
         </nav>
     </header>
