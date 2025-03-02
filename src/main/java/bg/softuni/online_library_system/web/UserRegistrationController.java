@@ -30,7 +30,6 @@ public class UserRegistrationController {
 
     @PostMapping("/register")
     public String register(UserRegistrationDTO userRegistrationDTO) {
-        System.out.println();
         if (!this.userService.registerUser(userRegistrationDTO)) {
             return "redirect:/users/register";
         }
