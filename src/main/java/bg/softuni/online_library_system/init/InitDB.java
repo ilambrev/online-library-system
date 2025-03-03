@@ -37,14 +37,14 @@ public class InitDB implements CommandLineRunner {
                     .map(UserRoleEntity::new)
                     .toList();
             roles.get(0).setDescription(USER_ROLE_DESCRIPTION);
-            roles.get(1).setDescription(MODERATOR_ROLE_DESCRIPTION);
-            roles.get(2).setDescription(ADMINISTRATOR_ROLE_DESCRIPTION);
+            roles.get(1).setDescription(STAFF_ROLE_DESCRIPTION);
+            roles.get(2).setDescription(ADMIN_ROLE_DESCRIPTION);
 
             this.userRoleRepository.saveAll(roles);
         }
 
         if (this.userRepository.count() == 0) {
-            UserRoleEntity administratorRole = this.userRoleRepository.findByRole(UserRoleEnum.ADMINISTRATOR);
+            UserRoleEntity administratorRole = this.userRoleRepository.findByRole(UserRoleEnum.ADMIN);
             UserEntity administrator = new UserEntity()
                     .setFirstName(FIRST_NAME)
                     .setLastName(LAST_NAME)
