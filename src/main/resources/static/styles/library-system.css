@@ -19,6 +19,7 @@ header {
     display: flex;
     justify-content: space-between;
     background-color: #4f8db2;
+    background-image: linear-gradient(to bottom right, rgba(134, 164, 182, 0.6), rgba(7, 76, 116, 0.8));
     color: #f9d342;
     width: 100%;
     height: 100px;
@@ -71,11 +72,10 @@ header {
     display: flex;
     align-items: center;
     gap: 10px;
-    background-color: #4087b1;
-    border: double 2px #3a89b6;
     padding: 6px 10px;
     border-radius: 6px;
     box-shadow: 2px 2px;
+    margin-left: 10px;
 }
 
 .user-space p {
@@ -91,6 +91,39 @@ header {
     cursor: pointer;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
+}
+
+/* Dropdown */
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    cursor: default;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-image: linear-gradient(to bottom right, rgba(134, 164, 182, 0.6), rgba(7, 76, 116, 0.8));
+    min-width: 130px;
+    padding: 6px 20px;
+    margin-bottom: 20px;
+    z-index: 1;
+    list-style: none;
+    border-radius: 6px;
+}
+
+.dropdown-content li {
+    margin: 8px 0;
+    font-size: 17px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.arrow-icon {
+    width: 20px;
 }
 
 /* Main */
@@ -115,7 +148,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #4f8db2;
+    background-color: #2a688c;
     width: 100%;
     height: 50px;
     font-size: 18px;
