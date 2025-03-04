@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 
-import static bg.softuni.online_library_system.util.AdministratorDataConstants.*;
-import static bg.softuni.online_library_system.util.UserRoleDescriptionConstants.*;
+import static bg.softuni.online_library_system.common.constant.AdministratorDataConstants.*;
+import static bg.softuni.online_library_system.common.constant.UserRoleDescriptionConstants.*;
 
 @Component
 public class InitDB implements CommandLineRunner {
