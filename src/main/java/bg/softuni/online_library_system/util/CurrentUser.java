@@ -1,5 +1,7 @@
 package bg.softuni.online_library_system.util;
 
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -11,8 +13,11 @@ public class CurrentUser {
     private String lastName;
     private String role;
     private boolean isLogged;
+    private final HttpSession httpSession;
 
-    public CurrentUser() {
+    @Autowired
+    public CurrentUser(HttpSession httpSession) {
+        this.httpSession = httpSession;
     }
 
     public String getUsername() {
@@ -79,5 +84,6 @@ public class CurrentUser {
         this.lastName = null;
         this.role = null;
         this.isLogged = false;
+        this.httpSession.invalidate();
     }
 }

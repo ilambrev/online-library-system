@@ -9,7 +9,6 @@ import bg.softuni.online_library_system.repository.UserRepository;
 import bg.softuni.online_library_system.repository.UserRoleRepository;
 import bg.softuni.online_library_system.service.UserService;
 import bg.softuni.online_library_system.util.CurrentUser;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,16 +21,14 @@ public class UserServiceImpl implements UserService {
     private final UserRoleRepository userRoleRepository;
     private final PasswordEncoder passwordEncoder;
     private final CurrentUser currentUser;
-    private final HttpSession httpSession;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, UserRoleRepository userRoleRepository,
-                           PasswordEncoder passwordEncoder, CurrentUser currentUser, HttpSession httpSession) {
+                           PasswordEncoder passwordEncoder, CurrentUser currentUser) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
         this.currentUser = currentUser;
-        this.httpSession = httpSession;
     }
 
     @Override
@@ -82,6 +79,5 @@ public class UserServiceImpl implements UserService {
     @Override
     public void logoutUser() {
         this.currentUser.logout();
-        this.httpSession.invalidate();
     }
 }
