@@ -14,7 +14,7 @@
             <form class="form" th:action="@{/users/register}" th:method="post" th:object="${userRegistrationDTO}" autocomplete="off">
                 <h2 class="form-heading">Register User</h2>
                 <div class="form-row-container">
-                    <div class="input-filed-container">
+                    <div class="input-field-container">
                         <label for="firstName">First Name</label>
                         <input type="text" id="firstName" placeholder="Type your first name..."
                                th:field="*{firstName}"/>
@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="form-row-container">
-                    <div class="input-filed-container">
+                    <div class="input-field-container">
                         <label for="userName">Username</label>
                         <input type="text" id="userName" placeholder="Type username..."
                                th:field="*{username}"/>
@@ -38,24 +38,24 @@
                     </div>
                 </div>
                 <div class="form-row-container">
-                    <div class="input-filed-container">
+                    <div class="input-field-container">
                         <label for="password">Password</label>
                         <input type="password" id="password" placeholder="Type password.."
                                th:field="*{password}"/>
                     </div>
-                    <div class="input-filed-container">
+                    <div class="input-field-container">
                         <label for="confirmPassword">Confirm password</label>
                         <input type="password" id="confirmPassword" placeholder="Re-type password..."
                                th:field="*{confirmPassword}"/>
                     </div>
                 </div>
                 <div class="form-row-container">
-                    <div class="input-filed-container">
+                    <div class="input-field-container">
                         <label for="phoneNumber">Phone number</label>
                         <input type="text" id="phoneNumber" placeholder="&#43;359812667788"
                                th:field="*{phoneNumber}"/>
                     </div>
-                    <div class="input-filed-container">
+                    <div class="input-field-container">
                         <p>Gender</p>
                         <div class="radio-input-container">
                             <div th:each="g : ${genders}">
@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="form-row-container">
-                    <div class="input-filed-container">
+                    <div class="input-field-container">
                         <label for="address">Address</label>
                         <input type="text" id="address" placeholder="Sofia, Old Library, 27"
                                th:field="*{address}"/>
