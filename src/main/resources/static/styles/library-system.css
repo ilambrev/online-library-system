@@ -134,7 +134,7 @@ main {
     justify-content: center;
     align-items: center;
     flex-grow: 1;
-    background-image: url('/images/background-library.jpg');
+    background-image: url('../images/background-library.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -187,7 +187,7 @@ footer {
     width: 100%;
 }
 
-.input-filed-container {
+.input-field-container {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -249,4 +249,20 @@ input[type="email"] {
     font-weight: 500;
     color: #f9d342;
     cursor: pointer;
+}
+
+/* Error messages */
+
+.validation-error-message {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: #8b0000;
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+    margin-top: 6px;
+}
+
+.validation-error-input {
+    border: 2px solid #be1414 !important;
+    background-color: #fffff0 !important;
 }

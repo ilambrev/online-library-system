@@ -13,18 +13,23 @@
         <div class="form-container">
             <form class="form" th:action="@{/users/login}" th:method="post" th:object="${userLoginDTO}">
                 <h2 class="form-heading">Login</h2>
+                <p class="validation-error-message" th:if="${badCredentials}" th:text="${errorMessage}">Message</p>
                 <div class="form-row-container">
-                    <div class="input-filed-container">
+                    <div class="input-field-container">
                         <label for="userName">Username</label>
                         <input type="text" id="userName" placeholder="Type your username..."
                                th:field="*{username}"/>
+                        <p class="validation-error-message"
+                           th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Message</p>
                     </div>
                 </div>
                 <div class="form-row-container">
-                    <div class="input-filed-container">
+                    <div class="input-field-container">
                         <label for="password">Password</label>
                         <input type="password" id="password" placeholder="Type your password"
                                th:field="*{password}"/>
+                        <p class="validation-error-message"
+                           th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Message</p>
                     </div>
                 </div>
                 <div class="form-row-container">
