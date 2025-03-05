@@ -25,16 +25,27 @@
                 <li><a href="#">Books</a></li>
                 <li><a href="#">Contacts</a></li>
                 <li class="dropdown" th:if="${@currentUser.isLogged() && @currentUser.getRole().equals('ADMIN')}">
+                    <span>Add <img class="arrow-icon" th:src="@{/images/dropdown-arrow.png}" alt="arrow"></span>
+                    <ul class="dropdown-content">
+                        <li>
+                            <a href="#">Author</a>
+                        </li>
+                        <li>
+                            <a href="#">Book</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown" th:if="${@currentUser.isLogged() && @currentUser.getRole().equals('ADMIN')}">
                     <span>Edit <img class="arrow-icon" th:src="@{/images/dropdown-arrow.png}" alt="arrow"></span>
                     <ul class="dropdown-content">
                         <li>
                             <a href="#">Users</a>
                         </li>
                         <li>
-                            <a href="#">Books</a>
+                            <a href="#">Authors</a>
                         </li>
                         <li>
-                            <a href="#">Authors</a>
+                            <a href="#">Books</a>
                         </li>
                     </ul>
                 </li>
