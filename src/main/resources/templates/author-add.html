@@ -11,30 +11,35 @@
 
     <main>
         <div class="form-container">
-            <form class="form" th:action="@{/authors/add}" th:method="post">
+            <form class="form" th:action="@{/authors/add}" th:method="post" th:object="${addAuthorDTO}" enctype="multipart/form-data">
                 <h2 class="form-heading">Add Author</h2>
                 <div class="form-row-container">
                     <div class="input-field-container">
                         <label for="firstName">First Name</label>
                         <input class="validation-error-input" type="text" id="firstName"
-                               placeholder="Type author's first name..." />
+                               placeholder="Type author's first name..."
+                               th:field="*{firstName}"/>
                     </div>
                     <div class="input-field-container">
                         <label for="lastName">Last Name</label>
                         <input class="validation-error-input" type="text" id="lastName"
-                               placeholder="Type author's last name..." />
+                               placeholder="Type author's last name..."
+                               th:field="*{lastName}"/>
                     </div>
                 </div>
                 <div class="form-row-container">
                     <div class="input-field-container">
                         <label for="presentation">Author's presentation:</label>
-                        <textarea rows="4" id="presentation" placeholder="Type author's last name..."></textarea>
+                        <textarea rows="4" id="presentation" placeholder="Type author's last name..."
+                                  th:field="*{presentation}">
+                        </textarea>
                     </div>
                 </div>
                 <div class="form-row-container">
                     <div class="input-field-container">
                         <label for="imageFile">Choose an author's image:</label>
-                        <input class="validation-error-input" type="file" id="imageFile"/>
+                        <input class="validation-error-input" type="file" id="imageFile" multiple="multiple"
+                               th:field="*{imageFile}"/>
                     </div>
                 </div>
                 <div class="form-row-container">
