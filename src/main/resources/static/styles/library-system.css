@@ -1,12 +1,18 @@
+html,
+body {
+    margin: 0;
+    height: 100vh;
+}
+
 html {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-body {
+.site {
     display: flex;
-    justify-content: center;
     flex-direction: column;
-    height: 100vh;
+    justify-content: center;
+    height: 100%;
 }
 
 a {
@@ -134,7 +140,7 @@ main {
     justify-content: center;
     align-items: center;
     flex-grow: 1;
-    background-image: url('../images/background-library.jpg');
+    background-image: url('/images/background-library.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -196,7 +202,7 @@ footer {
 .form input[type="text"],
 input[type="password"],
 input[type="email"],
-textarea{
+textarea {
     display: block;
     width: 100%;
     padding: 6px;
