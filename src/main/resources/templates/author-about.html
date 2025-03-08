@@ -11,20 +11,19 @@
         </header>
 
         <main>
-            <div class="author-about-container">
+            <div class="author-about-container" th:object="${authorDTO}">
                 <div class="image-container">
                     <div class="image-holder">
-                        <img src="https://res.cloudinary.com/dpwcshnvl/image/upload/v1741209562/fk8wtv6fxlxiecjx6mgd.jpg"
+                        <img th:src="*{imageURL}"
                              alt="Author image">
                     </div>
                 </div>
                 <div class="text-content-container">
-                    <h2>Astrind Lindgren</h2>
-                    <p>Astrid Anna Emilia Lindgren (Swedish - 14 November 1907 - 28 January 2002) was a Swedish writer
-                        of
-                        fiction and screenplays. She is best known for several children's book series, featuring Pippi
-                        Longstocking, Emil of Lönneberga, Karlsson-on-the-Roof, and the Six Bullerby Children (Children
-                        of
+                    <h2 th:text="|*{firstName} *{lastName}|">Astrid Lindgren</h2>
+                    <p th:text="*{presentation}">Astrid Anna Emilia Lindgren (Swedish - 14 November 1907 - 28
+                        January 2002) was a Swedish writer of fiction and screenplays. She is best known for several
+                        children's book series, featuring Pippi
+                        Longstocking, Emil of Lönneberga, Karlsson-on-the-Roof, and the Six Bullerby Children (Children of
                         Noisy Village in the US), and for the children's fantasy novels Mio, My Son; Ronia the Robber's
                         Daughter; and The Brothers Lionheart.
                     </p>

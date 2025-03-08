@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -43,10 +44,26 @@ public class AuthorServiceImpl implements AuthorService {
         List<AuthorEntity> authors = this.authorRepository.findAllByOrderByFirstNameAsc();
         return authors.stream()
                 .map(a -> new AuthorDTO()
+                        .setId(a.getId())
                         .setFirstName(a.getFirstName())
                         .setLastName(a.getLastName())
                         .setPresentation(a.getPresentation())
                         .setImageURL(a.getImageURL()))
                 .toList();
+    }
+
+    @Override
+    public AuthorDTO getAuthor(Long id) {
+        Optional<AuthorEntity> authorOptional = this.authorRepository.findById(id);
+        if (authorOptional.isEmpty()) {
+            return null;
+        }
+        AuthorEntity author = authorOptional.get();
+
+        return new AuthorDTO().setId(author.getId())
+                .setFirstName(author.getFirstName())
+                .setLastName(author.getLastName())
+                .setPresentation(author.getPresentation())
+                .setImageURL(author.getImageURL());
     }
 }

@@ -2,6 +2,8 @@ package bg.softuni.online_library_system.model.dto;
 
 public class AuthorDTO {
 
+    private Long id;
+
     private String firstName;
 
 
@@ -14,6 +16,15 @@ public class AuthorDTO {
     private String imageURL;
 
     public AuthorDTO() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public AuthorDTO setId(Long id) {
+        this.id = id;
+        return this;
     }
 
     public String getFirstName() {

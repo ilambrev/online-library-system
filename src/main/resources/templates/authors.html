@@ -24,7 +24,7 @@
                             <div class="author-name-container"
                                  th:text="${author.getFirstName()} + ' ' + ${author.getLastName()}">Agatha Christie</div>
                             <div class="author-about">
-                                <a href="#">View</a>
+                                <a th:href="@{/authors/{id}/about (id=${author.getId()})}">View</a>
                             </div>
                         </div>
                     </div>
