@@ -13,72 +13,16 @@
         <main>
             <div class="all-authors-container">
                 <h2>List of all authors</h2>
-                <div class="authors-names-container">
+                <div class="authors-names-container" th:each="author : ${authors}">
                     <div class="author-container">
                         <div class="author-image-container">
                             <div class="author-image-holder">
-                                <img src="https://res.cloudinary.com/dpwcshnvl/image/upload/v1741378542/jbxogmfpaqbnbzotdrml.png"
-                                     alt="Author image">
+                                <img th:src="${author.getImageURL()}" alt="Author image">
                             </div>
                         </div>
                         <div class="author-name-container">
-                            <div class="author-name-container">Agatha Christie</div>
-                            <div class="author-about">
-                                <a href="#">View</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="author-container">
-                        <div class="author-image-container">
-                            <div class="author-image-holder">
-                                <img src="https://res.cloudinary.com/dpwcshnvl/image/upload/v1741209562/fk8wtv6fxlxiecjx6mgd.jpg"
-                                     alt="Author image">
-                            </div>
-                        </div>
-                        <div class="author-name-container">
-                            <div class="author-name-container">Astrid Lindgren</div>
-                            <div class="author-about">
-                                <a href="#">View</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="author-container">
-                        <div class="author-image-container">
-                            <div class="author-image-holder">
-                                <img src="https://res.cloudinary.com/dpwcshnvl/image/upload/v1741376565/gltkatdugnfwtcc7ktj0.jpg"
-                                     alt="Author image">
-                            </div>
-                        </div>
-                        <div class="author-name-container">
-                            <div class="author-name-container">Douglas Adams</div>
-                            <div class="author-about">
-                                <a href="#">View</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="author-container">
-                        <div class="author-image-container">
-                            <div class="author-image-holder">
-                                <img src="https://res.cloudinary.com/dpwcshnvl/image/upload/v1741378059/byvz5y1t85riftwqkxi1.png"
-                                     alt="Author image">
-                            </div>
-                        </div>
-                        <div class="author-name-container">
-                            <div class="author-name-container">James Clavell</div>
-                            <div class="author-about">
-                                <a href="#">View</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="author-container">
-                        <div class="author-image-container">
-                            <div class="author-image-holder">
-                                <img src="https://res.cloudinary.com/dpwcshnvl/image/upload/v1741378940/uutqvssw025hfzijlbgz.png"
-                                     alt="Author image">
-                            </div>
-                        </div>
-                        <div class="author-name-container">
-                            <div class="author-name-container">Mario Puzo</div>
+                            <div class="author-name-container"
+                                 th:text="${author.getFirstName()} + ' ' + ${author.getLastName()}">Agatha Christie</div>
                             <div class="author-about">
                                 <a href="#">View</a>
                             </div>
