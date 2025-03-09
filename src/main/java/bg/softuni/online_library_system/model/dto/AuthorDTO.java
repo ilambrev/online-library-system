@@ -6,12 +6,9 @@ public class AuthorDTO {
 
     private String firstName;
 
-
     private String lastName;
 
-
     private String presentation;
-
 
     private String imageURL;
 

@@ -3,6 +3,7 @@ package bg.softuni.online_library_system.web;
 import bg.softuni.online_library_system.model.dto.AddAuthorDTO;
 import bg.softuni.online_library_system.model.dto.AuthorDTO;
 import bg.softuni.online_library_system.service.AuthorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import java.util.List;
 public class AuthorController {
     private final AuthorService authorService;
 
+    @Autowired
     public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
     }
@@ -38,7 +40,7 @@ public class AuthorController {
 
     @GetMapping("/all")
     public String getAll(Model model) {
-        List<AuthorDTO> authors = this.authorService.getAllAuthors();
+        List<AuthorDTO> authors = this.authorService.getAllAuthorsOrderByFirstName();
         model.addAttribute("authors", authors);
 
         return "authors";

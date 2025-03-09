@@ -10,6 +10,8 @@ public interface AuthorService {
 
     boolean addAuthor(AddAuthorDTO addAuthorDTO) throws IOException;
 
+    List<AuthorDTO> getAllAuthorsOrderByFirstName();
+
     List<AuthorDTO> getAllAuthors();
 
     AuthorDTO getAuthor(Long id);

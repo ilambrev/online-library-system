@@ -40,8 +40,21 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<AuthorDTO> getAllAuthors() {
+    public List<AuthorDTO> getAllAuthorsOrderByFirstName() {
         List<AuthorEntity> authors = this.authorRepository.findAllByOrderByFirstNameAsc();
+        return authors.stream()
+                .map(a -> new AuthorDTO()
+                        .setId(a.getId())
+                        .setFirstName(a.getFirstName())
+                        .setLastName(a.getLastName())
+                        .setPresentation(a.getPresentation())
+                        .setImageURL(a.getImageURL()))
+                .toList();
+    }
+
+    @Override
+    public List<AuthorDTO> getAllAuthors() {
+        List<AuthorEntity> authors = this.authorRepository.findAll();
         return authors.stream()
                 .map(a -> new AuthorDTO()
                         .setId(a.getId())
