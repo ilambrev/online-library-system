@@ -3,10 +3,7 @@ package bg.softuni.online_library_system.web.rest;
 import bg.softuni.online_library_system.model.dto.AuthorDTO;
 import bg.softuni.online_library_system.service.AuthorService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +20,15 @@ public class AuthorsRestController {
     @GetMapping("/all")
     public ResponseEntity<List<AuthorDTO>> getAll() {
         return ResponseEntity.ok(this.authorService.getAllAuthors());
+    }
+
+    @GetMapping("/first-name/{letter}")
+    public ResponseEntity<List<AuthorDTO>> getByFirstName(@PathVariable("letter") String letter) {
+        return ResponseEntity.ok(this.authorService.getAuthorsByFirstNameStartingWith(letter));
+    }
+
+    @GetMapping("/last-name/{letter}")
+    public ResponseEntity<List<AuthorDTO>> getByLastName(@PathVariable("letter") String letter) {
+        return ResponseEntity.ok(this.authorService.getAuthorsByLastNameStartingWith(letter));
     }
 }

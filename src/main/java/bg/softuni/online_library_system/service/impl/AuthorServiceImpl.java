@@ -39,22 +39,6 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<AuthorDTO> getAllAuthorsOrderByFirstName() {
-        List<AuthorEntity> authors = this.authorRepository.findAllByOrderByFirstNameAsc();
-        return authors.stream()
-                .map(a -> this.modelMapper.map(a, AuthorDTO.class))
-                .toList();
-    }
-
-    @Override
-    public List<AuthorDTO> getAllAuthors() {
-        List<AuthorEntity> authors = this.authorRepository.findAll();
-        return authors.stream()
-                .map(a -> this.modelMapper.map(a, AuthorDTO.class))
-                .toList();
-    }
-
-    @Override
     public AuthorDTO getAuthor(Long id) {
         Optional<AuthorEntity> authorOptional = this.authorRepository.findById(id);
         if (authorOptional.isEmpty()) {
@@ -63,5 +47,31 @@ public class AuthorServiceImpl implements AuthorService {
         AuthorEntity author = authorOptional.get();
 
         return this.modelMapper.map(author, AuthorDTO.class);
+    }
+
+    @Override
+    public List<AuthorDTO> getAllAuthorsOrderByFirstName() {
+        return mapAuthors(this.authorRepository.findAllByOrderByFirstNameAsc());
+    }
+
+    @Override
+    public List<AuthorDTO> getAllAuthors() {
+        return mapAuthors(authorRepository.findAll());
+    }
+
+    @Override
+    public List<AuthorDTO> getAuthorsByFirstNameStartingWith(String letter) {
+        return mapAuthors(this.authorRepository.findByFirstNameStartingWith(letter));
+    }
+
+    @Override
+    public List<AuthorDTO> getAuthorsByLastNameStartingWith(String letter) {
+        return mapAuthors(this.authorRepository.findByLastNameStartingWith(letter));
+    }
+
+    private List<AuthorDTO> mapAuthors(List<AuthorEntity> authors) {
+        return authors.stream()
+                .map(a -> this.modelMapper.map(a, AuthorDTO.class))
+                .toList();
     }
 }
