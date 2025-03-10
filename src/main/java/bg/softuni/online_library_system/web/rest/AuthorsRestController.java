@@ -19,16 +19,31 @@ public class AuthorsRestController {
 
     @GetMapping("/all")
     public ResponseEntity<List<AuthorDTO>> getAll() {
-        return ResponseEntity.ok(this.authorService.getAllAuthors());
+        List<AuthorDTO> authors = this.authorService.getAllAuthors();
+        if (authors.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(authors);
+        }
     }
 
     @GetMapping("/first-name/{letter}")
     public ResponseEntity<List<AuthorDTO>> getByFirstName(@PathVariable("letter") String letter) {
-        return ResponseEntity.ok(this.authorService.getAuthorsByFirstNameStartingWith(letter));
+        List<AuthorDTO> authors = this.authorService.getAuthorsByFirstNameStartingWith(letter);
+        if (authors.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(authors);
+        }
     }
 
     @GetMapping("/last-name/{letter}")
     public ResponseEntity<List<AuthorDTO>> getByLastName(@PathVariable("letter") String letter) {
-        return ResponseEntity.ok(this.authorService.getAuthorsByLastNameStartingWith(letter));
+        List<AuthorDTO> authors = this.authorService.getAuthorsByLastNameStartingWith(letter);
+        if (authors.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(authors);
+        }
     }
 }
