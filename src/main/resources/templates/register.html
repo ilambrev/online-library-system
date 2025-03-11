@@ -20,7 +20,7 @@
                             <input type="text" id="firstName" placeholder="Type your first name..."
                                    th:field="*{firstName}"/>
                         </div>
-                        <div class="input-filed-container">
+                        <div class="input-field-container">
                             <label for="lastName">Last Name</label>
                             <input type="text" id="lastName" placeholder="Type your last name..."
                                    th:field="*{lastName}"/>
@@ -30,9 +30,12 @@
                         <div class="input-field-container">
                             <label for="userName">Username</label>
                             <input type="text" id="userName" placeholder="Type username..."
-                                   th:field="*{username}"/>
+                                   th:field="*{username}"
+                                   th:errorclass="'input-validation-error'"/>
+                            <p class="validation-error-message"
+                               th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Message</p>
                         </div>
-                        <div class="input-filed-container">
+                        <div class="input-field-container">
                             <label for="email">E-mail</label>
                             <input type="email" id="email" placeholder="Type e-mail..."
                                    th:field="*{email}"/>

@@ -1,12 +1,18 @@
 package bg.softuni.online_library_system.model.dto;
 
 import bg.softuni.online_library_system.model.enums.GenderEnum;
+import bg.softuni.online_library_system.model.validation.UniqueUsername;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 public class UserRegistrationDTO {
     private String firstName;
 
     private String lastName;
 
+    @NotEmpty(message = "Username can not be empty")
+    @UniqueUsername(message = "Username not available.")
+    @Size(min = 5, max = 40, message = "Username must be between 5 and 40 characters long.")
     private String username;
 
     private String password;
