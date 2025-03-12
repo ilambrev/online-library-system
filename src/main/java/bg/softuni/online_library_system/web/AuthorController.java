@@ -4,15 +4,12 @@ import bg.softuni.online_library_system.model.dto.AddAuthorDTO;
 import bg.softuni.online_library_system.model.dto.AuthorDTO;
 import bg.softuni.online_library_system.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 
 @Controller
 @RequestMapping("/authors")
@@ -39,10 +36,16 @@ public class AuthorController {
     }
 
     @GetMapping("/all")
-    public String getAll(Model model) {
-        List<AuthorDTO> authors = this.authorService.getAllAuthorsOrderByFirstName();
-        model.addAttribute("authors", authors);
+    public String getAll(@RequestParam(defaultValue = "0") int page,
+                         @RequestParam(defaultValue = "6") int size,
+                         Model model) {
+
+        Page<AuthorDTO> authorsPage = this.authorService.getAllAuthorsOrderByFirstName(page, size);
+
         model.addAttribute("authorsCount", this.authorService.getAuthorsCount());
+        model.addAttribute("authors", authorsPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", authorsPage.getTotalPages());
 
         return "authors";
     }

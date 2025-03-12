@@ -7,6 +7,10 @@ import bg.softuni.online_library_system.repository.AuthorRepository;
 import bg.softuni.online_library_system.service.AuthorService;
 import bg.softuni.online_library_system.service.CloudinaryService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -55,6 +59,18 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public List<AuthorDTO> getAllAuthorsOrderByFirstName() {
         return mapAuthors(this.authorRepository.findAllByOrderByFirstNameAsc());
+    }
+
+    @Override
+    public Page<AuthorDTO> getAllAuthorsOrderByFirstName(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        List<AuthorDTO> authors = mapAuthors(this.authorRepository.findAllByOrderByFirstNameAsc());
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), authors.size());
+
+        return new PageImpl<>(authors.subList(start, end), pageable, authors.size());
     }
 
     @Override
