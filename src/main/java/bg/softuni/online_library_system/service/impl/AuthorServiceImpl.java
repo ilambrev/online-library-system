@@ -26,16 +26,14 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public boolean addAuthor(AddAuthorDTO addAuthorDTO) throws IOException {
+    public Long addAuthor(AddAuthorDTO addAuthorDTO) throws IOException {
         String directory = "authors";
         String imageUrl = this.cloudinaryService.uploadFile(addAuthorDTO.getImageFile(), directory);
 
         AuthorEntity newAuthor = this.modelMapper.map(addAuthorDTO, AuthorEntity.class);
         newAuthor.setImageURL(imageUrl);
 
-        this.authorRepository.save(newAuthor);
-
-        return true;
+        return this.authorRepository.save(newAuthor).getId();
     }
 
     @Override
@@ -47,6 +45,11 @@ public class AuthorServiceImpl implements AuthorService {
         AuthorEntity author = authorOptional.get();
 
         return this.modelMapper.map(author, AuthorDTO.class);
+    }
+
+    @Override
+    public long getAuthorsCount() {
+        return this.authorRepository.count();
     }
 
     @Override

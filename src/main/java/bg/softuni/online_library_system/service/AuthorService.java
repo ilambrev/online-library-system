@@ -8,9 +8,11 @@ import java.util.List;
 
 public interface AuthorService {
 
-    boolean addAuthor(AddAuthorDTO addAuthorDTO) throws IOException;
+    Long addAuthor(AddAuthorDTO addAuthorDTO) throws IOException;
 
     AuthorDTO getAuthor(Long id);
+
+    long getAuthorsCount();
 
     List<AuthorDTO> getAllAuthorsOrderByFirstName();
 

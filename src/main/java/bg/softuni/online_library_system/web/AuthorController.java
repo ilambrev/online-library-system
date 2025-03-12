@@ -33,15 +33,16 @@ public class AuthorController {
 
     @PostMapping("/add")
     public String addAuthor(AddAuthorDTO addAuthorDTO) throws IOException {
-        this.authorService.addAuthor(addAuthorDTO);
+        Long id = this.authorService.addAuthor(addAuthorDTO);
 
-        return "redirect:/";
+        return String.format("redirect:/authors/%d/about", id);
     }
 
     @GetMapping("/all")
     public String getAll(Model model) {
         List<AuthorDTO> authors = this.authorService.getAllAuthorsOrderByFirstName();
         model.addAttribute("authors", authors);
+        model.addAttribute("authorsCount", this.authorService.getAuthorsCount());
 
         return "authors";
     }
@@ -56,6 +57,6 @@ public class AuthorController {
             return "author-about";
         }
 
-        return "/authors/all";
+        return "redirect:/authors/all";
     }
 }

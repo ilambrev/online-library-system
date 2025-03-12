@@ -12,12 +12,13 @@
 
         <main>
             <div class="all-authors-container">
-                <h2>List of all authors</h2>
-                <div class="authors-names-container" th:each="author : ${authors}">
-                    <div class="author-container">
+                <h2>List of authors</h2>
+                <p>Number of available authors: <span th:text="${authorsCount}">25</span></p>
+                <div class="authors-names-container">
+                    <div class="author-container" th:each="author : ${authors}">
                         <div class="author-image-container">
                             <div class="author-image-holder">
-                                <img th:src="${author.getImageURL()}" alt="Author image">
+                                <img th:src="${author.getImageURL()}" alt="Author image"/>
                             </div>
                         </div>
                         <div class="author-name-container">
