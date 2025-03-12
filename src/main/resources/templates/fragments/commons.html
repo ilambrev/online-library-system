@@ -21,7 +21,7 @@
         <nav class="header-navigation">
             <ul class="header-list">
                 <li><a href="#">About Library</a></li>
-                <li><a th:href="@{/authors/all}">Authors</a></li>
+                <li><a th:href="@{/authors/all(page=0, size=6)}">Authors</a></li>
                 <li><a href="#">Books</a></li>
                 <li><a href="#">Contacts</a></li>
                 <li class="dropdown" th:if="${@currentUser.isLogged() && @currentUser.getRole().equals('ADMIN')}">

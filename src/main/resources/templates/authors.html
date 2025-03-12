@@ -13,30 +13,28 @@
         <main>
             <div class="all-authors-container">
                 <h2>Authors</h2>
-                <p>Number of available authors: <span th:text="${authorsCount}">25</span></p>
-                <div style="color: white; text-align: center">
-                    <a th:if="${currentPage > 0}"
-                       th:href="@{/authors/all(page=${currentPage - 1}, size=6)}">
-                        Previous
-                    </a>
-                    <span th:text="'Page ' + (${currentPage} + 1) + ' of ' + ${totalPages}"></span>
-                    <a th:if="${currentPage + 1 < totalPages}"
-                       th:href="@{/authors/all(page=${currentPage + 1}, size=6)}">
-                        Next
-                    </a>
+                <div class="pagination-container">
+                    <p>Number of available authors: <span th:text="${authorsCount}">25</span></p>
+                    <div class="page-nav">
+                        <a class="page-nav-button" th:if="${currentPage > 0}"
+                           th:href="@{/authors/all(page=${currentPage - 1}, size=6)}">&lt;&lt;</a>
+                        <span th:text="'Page ' + (${currentPage} + 1) + ' of ' + ${totalPages}"></span>
+                        <a class="page-nav-button" th:if="${currentPage + 1 < totalPages}"
+                           th:href="@{/authors/all(page=${currentPage + 1}, size=6)}">&gt;&gt;</a>
+                    </div>
                 </div>
                 <div class="authors-names-container">
                     <div class="author-container" th:each="author : ${authors}">
                         <div class="author-image-container">
                             <div class="author-image-holder">
-                                <img th:src="${author.getImageURL()}" alt="Author image"/>
+                                <img th:src="${author.imageURL}" alt="Author image"/>
                             </div>
                         </div>
                         <div class="author-name-container">
                             <div class="author-name-container"
-                                 th:text="${author.getFirstName()} + ' ' + ${author.getLastName()}">Agatha Christie</div>
+                                 th:text="${author.firstName} + ' ' + ${author.lastName}">Agatha Christie</div>
                             <div class="author-about">
-                                <a th:href="@{/authors/{id}/about (id=${author.getId()})}">View</a>
+                                <a class="about-button" th:href="@{/authors/{id}/about (id=${author.id})}">About</a>
                             </div>
                         </div>
                     </div>

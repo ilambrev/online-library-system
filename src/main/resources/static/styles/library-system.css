@@ -368,6 +368,31 @@ textarea {
     text-decoration: underline;
 }
 
+.pagination-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.page-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.page-nav-button {
+    background-color: #f9d342;
+    width: 50px;
+    padding: 6px 0;
+    border-radius: 20px;
+    color: blue;
+    font-size: 14px;
+    text-align: center;
+}
+
 .authors-names-container {
     display: flex;
     flex-direction: column;
@@ -401,7 +426,7 @@ textarea {
     color: #f9d342;
 }
 
-.all-authors-container a {
+.about-button {
     background-color: #f9d342;
     padding: 6px 16px;
     border-radius: 20px;
