@@ -13,8 +13,6 @@ public interface AuthorService {
 
     AuthorDTO getAuthor(Long id);
 
-    long getAuthorsCount();
-
     List<AuthorDTO> getAllAuthorsOrderByFirstName();
 
     Page<AuthorDTO> getAllAuthorsOrderByFirstName(int page, int size);

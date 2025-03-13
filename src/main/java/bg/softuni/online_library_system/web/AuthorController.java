@@ -36,13 +36,13 @@ public class AuthorController {
     }
 
     @GetMapping("/all")
-    public String getAll(@RequestParam(defaultValue = "0") int page,
+    public String getAllAuthors(@RequestParam(defaultValue = "0") int page,
                          @RequestParam(defaultValue = "6") int size,
                          Model model) {
 
         Page<AuthorDTO> authorsPage = this.authorService.getAllAuthorsOrderByFirstName(page, size);
 
-        model.addAttribute("authorsCount", this.authorService.getAuthorsCount());
+        model.addAttribute("authorsCount", authorsPage.getTotalElements());
         model.addAttribute("authors", authorsPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", authorsPage.getTotalPages());
@@ -51,7 +51,7 @@ public class AuthorController {
     }
 
     @GetMapping("/{id}/about")
-    public String about(@PathVariable("id") Long id, Model model) {
+    public String aboutAuthor(@PathVariable("id") Long id, Model model) {
         AuthorDTO author = this.authorService.getAuthor(id);
 
         if (author != null) {
