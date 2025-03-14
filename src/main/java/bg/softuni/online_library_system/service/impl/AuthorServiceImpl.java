@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import static bg.softuni.online_library_system.common.constant.CloudinaryConstants.AUTHORS_IMAGES_DIRECTORY;
+
 @Service
 public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
@@ -31,8 +33,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Long addAuthor(AddAuthorDTO addAuthorDTO) throws IOException {
-        String directory = "authors";
-        String imageUrl = this.cloudinaryService.uploadFile(addAuthorDTO.getImageFile(), directory);
+        String imageUrl = this.cloudinaryService.uploadFile(addAuthorDTO.getImageFile(), AUTHORS_IMAGES_DIRECTORY);
 
         AuthorEntity newAuthor = this.modelMapper.map(addAuthorDTO, AuthorEntity.class);
         newAuthor.setImageURL(imageUrl);
