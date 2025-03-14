@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/commons.html::head}">
+    <title>The Old Library</title>
+</head>
+
+<body>
+    <div class="site">
+        <header th:replace="~{/fragments/commons.html::header}">
+        </header>
+
+        <main>
+            <div class="about-container">
+                <h1>About Our Library</h1>
+                <p>Welcome to <strong>The Old Library</strong>, your digital gateway to a world of knowledge! Our online
+                    library provides a diverse collection of books across various genres, making it easy for readers to
+                    explore, learn, and enjoy.</p>
+                <h3>📚 Library Collection</h3>
+                <ul class="library-collection-list">
+                    <li>📖 Total Books Available: <span>2000</span></li>
+                    <li>&nbsp;✍ Total Authors Represented: <span>500</span></li>
+                </ul>
+                <p>Our collection is continuously growing, ensuring that you always have something new to discover!</p>
+                <h3>📖 Borrowing Rules</h3>
+                <ul class="borrowing-rules-list">
+                    <li>Registered users can borrow up to <strong>3 books</strong> at a time.</li>
+                    <li>The borrowing period is <strong>14 days</strong>.</li>
+                    <li>Books must be returned before the due date to avoid restrictions on future borrowing.</li>
+                    <li>If a book is already borrowed, you can place a reservation and get notified when it becomes available.</li>
+                </ul>
+                <p>We aim to provide a smooth reading experience for everyone. If you have any questions, feel free to contact our support team.</p>
+                <p>Happy Reading! 📚✨</p>
+            </div>
+        </main>
+
+        <footer th:replace="~{/fragments/commons.html::footer}">
+        </footer>
+    </div>
+</body>
+
+</html>
