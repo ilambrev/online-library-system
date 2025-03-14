@@ -4,6 +4,7 @@ import bg.softuni.online_library_system.model.enums.GenderEnum;
 import bg.softuni.online_library_system.model.validation.UniqueUsername;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import org.springframework.web.multipart.MultipartFile;
 
 public class UserRegistrationDTO {
     private String firstName;
@@ -24,6 +25,8 @@ public class UserRegistrationDTO {
     private String phoneNumber;
 
     private String address;
+
+    private MultipartFile imageFile;
 
     private GenderEnum gender;
 
@@ -99,6 +102,15 @@ public class UserRegistrationDTO {
 
     public UserRegistrationDTO setAddress(String address) {
         this.address = address;
+        return this;
+    }
+
+    public MultipartFile getImageFile() {
+        return imageFile;
+    }
+
+    public UserRegistrationDTO setImageFile(MultipartFile imageFile) {
+        this.imageFile = imageFile;
         return this;
     }
 

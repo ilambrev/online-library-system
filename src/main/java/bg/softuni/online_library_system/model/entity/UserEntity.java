@@ -27,6 +27,9 @@ public class UserEntity extends BaseEntity {
     @Column(name = "address", nullable = false)
     private String address;
 
+    @Column(name = "image_url")
+    private String imageURL;
+
     @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)
     private GenderEnum gender;
@@ -102,6 +105,15 @@ public class UserEntity extends BaseEntity {
 
     public UserEntity setAddress(String address) {
         this.address = address;
+        return this;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public UserEntity setImageURL(String imageURL) {
+        this.imageURL = imageURL;
         return this;
     }
 

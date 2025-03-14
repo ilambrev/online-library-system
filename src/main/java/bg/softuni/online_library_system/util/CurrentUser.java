@@ -11,6 +11,7 @@ public class CurrentUser {
     private String username;
     private String firstName;
     private String lastName;
+    private String imageURL;
     private String role;
     private boolean isLogged;
     private final HttpSession httpSession;
@@ -44,6 +45,15 @@ public class CurrentUser {
 
     public CurrentUser setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public CurrentUser setImageURL(String imageURL) {
+        this.imageURL = imageURL;
         return this;
     }
 
@@ -82,6 +92,7 @@ public class CurrentUser {
         this.username = null;
         this.firstName = null;
         this.lastName = null;
+        this.imageURL = null;
         this.role = null;
         this.isLogged = false;
         this.httpSession.invalidate();
