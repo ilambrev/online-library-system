@@ -1,6 +1,7 @@
 package bg.softuni.online_library_system.service.impl;
 
 import bg.softuni.online_library_system.model.dto.UserLoginDTO;
+import bg.softuni.online_library_system.model.dto.UserProfileDTO;
 import bg.softuni.online_library_system.model.dto.UserRegistrationDTO;
 import bg.softuni.online_library_system.model.entity.UserEntity;
 import bg.softuni.online_library_system.model.entity.UserRoleEntity;
@@ -11,6 +12,7 @@ import bg.softuni.online_library_system.repository.UserRoleRepository;
 import bg.softuni.online_library_system.service.CloudinaryService;
 import bg.softuni.online_library_system.service.UserService;
 import bg.softuni.online_library_system.util.CurrentUser;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,15 +26,17 @@ import static bg.softuni.online_library_system.common.constant.CloudinaryConstan
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
+    private final ModelMapper modelMapper;
     private final CloudinaryService cloudinaryService;
     private final PasswordEncoder passwordEncoder;
     private final CurrentUser currentUser;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserRoleRepository userRoleRepository, CloudinaryService cloudinaryService,
-                           PasswordEncoder passwordEncoder, CurrentUser currentUser) {
+    public UserServiceImpl(UserRepository userRepository, UserRoleRepository userRoleRepository, ModelMapper modelMapper,
+                           CloudinaryService cloudinaryService, PasswordEncoder passwordEncoder, CurrentUser currentUser) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
+        this.modelMapper = modelMapper;
         this.cloudinaryService = cloudinaryService;
         this.passwordEncoder = passwordEncoder;
         this.currentUser = currentUser;
@@ -98,5 +102,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public void logoutUser() {
         this.currentUser.logout();
+    }
+
+    @Override
+    public UserProfileDTO getUserByUsername(String username) {
+        Optional<UserEntity> optionalUser = this.userRepository.findByUsername(username);
+
+        return optionalUser.map(userEntity -> this.modelMapper.map(userEntity, UserProfileDTO.class))
+                .orElse(null);
     }
 }

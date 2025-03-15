@@ -64,7 +64,7 @@
                     <div>
                         <p><span th:text="${@currentUser.fullName}">User</span></p>
                     </div>
-                    <a th:href="@{/user/profile(userName=${@currentUser.username})}">Profile</a>
+                    <a th:href="@{/user/profile(username=${@currentUser.username})}">Profile</a>
                     <form th:action="@{/users/logout}" method="post">
                         <button type="submit">Logout</button>
                     </form>
