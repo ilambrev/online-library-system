@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/commons.html::head}">
+    <title>The Old Library</title>
+</head>
+
+<body>
+    <div class="site">
+        <header th:replace="~{/fragments/commons.html::header}">
+        </header>
+
+        <main>
+            <div class="profile-container">
+                <form class="profile-form" action="#" method="post" autocomplete="off" enctype="multipart/form-data">
+                    <div class="form-row-container">
+                        <div class="profile-image-container">
+                            <div class="profile-image-holder">
+                                <img src="https://res.cloudinary.com/dpwcshnvl/image/upload/v1741959840/cxhnfrgajbg6fie481q0.png"
+                                     alt="User image">
+                            </div>
+                            <div>
+                                <p>lombardo</p>
+                            </div>
+                        </div>
+                        <div class="change-password-container">
+                            <div class="input-field-container">
+                                <label for="oldPassword">Old password</label>
+                                <input type="password" id="oldPassword" autocomplete="new-password" placeholder="Type your old password.." />
+                            </div>
+                            <div class="input-field-container">
+                                <label for="newPassword">New password</label>
+                                <input type="password" id="newPassword" autocomplete="new-password" placeholder="Type your new password.." />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row-container">
+                        <div class="input-field-container">
+                            <label for="firstName">First name</label>
+                            <input type="text" id="firstName" value="Dave"/>
+                        </div>
+                        <div class="input-field-container">
+                            <label for="lastName">Last name</label>
+                            <input type="text" id="lastName" value="Lombardo" />
+                        </div>
+                    </div>
+                    <div class="form-row-container">
+                        <div class="input-field-container">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" />
+                        </div>
+                        <div class="input-field-container">
+                            <label for="phoneNumber">Phone number</label>
+                            <input type="text" id="phoneNumber" />
+                        </div>
+                    </div>
+                    <div class="form-row-container">
+                        <div class="input-field-container">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" />
+                        </div>
+                    </div>
+                    <div class="form-row-container">
+                        <div class="input-field-container">
+                            <p>Gender</p>
+                            <div class="radio-input-container">
+                                <div>
+                                    <label for="male">Male</label>
+                                    <input type="radio" id="male" name="gender" value="Male" checked />
+                                </div>
+                                <div>
+                                    <label for="female">Female</label>
+                                    <input type="radio" id="female" name="gender" value="Female" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-field-container">
+                            <label for="imageFile">Image:</label>
+                            <input type="file" id="imageFile" multiple="multiple" />
+                        </div>
+                    </div>
+                    <div class="profile-buttons-container">
+                        <a href="" id="edit-btn">Edit</a>
+                        <a th:href="@{/}" id="close-btn">Close</a>
+                        <input type="submit" id="save-btn" value="Save" />
+                        <a href="" id="cancel-btn">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer th:replace="~{/fragments/commons.html::footer}">
+        </footer>
+    </div>
+    <script th:src="@{/javascript/profile.js}"></script>
+</body>
+
+</html>

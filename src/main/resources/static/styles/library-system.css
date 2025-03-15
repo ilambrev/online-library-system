@@ -87,9 +87,10 @@ header {
 }
 
 .user-avatar-container {
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #4f8db2;
+    border-radius: 50%;
     overflow: hidden;
 }
 
@@ -216,9 +217,9 @@ footer {
 }
 
 .form input[type="text"],
-input[type="password"],
-input[type="email"],
-textarea {
+.form input[type="password"],
+.form input[type="email"],
+.form textarea {
     display: block;
     width: 100%;
     padding: 6px;
@@ -249,7 +250,7 @@ textarea {
 }
 
 .radio-input-container input[type="radio"] {
-    accent-color: #074c74;
+    accent-color: #f77124;
     cursor: pointer;
     height: 18px;
     width: 18px;
@@ -280,6 +281,7 @@ textarea {
     padding: 8px 8px;
     border-radius: 8px;
     margin-top: 6px;
+    cursor: pointer;
 }
 
 /* Author About */
@@ -360,7 +362,7 @@ textarea {
     align-items: center;
 }
 
-/* Author About */
+/* Authors */
 
 .all-authors-container {
     display: flex;
@@ -465,12 +467,14 @@ textarea {
     text-align: center;
 }
 
-.about-container h1, h3 {
+.about-container h1,
+h3 {
     color: #f9d342;
     text-decoration: underline;
 }
 
-.library-collection-list, .borrowing-rules-list {
+.library-collection-list,
+.borrowing-rules-list {
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -481,6 +485,116 @@ textarea {
     list-style: none;
     margin: 0;
     padding: 0;
+}
+
+/* User Profile */
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: rgb(0 0 0 / 0.5);
+    width: 30%;
+    max-height: 700px;
+    padding: 30px 40px;
+    border-radius: 20px;
+    color: #e4d8c9;
+    overflow: auto;
+}
+
+.profile-image-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+}
+
+.profile-image-holder {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid rgb(255 255 255 / 0.9);
+    background-color: rgb(255 255 255 / 0.5);
+    overflow: hidden;
+}
+
+.profile-image-holder img {
+    width: 100%;
+}
+
+.profile-image-container p {
+    color: #f9d342;
+    font-size: 18px;
+}
+
+.change-password-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+}
+
+.profile-form input[type="text"],
+.profile-form input[type="email"],
+.profile-form input[type="password"] {
+    display: block;
+    width: 100%;
+    padding: 6px;
+    font-size: 14px;
+    color: #323538;
+    border-radius: 6px;
+    border: 1px solid #074c74;
+    margin-top: 6px;
+    outline: none;
+}
+
+.profile-form input::file-selector-button {
+    display: block;
+    width: 100%;
+    background-color: #fffff0;
+    border: thin solid #117a8b;
+    padding: 8px 8px;
+    border-radius: 8px;
+    margin-top: 6px;
+    cursor: pointer;
+}
+
+.profile-form input[type="text"]:disabled,
+.profile-form input[type="email"]:disabled,
+.profile-form input[type="password"]:disabled,
+.profile-form input[type="file"]:disabled::file-selector-button {
+    background-color: #ffffffd5;
+}
+
+.profile-form input:focus {
+    background-color: lightblue;
+}
+
+.profile-buttons-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+#edit-btn,
+#close-btn,
+#cancel-btn,
+#save-btn {
+    background-color: #f9d342;
+    width: 80px;
+    padding: 6px 0;
+    border: none;
+    border-radius: 20px;
+    color: blue;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#cancel-btn,
+#save-btn {
+    display: none;
 }
 
 /* Error messages */
