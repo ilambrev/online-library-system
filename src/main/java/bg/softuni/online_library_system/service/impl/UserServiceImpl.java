@@ -18,7 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import static bg.softuni.online_library_system.common.constant.CloudinaryConstants.USERS_IMAGES_DIRECTORY;
 
@@ -44,11 +43,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean registerUser(UserRegistrationDTO userRegistrationDTO) throws IOException {
-        if (!userRegistrationDTO.getPassword().equals(userRegistrationDTO.getConfirmPassword())) {
-            return false;
-        }
-        Optional<UserEntity> optionalUser = this.userRepository.findByUsername(userRegistrationDTO.getUsername());
-        if (optionalUser.isPresent()) {
+        UserEntity user = getUserByUsername(userRegistrationDTO.getUsername());
+        if (user == null) {
             return false;
         }
         UserRoleEntity userRole = this.userRoleRepository.findByRole(UserRoleEnum.USER);
@@ -80,35 +76,76 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean loginUser(UserLoginDTO userLoginDTO) {
-        Optional<UserEntity> optionalUser = this.userRepository.findByUsername(userLoginDTO.getUsername());
-        if (optionalUser.isEmpty()) {
+        UserEntity user = getUserByUsername(userLoginDTO.getUsername());
+        if (user == null) {
             return false;
         }
-        UserEntity existingUser = optionalUser.get();
-        if (!this.passwordEncoder.matches(userLoginDTO.getPassword(), existingUser.getPassword())) {
+        if (!this.passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword())) {
             return false;
         }
 
-        this.currentUser.setUsername(existingUser.getUsername())
-                .setFirstName(existingUser.getFirstName())
-                .setLastName(existingUser.getLastName())
-                .setImageURL(existingUser.getImageURL())
-                .setRole(existingUser.getRole().getRole().name())
+        this.currentUser.setUsername(user.getUsername())
+                .setFirstName(user.getFirstName())
+                .setLastName(user.getLastName())
+                .setImageURL(user.getImageURL())
+                .setRole(user.getRole().getRole().name())
                 .setLogged(true);
 
         return true;
     }
 
     @Override
-    public void logoutUser() {
-        this.currentUser.logout();
+    public UserProfileDTO getUserProfileData(String username) {
+        UserEntity user = getUserByUsername(username);
+
+        return user == null ? null :
+                this.modelMapper.map(user, UserProfileDTO.class);
     }
 
     @Override
-    public UserProfileDTO getUserByUsername(String username) {
-        Optional<UserEntity> optionalUser = this.userRepository.findByUsername(username);
+    public boolean editUser(UserProfileDTO userProfileDTO) throws IOException {
+        UserEntity user = getUserByUsername(userProfileDTO.getUsername());
+        if (user == null) {
+            return false;
+        }
+        if (!this.passwordEncoder.matches(userProfileDTO.getPassword(), user.getPassword())) {
+            return false;
+        }
+        if (!user.getFirstName().equals(userProfileDTO.getFirstName())) {
+            user.setFirstName(userProfileDTO.getFirstName());
+        }
+        if (!user.getLastName().equals(userProfileDTO.getLastName())) {
+            user.setLastName(userProfileDTO.getLastName());
+        }
 
-        return optionalUser.map(userEntity -> this.modelMapper.map(userEntity, UserProfileDTO.class))
-                .orElse(null);
+
+        if (!user.getPhoneNumber().equals(userProfileDTO.getPhoneNumber())) {
+            user.setPhoneNumber(userProfileDTO.getPhoneNumber());
+        }
+        if (!user.getAddress().equals(userProfileDTO.getAddress())) {
+            user.setAddress(userProfileDTO.getAddress());
+        }
+        if (!user.getGender().equals(userProfileDTO.getGender())) {
+            user.setGender(userProfileDTO.getGender());
+        }
+        if (!userProfileDTO.getImageFile().isEmpty()) {
+            this.cloudinaryService.deleteFile(user.getImageURL());
+            String imageUrl = this.cloudinaryService.uploadFile(userProfileDTO.getImageFile(), USERS_IMAGES_DIRECTORY);
+            user.setImageURL(imageUrl);
+        }
+
+        this.userRepository.save(user);
+
+        return true;
+    }
+
+    @Override
+    public UserEntity getUserByUsername(String username) {
+        return this.userRepository.findByUsername(username).orElse(null);
+    }
+
+    @Override
+    public void logoutUser() {
+        this.currentUser.logout();
     }
 }

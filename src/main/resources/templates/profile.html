@@ -13,8 +13,8 @@
         <main>
             <div class="profile-container">
                 <form class="profile-form" autocomplete="off" enctype="multipart/form-data"
-                      th:action="@{/user/profile(username=${userProfileDTO.username})}"
-                      th:method="post"
+                      th:action="@{/user/profile(username=${userProfileDTO .username})}"
+                      th:method="patch"
                       th:object="${userProfileDTO}" >
                     <div class="form-row-container">
                         <div class="profile-image-container">

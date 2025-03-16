@@ -33,4 +33,21 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 
         return jsonObject.get("secure_url").getAsString();
     }
+
+    @Override
+    public void deleteFile(String imageURL) throws IOException {
+        String publicID = getPublicIdFromURL(imageURL);
+        this.cloudinary.uploader().destroy(publicID, ObjectUtils.asMap("invalidate", true));
+    }
+
+    private String getPublicIdFromURL(String url) {
+        int startIndex = url.lastIndexOf("/");
+        String publicID = url.substring(startIndex + 1);
+        int endIndex = publicID.indexOf(".");
+        if (endIndex != -1) {
+            publicID = publicID.substring(0, endIndex);
+        }
+
+        return publicID;
+    }
 }
