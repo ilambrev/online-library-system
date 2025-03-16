@@ -1,23 +1,37 @@
 package bg.softuni.online_library_system.model.dto;
 
 import bg.softuni.online_library_system.model.enums.GenderEnum;
+import bg.softuni.online_library_system.model.validation.FieldMatch;
 import bg.softuni.online_library_system.model.validation.UniqueUsername;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
 
+import static bg.softuni.online_library_system.common.constant.ValidationMessages.*;
+
+@FieldMatch(
+        first = "password",
+        second = "confirmPassword",
+        message = PASSWORDS_MATCH
+)
 public class UserRegistrationDTO {
+
     private String firstName;
 
     private String lastName;
 
-    @NotEmpty(message = "Username can not be empty")
-    @UniqueUsername(message = "Username not available.")
-    @Size(min = 5, max = 40, message = "Username must be between 5 and 40 characters long.")
+    @NotEmpty(message = NOT_EMPTY_USERNAME)
+    @UniqueUsername(message = UNIQUE_USERNAME)
+    @Size(min = 5, max = 40, message = USERNAME_LENGTH)
     private String username;
 
+    @NotEmpty(message = NOT_EMPTY_PASSWORD)
+    @Pattern(regexp = PASSWORD_PATTERN,
+            message = PASSWORD_REQUIREMENTS)
     private String password;
 
+    @NotEmpty(message = PASSWORDS_CONFIRMATION)
     private String confirmPassword;
 
     private String email;

@@ -181,7 +181,11 @@ footer {
 /* Form */
 
 .form-container {
+    display: flex;
+    flex-direction: column;
     width: 30%;
+    max-height: 90%;
+    overflow: auto;
 }
 
 .form {
@@ -604,7 +608,6 @@ h3 {
     color: #8b0000;
     font-size: 18px;
     font-weight: 400;
-    text-align: center;
     margin-top: 6px;
 }
 

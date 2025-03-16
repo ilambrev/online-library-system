@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import static bg.softuni.online_library_system.common.constant.ValidationConstants.BINDING_RESULT_PATH;
-import static bg.softuni.online_library_system.common.constant.ValidationMessages.BAD_CREDENTIALS_MESSAGE;
+import static bg.softuni.online_library_system.common.constant.ValidationMessages.BAD_CREDENTIALS;
 
 @Controller
 @RequestMapping("/users")
@@ -28,7 +28,7 @@ public class UserLoginController {
 
     @ModelAttribute
     public void addErrorMessage(Model model) {
-        model.addAttribute("errorMessage", BAD_CREDENTIALS_MESSAGE);
+        model.addAttribute("errorMessage", BAD_CREDENTIALS);
     }
 
     @GetMapping("/login")
