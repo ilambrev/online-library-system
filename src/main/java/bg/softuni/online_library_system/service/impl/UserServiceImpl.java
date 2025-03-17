@@ -43,21 +43,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean registerUser(UserRegistrationDTO userRegistrationDTO) throws IOException {
-        UserEntity user = getUserByUsername(userRegistrationDTO.getUsername());
-        if (user == null) {
-            return false;
-        }
         UserRoleEntity userRole = this.userRoleRepository.findByRole(UserRoleEnum.USER);
+        UserEntity newUser = this.modelMapper.map(userRegistrationDTO, UserEntity.class);
 
-        UserEntity newUser = new UserEntity()
-                .setFirstName(userRegistrationDTO.getFirstName())
-                .setLastName(userRegistrationDTO.getLastName())
-                .setUsername(userRegistrationDTO.getUsername())
-                .setPassword(this.passwordEncoder.encode(userRegistrationDTO.getPassword()))
-                .setEmail(userRegistrationDTO.getEmail())
-                .setPhoneNumber(userRegistrationDTO.getPhoneNumber())
-                .setAddress(userRegistrationDTO.getAddress())
-                .setGender(userRegistrationDTO.getGender())
+        newUser.setPassword(this.passwordEncoder.encode(userRegistrationDTO.getPassword()))
                 .setRole(userRole)
                 .setActive(true);
 
