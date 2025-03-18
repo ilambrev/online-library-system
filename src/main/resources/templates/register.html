@@ -17,19 +17,19 @@
                     <h2 class="form-heading">Register User</h2>
                     <div class="form-row-container">
                         <div class="input-field-container">
-                            <label for="firstName">First Name</label>
+                            <label for="firstName">First name:</label>
                             <input type="text" id="firstName" placeholder="Type your first name..."
                                    th:field="*{firstName}"/>
                         </div>
                         <div class="input-field-container">
-                            <label for="lastName">Last Name</label>
+                            <label for="lastName">Last name:</label>
                             <input type="text" id="lastName" placeholder="Type your last name..."
                                    th:field="*{lastName}"/>
                         </div>
                     </div>
                     <div class="form-row-container">
                         <div class="input-field-container">
-                            <label for="userName">Username</label>
+                            <label for="userName">Username:</label>
                             <input type="text" id="userName" placeholder="Type username..."
                                    th:field="*{username}"
                                    th:errorclass="'input-validation-error'"/>
@@ -37,14 +37,14 @@
                                th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Message</p>
                         </div>
                         <div class="input-field-container">
-                            <label for="email">E-mail</label>
+                            <label for="email">E-mail:</label>
                             <input type="email" id="email" placeholder="Type e-mail..."
                                    th:field="*{email}"/>
                         </div>
                     </div>
                     <div class="form-row-container">
                         <div class="input-field-container">
-                            <label for="password">Password</label>
+                            <label for="password">Password:</label>
                             <input type="password" id="password" autocomplete="new-password" placeholder="Type password.."
                                    th:field="*{password}"
                                    th:errorclass="'input-validation-error'"/>
@@ -52,7 +52,7 @@
                                th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Message</p>
                         </div>
                         <div class="input-field-container">
-                            <label for="confirmPassword">Confirm password</label>
+                            <label for="confirmPassword">Confirm password:</label>
                             <input type="password" id="confirmPassword" placeholder="Re-type password..."
                                    th:field="*{confirmPassword}"
                                    th:errorclass="'input-validation-error'"/>
@@ -62,12 +62,12 @@
                     </div>
                     <div class="form-row-container">
                         <div class="input-field-container">
-                            <label for="phoneNumber">Phone number</label>
+                            <label for="phoneNumber">Phone number:</label>
                             <input type="text" id="phoneNumber" placeholder="&#43;359812667788"
                                    th:field="*{phoneNumber}"/>
                         </div>
                         <div class="input-field-container">
-                            <p>Gender</p>
+                            <p>Gender:</p>
                             <div class="radio-input-container">
                                 <div th:each="g : ${genders}">
                                     <label th:for="${#strings.toLowerCase(g)}"
@@ -81,7 +81,7 @@
                     </div>
                     <div class="form-row-container">
                         <div class="input-field-container">
-                            <label for="address">Address</label>
+                            <label for="address">Address:</label>
                             <input type="text" id="address" placeholder="Sofia, Old Library, 27"
                                    th:field="*{address}"/>
                         </div>

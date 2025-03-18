@@ -17,7 +17,7 @@
                     <p class="validation-error-message" th:if="${badCredentials}" th:text="${errorMessage}">Message</p>
                     <div class="form-row-container">
                         <div class="input-field-container">
-                            <label for="userName">Username</label>
+                            <label for="userName">Username:</label>
                             <input type="text" id="userName" placeholder="Type your username..."
                                    th:field="*{username}"
                                    th:errorclass="'input-validation-error'"/>
@@ -27,7 +27,7 @@
                     </div>
                     <div class="form-row-container">
                         <div class="input-field-container">
-                            <label for="password">Password</label>
+                            <label for="password">Password:</label>
                             <input type="password" id="password" placeholder="Type your password"
                                    th:field="*{password}"
                                    th:errorclass="'input-validation-error'"/>
