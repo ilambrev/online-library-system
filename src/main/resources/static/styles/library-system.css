@@ -237,7 +237,7 @@ footer {
 }
 
 .form input:focus,
-.form select {
+.form select:focus {
     background-color: lightblue;
 }
 
