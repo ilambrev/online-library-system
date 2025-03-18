@@ -223,7 +223,8 @@ footer {
 .form input[type="text"],
 .form input[type="password"],
 .form input[type="email"],
-.form textarea {
+.form textarea,
+.form select {
     display: block;
     width: 100%;
     padding: 6px;
@@ -235,7 +236,8 @@ footer {
     outline: none;
 }
 
-.form input:focus {
+.form input:focus,
+.form select {
     background-color: lightblue;
 }
 

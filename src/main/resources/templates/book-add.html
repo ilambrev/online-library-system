@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/commons.html::head}">
+    <title>The Old Library</title>
+</head>
+
+<body>
+    <div class="site">
+        <header th:replace="~{/fragments/commons.html::header}">
+        </header>
+
+        <main>
+            <div class="form-container">
+                <form class="form" action="#" method="post" enctype="multipart/form-data">
+                    <h2 class="form-heading">Add book</h2>
+                    <div class="form-row-container">
+                        <div class="input-field-container">
+                            <label for="title">Book title:</label>
+                            <input class="validation-error-input" type="text" id="title"
+                                   placeholder="Type book title..." />
+                        </div>
+                        <div class="input-field-container">
+                            <label for="isbn">ISBN:</label>
+                            <input class="validation-error-input" type="text" id="isbn"
+                                   placeholder="Type book ISBN..." />
+                        </div>
+                    </div>
+                    <div class="form-row-container">
+                        <div class="input-field-container">
+                            <label for="author">Book author:</label>
+                            <input type="text" list="authors" name="author" id="author" placeholder="Select book author...">
+                            <datalist id="authors"></datalist>
+                        </div>
+                        <div class="input-field-container">
+                            <label for="genre">Book genre:</label>
+                            <select class="validation-error-input" name="genre" id="genre">
+                                <option disabled selected value>-- Select book genre --</option>
+                                <option value="ADVENTURE">Adventure</option>
+                                <option value="ART">Art</option>
+                                <option value="AUTOBIOGRAPHY">Autobiography</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row-container">
+                        <div class="input-field-container">
+                            <label for="description">Book description:</label>
+                            <textarea rows="4" id="description" placeholder="Enter book description..."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row-container">
+                        <div class="input-field-container">
+                            <label for="imageFile">Choose book image:</label>
+                            <input class="validation-error-input" type="file" id="imageFile" multiple="multiple" />
+                        </div>
+                    </div>
+                    <div class="form-row-container">
+                        <div class="submit-container">
+                            <input type="submit" value="Add Book" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer th:replace="~{/fragments/commons.html::footer}">
+        </footer>
+    </div>
+</body>
+
+</html>
