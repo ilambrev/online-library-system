@@ -4,7 +4,7 @@ import bg.softuni.online_library_system.model.enums.BookGenreEnum;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "genres")
+@Table(name = "book_genres")
 public class BookGenreEntity extends BaseEntity {
     @Column(name = "genre", nullable = false)
     @Enumerated(EnumType.STRING)
