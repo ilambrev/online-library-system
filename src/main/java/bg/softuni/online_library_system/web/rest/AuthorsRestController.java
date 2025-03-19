@@ -2,6 +2,7 @@ package bg.softuni.online_library_system.web.rest;
 
 import bg.softuni.online_library_system.model.dto.AuthorDTO;
 import bg.softuni.online_library_system.service.AuthorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.List;
 public class AuthorsRestController {
     private final AuthorService authorService;
 
+    @Autowired
     public AuthorsRestController(AuthorService authorService) {
         this.authorService = authorService;
     }
