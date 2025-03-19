@@ -17,11 +17,17 @@ public class BookEntity extends BaseEntity {
     @Column(name = "isbn", nullable = false)
     private String isbn;
 
+    @Column(name = "year")
+    private int year;
+
+    @Column(name = "pages")
+    private int pages;
+
     @Column(name = "image_url")
     private String imageURL;
 
-    @Column(name = "entry_date", nullable = false)
-    private LocalDateTime entryDate;
+    @Column(name = "created", nullable = false)
+    private LocalDateTime created;
 
     @Column(name = "read_counter")
     private int readCounter;
@@ -36,6 +42,10 @@ public class BookEntity extends BaseEntity {
     @ManyToOne(targetEntity = BookGenreEntity.class)
     @JoinColumn(name = "genre_id", referencedColumnName = "id")
     private BookGenreEntity genre;
+
+    @ManyToOne(targetEntity = PublisherEntity.class)
+    @JoinColumn(name = "publisher_id", referencedColumnName = "id")
+    private PublisherEntity publisher;
 
     public BookEntity() {
     }
@@ -67,6 +77,24 @@ public class BookEntity extends BaseEntity {
         return this;
     }
 
+    public int getYear() {
+        return year;
+    }
+
+    public BookEntity setYear(int year) {
+        this.year = year;
+        return this;
+    }
+
+    public int getPages() {
+        return pages;
+    }
+
+    public BookEntity setPages(int pages) {
+        this.pages = pages;
+        return this;
+    }
+
     public String getImageURL() {
         return imageURL;
     }
@@ -76,12 +104,12 @@ public class BookEntity extends BaseEntity {
         return this;
     }
 
-    public LocalDateTime getEntryDate() {
-        return entryDate;
+    public LocalDateTime getCreated() {
+        return created;
     }
 
-    public BookEntity setEntryDate(LocalDateTime entryDate) {
-        this.entryDate = entryDate;
+    public BookEntity setCreated(LocalDateTime created) {
+        this.created = created;
         return this;
     }
 
@@ -118,6 +146,15 @@ public class BookEntity extends BaseEntity {
 
     public BookEntity setGenre(BookGenreEntity genre) {
         this.genre = genre;
+        return this;
+    }
+
+    public PublisherEntity getPublisher() {
+        return publisher;
+    }
+
+    public BookEntity setPublisher(PublisherEntity publisher) {
+        this.publisher = publisher;
         return this;
     }
 }
