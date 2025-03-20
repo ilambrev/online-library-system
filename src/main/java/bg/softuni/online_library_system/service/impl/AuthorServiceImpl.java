@@ -53,6 +53,11 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    public AuthorEntity getAuthorById(Long id) {
+        return this.authorRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public List<AuthorDTO> getAllAuthorsOrderByFirstName() {
         return mapAuthors(this.authorRepository.findAllByOrderByFirstNameAsc());
     }

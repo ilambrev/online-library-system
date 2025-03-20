@@ -12,46 +12,79 @@
 
         <main>
             <div class="form-container">
-                <form class="form" action="#" method="post" enctype="multipart/form-data">
+                <form class="form" th:action="@{/books/add}" th:method="post" th:object="${addBookDTO}"
+                      enctype="multipart/form-data" autocomplete="off">
                     <h2 class="form-heading">Add book</h2>
                     <div class="form-row-container">
                         <div class="input-field-container">
                             <label for="title">Book title:</label>
                             <input class="validation-error-input" type="text" id="title"
-                                   placeholder="Type book title..." />
+                                   placeholder="Type book title..."
+                                   th:field="*{title}"/>
                         </div>
                         <div class="input-field-container">
                             <label for="isbn">ISBN:</label>
                             <input class="validation-error-input" type="text" id="isbn"
-                                   placeholder="Type book ISBN..." />
+                                   placeholder="Type book ISBN..."
+                                   th:field="*{isbn}"/>
                         </div>
                     </div>
                     <div class="form-row-container">
                         <div class="input-field-container">
-                            <label for="author">Book author:</label>
-                            <input type="text" list="authors" name="author" id="author" placeholder="Select book author...">
+                            <label for="authorName">Book author:</label>
+                            <input type="hidden" id="hidden-author-input"
+                                   th:field="*{author}">
+                            <input type="text" list="authors" name="authorName" id="authorName"
+                                   placeholder="Select book author..."/>
                             <datalist id="authors"></datalist>
                         </div>
                         <div class="input-field-container">
                             <label for="genre">Book genre:</label>
-                            <select class="validation-error-input" name="genre" id="genre">
-                                <option disabled selected value>-- Select book genre --</option>
-                                <option value="ADVENTURE">Adventure</option>
-                                <option value="ART">Art</option>
-                                <option value="AUTOBIOGRAPHY">Autobiography</option>
+                            <select class="validation-error-input" id="genre"
+                                    th:field="*{genre}">
+                                <option value="">-- Select book genre --</option>
+                                <option
+                                        th:each="bookGenre : ${bookGenres}"
+                                        th:value="${bookGenre}"
+                                        th:text="${bookGenre.label}">Adventure
+                                </option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="form-row-container">
+                        <div class="form-row-container">
+                            <div class="input-field-container">
+                                <label for="year">Year of publication:</label>
+                                <input class="validation-error-input" type="number" id="year"
+                                       th:field="*{year}"/>
+                            </div>
+                            <div class="input-field-container">
+                                <label for="pages">Number of pages:</label>
+                                <input class="validation-error-input" type="number" id="pages"
+                                       th:field="*{pages}"/>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row-container">
                         <div class="input-field-container">
                             <label for="description">Book description:</label>
-                            <textarea rows="4" id="description" placeholder="Enter book description..."></textarea>
+                            <textarea rows="4" id="description" placeholder="Enter book description..."
+                                      th:field="*{description}">
+                            </textarea>
                         </div>
                     </div>
                     <div class="form-row-container">
                         <div class="input-field-container">
+                            <label for="publisher">Publisher:</label>
+                            <input class="validation-error-input" type="text" list="publishers" id="publisher"
+                                   placeholder="Type name of publisher."
+                                   th:field="*{publisher}"/>
+                            <datalist id="publishers"></datalist>
+                        </div>
+                        <div class="input-field-container">
                             <label for="imageFile">Choose book image:</label>
-                            <input class="validation-error-input" type="file" id="imageFile" multiple="multiple" />
+                            <input class="validation-error-input" type="file" id="imageFile" multiple="multiple"
+                                   th:field="*{imageFile}"/>
                         </div>
                     </div>
                     <div class="form-row-container">
