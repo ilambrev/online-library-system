@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/commons.html::head}">
+    <title>The Old Library</title>
+</head>
+
+<body>
+    <div class="site">
+        <header th:replace="~{/fragments/commons.html::header}">
+        </header>
+
+        <main>
+            <div class="book-about-container">
+                <div class="image-container">
+                    <div class="image-holder">
+                        <img src="https://res.cloudinary.com/dpwcshnvl/image/upload/v1742416970/lfkwdozgkd84e7ftbgw6.jpg"
+                             alt="Book image">
+                    </div>
+                </div>
+                <div class="book-about-text-content-container">
+                    <h2>And Then There Were None</h2>
+                    <h4>by <a href="#">Agatha Christie</a></h4>
+                    <div class="book-description-container">
+                        <p>Ten people, each with something to hide and something to fear, are invited to an isolated mansion
+                            on Indian Island by a host who, surprisingly, fails to appear. On the island they are cut off
+                            from everything but each other and the inescapable shadows of their own past lives. One by one,
+                            the guests share the darkest secrets of their wicked pasts. And one by one, they die… Which
+                            among them is the killer and will any of them survive?
+                        </p>
+                    </div>
+                    <h3>Book details</h3>
+                    <div class="book-details-container">
+                        <div class="book-details-book-container">ISBN: <span>9780062073488</span></div>
+                        <div class="book-details-book-container">Publisher: <span>William Morrow Paperbacks</span></div>
+                        <div class="book-details-book-container">Year of publication: <span>2011</span></div>
+                        <div class="book-details-book-container">Pages: <span>300</span></div>
+                    </div>
+                    <div class="book-about-buttons-container">
+                        <p>Status: <span>available</span></p>
+                        <a href="#">Borrow</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer th:replace="~{/fragments/commons.html::footer}">
+        </footer>
+    </div>
+</body>
+
+</html>
