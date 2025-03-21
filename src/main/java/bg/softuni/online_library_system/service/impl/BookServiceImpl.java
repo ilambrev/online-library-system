@@ -1,6 +1,7 @@
 package bg.softuni.online_library_system.service.impl;
 
 import bg.softuni.online_library_system.model.dto.AddBookDTO;
+import bg.softuni.online_library_system.model.dto.BookAboutDTO;
 import bg.softuni.online_library_system.model.dto.BookDTO;
 import bg.softuni.online_library_system.model.entity.AuthorEntity;
 import bg.softuni.online_library_system.model.entity.BookEntity;
@@ -76,13 +77,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDTO getBookById(Long id) {
+    public BookAboutDTO getBookById(Long id) {
         Optional<BookEntity> bookOptional = this.bookRepository.findById(id);
         if (bookOptional.isEmpty()) {
             return null;
         }
         BookEntity book = bookOptional.get();
 
-        return this.modelMapper.map(book, BookDTO.class);
+        return this.modelMapper.map(book, BookAboutDTO.class);
     }
 }

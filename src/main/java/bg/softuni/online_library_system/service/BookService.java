@@ -1,6 +1,7 @@
 package bg.softuni.online_library_system.service;
 
 import bg.softuni.online_library_system.model.dto.AddBookDTO;
+import bg.softuni.online_library_system.model.dto.BookAboutDTO;
 import bg.softuni.online_library_system.model.dto.BookDTO;
 import org.springframework.data.domain.Page;
 
@@ -12,5 +13,5 @@ public interface BookService {
 
     Page<BookDTO> getAllBooksOrderByFirstName(int page, int size);
 
-    BookDTO getBookById(Long id);
+    BookAboutDTO getBookById(Long id);
 }

@@ -1,6 +1,7 @@
 package bg.softuni.online_library_system.web;
 
 import bg.softuni.online_library_system.model.dto.AddBookDTO;
+import bg.softuni.online_library_system.model.dto.BookAboutDTO;
 import bg.softuni.online_library_system.model.dto.BookDTO;
 import bg.softuni.online_library_system.model.enums.BookGenreEnum;
 import bg.softuni.online_library_system.service.BookService;
@@ -54,10 +55,10 @@ public class BookController {
 
     @GetMapping("/{id}/about")
     public String aboutBook(@PathVariable("id") Long id, Model model) {
-        BookDTO book = this.bookService.getBookById(id);
+        BookAboutDTO book = this.bookService.getBookById(id);
 
         if (book != null) {
-            model.addAttribute("bookDTO", book);
+            model.addAttribute("bookAboutDTO", book);
 
             return "book-about";
         }
