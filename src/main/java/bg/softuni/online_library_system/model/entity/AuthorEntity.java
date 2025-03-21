@@ -1,8 +1,8 @@
 package bg.softuni.online_library_system.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "authors")
@@ -18,6 +18,9 @@ public class AuthorEntity extends BaseEntity {
 
     @Column(name = "image_url")
     private String imageURL;
+
+    @OneToMany(targetEntity = BookEntity.class)
+    private List<BookEntity> books;
 
     public AuthorEntity() {
     }
@@ -55,6 +58,15 @@ public class AuthorEntity extends BaseEntity {
 
     public AuthorEntity setImageURL(String imageURL) {
         this.imageURL = imageURL;
+        return this;
+    }
+
+    public List<BookEntity> getBooks() {
+        return books;
+    }
+
+    public AuthorEntity setBooks(List<BookEntity> books) {
+        this.books = books;
         return this;
     }
 }

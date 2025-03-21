@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/commons.html::head}">
+    <title>The Old Library</title>
+</head>
+
+<body>
+    <div class="site">
+        <header th:replace="~{/fragments/commons.html::header}">
+        </header>
+
+        <main>
+            <div class="all-books-container">
+                <h2>Books</h2>
+                <div class="pagination-container">
+                    <p>Number of available books: 25</p>
+                    <div class="page-nav">
+                        <a class="page-nav-button">&lt;&lt;</a>
+                        <span>Page 1 of 3</span>
+                        <a class="page-nav-button">&gt;&gt;</a>
+                    </div>
+                </div>
+                <div class="books-names-container">
+                    <div class="book-container">
+                        <div class="book-image-container">
+                            <div class="book-image-holder">
+                                <img src="https://res.cloudinary.com/dpwcshnvl/image/upload/v1742416970/lfkwdozgkd84e7ftbgw6.jpg"
+                                     alt="Book image">
+                            </div>
+                        </div>
+                        <div class="book-name-container">
+                            <div class="book-name-container">And Then There Were None</div>
+                            <div class="book-about">
+                                <a class="about-button" href="#">About</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer th:replace="~{/fragments/commons.html::footer}">
+        </footer>
+    </div>
+</body>
+
+</html>
