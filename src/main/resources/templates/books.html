@@ -14,7 +14,7 @@
             <div class="all-books-container">
                 <h2>Books</h2>
                 <div class="pagination-container">
-                    <p>Number of available books: <span th:text="${booksCount}">25</span></p>
+                    <p>Number of books: <span th:text="${booksCount}">25</span></p>
                     <div class="page-nav">
                         <a class="page-nav-button" th:if="${currentPage > 0}"
                            th:href="@{/books/all(page=${currentPage - 1}, size=6)}">&lt;&lt;</a>
@@ -33,7 +33,7 @@
                         <div class="book-name-container">
                             <div class="book-name-container" th:text="${book.title}">And Then There Were None</div>
                             <div class="book-about">
-                                <a class="about-button" href="#">About</a>
+                                <a class="about-button" th:href="@{/books/{id}/about (id=${book.id})}">About</a>
                             </div>
                         </div>
                     </div>

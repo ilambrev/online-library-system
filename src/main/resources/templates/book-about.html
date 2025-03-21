@@ -11,18 +11,17 @@
         </header>
 
         <main>
-            <div class="book-about-container">
+            <div class="book-about-container" th:object="${bookDTO}">
                 <div class="image-container">
                     <div class="image-holder">
-                        <img src="https://res.cloudinary.com/dpwcshnvl/image/upload/v1742416970/lfkwdozgkd84e7ftbgw6.jpg"
-                             alt="Book image">
+                        <img th:src="*{imageURL}" alt="Book image">
                     </div>
                 </div>
                 <div class="book-about-text-content-container">
-                    <h2>And Then There Were None</h2>
-                    <h4>by <a href="#">Agatha Christie</a></h4>
+                    <h2 th:text="*{title}">And Then There Were None</h2>
+                    <h4>by <a th:href="@{/authors/{id}/about (id=*{authorId})}">Agatha Christie</a></h4>
                     <div class="book-description-container">
-                        <p>Ten people, each with something to hide and something to fear, are invited to an isolated mansion
+                        <p th:text="*{description}">Ten people, each with something to hide and something to fear, are invited to an isolated mansion
                             on Indian Island by a host who, surprisingly, fails to appear. On the island they are cut off
                             from everything but each other and the inescapable shadows of their own past lives. One by one,
                             the guests share the darkest secrets of their wicked pasts. And one by one, they die… Which
@@ -31,14 +30,15 @@
                     </div>
                     <h3>Book details</h3>
                     <div class="book-details-container">
-                        <div class="book-details-book-container">ISBN: <span>9780062073488</span></div>
-                        <div class="book-details-book-container">Publisher: <span>William Morrow Paperbacks</span></div>
-                        <div class="book-details-book-container">Year of publication: <span>2011</span></div>
-                        <div class="book-details-book-container">Pages: <span>300</span></div>
+                        <div class="book-details-book-container">ISBN: <span th:text="*{isbn}">9780062073488</span></div>
+                        <div class="book-details-book-container">Publisher: <span th:text="*{publisherName}">William Morrow Paperbacks</span></div>
+                        <div class="book-details-book-container">Year of publication: <span th:text="*{year}">2011</span></div>
+                        <div class="book-details-book-container">Pages: <span th:text="*{pages}">300</span></div>
+                        <div class="book-details-book-container">Genre: <span th:text="*{bookGenre.label}">Crime</span></div>
                     </div>
                     <div class="book-about-buttons-container">
-                        <p>Status: <span>available</span></p>
-                        <a href="#">Borrow</a>
+                        <p>Status: <span th:text="*{available} ? 'available' : 'unavailable'">available</span></p>
+                        <a th:if="*{available}" href="#">Borrow</a>
                     </div>
                 </div>
             </div>

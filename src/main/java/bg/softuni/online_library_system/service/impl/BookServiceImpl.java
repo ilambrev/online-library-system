@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static bg.softuni.online_library_system.common.constant.CloudinaryConstants.BOOKS_IMAGES_DIRECTORY;
@@ -72,5 +73,16 @@ public class BookServiceImpl implements BookService {
 
         return this.bookRepository.findAll(pageable)
                 .map(bookEntity -> this.modelMapper.map(bookEntity, BookDTO.class));
+    }
+
+    @Override
+    public BookDTO getBookById(Long id) {
+        Optional<BookEntity> bookOptional = this.bookRepository.findById(id);
+        if (bookOptional.isEmpty()) {
+            return null;
+        }
+        BookEntity book = bookOptional.get();
+
+        return this.modelMapper.map(book, BookDTO.class);
     }
 }

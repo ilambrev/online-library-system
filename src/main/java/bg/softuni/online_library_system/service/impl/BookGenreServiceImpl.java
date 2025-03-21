@@ -18,6 +18,6 @@ public class BookGenreServiceImpl implements BookGenreService {
 
     @Override
     public BookGenreEntity getBookGenreByName(BookGenreEnum bookGenreEnum) {
-        return null;
+        return this.bookGenreRepository.findByGenre(bookGenreEnum);
     }
 }

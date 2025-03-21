@@ -1,6 +1,6 @@
 package bg.softuni.online_library_system.model.dto;
 
-import bg.softuni.online_library_system.model.entity.BookGenreEntity;
+import bg.softuni.online_library_system.model.enums.BookGenreEnum;
 
 public class BookDTO {
 
@@ -22,7 +22,7 @@ public class BookDTO {
 
     private Long authorId;
 
-    private BookGenreEntity genre;
+    private BookGenreEnum bookGenre;
 
     private String publisherName;
 
@@ -110,12 +110,12 @@ public class BookDTO {
         return this;
     }
 
-    public BookGenreEntity getGenre() {
-        return genre;
+    public BookGenreEnum getBookGenre() {
+        return bookGenre;
     }
 
-    public BookDTO setGenre(BookGenreEntity genre) {
-        this.genre = genre;
+    public BookDTO setBookGenre(BookGenreEnum bookGenre) {
+        this.bookGenre = bookGenre;
         return this;
     }
 

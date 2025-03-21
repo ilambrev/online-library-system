@@ -11,4 +11,6 @@ public interface BookService {
     Long addBook(AddBookDTO addBookDTO) throws IOException;
 
     Page<BookDTO> getAllBooksOrderByFirstName(int page, int size);
+
+    BookDTO getBookById(Long id);
 }
