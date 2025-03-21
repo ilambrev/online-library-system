@@ -14,23 +14,24 @@
             <div class="all-books-container">
                 <h2>Books</h2>
                 <div class="pagination-container">
-                    <p>Number of available books: 25</p>
+                    <p>Number of available books: <span th:text="${booksCount}">25</span></p>
                     <div class="page-nav">
-                        <a class="page-nav-button">&lt;&lt;</a>
-                        <span>Page 1 of 3</span>
-                        <a class="page-nav-button">&gt;&gt;</a>
+                        <a class="page-nav-button" th:if="${currentPage > 0}"
+                           th:href="@{/books/all(page=${currentPage - 1}, size=6)}">&lt;&lt;</a>
+                        <span th:text="'Page ' + (${currentPage} + 1) + ' of ' + ${totalPages}"></span>
+                        <a class="page-nav-button" th:if="${currentPage + 1 < totalPages}"
+                           th:href="@{/books/all(page=${currentPage + 1}, size=6)}">&gt;&gt;</a>
                     </div>
                 </div>
                 <div class="books-names-container">
-                    <div class="book-container">
+                    <div class="book-container" th:each="book : ${books}">
                         <div class="book-image-container">
                             <div class="book-image-holder">
-                                <img src="https://res.cloudinary.com/dpwcshnvl/image/upload/v1742416970/lfkwdozgkd84e7ftbgw6.jpg"
-                                     alt="Book image">
+                                <img th:src="${book.imageURL}" alt="Book image">
                             </div>
                         </div>
                         <div class="book-name-container">
-                            <div class="book-name-container">And Then There Were None</div>
+                            <div class="book-name-container" th:text="${book.title}">And Then There Were None</div>
                             <div class="book-about">
                                 <a class="about-button" href="#">About</a>
                             </div>

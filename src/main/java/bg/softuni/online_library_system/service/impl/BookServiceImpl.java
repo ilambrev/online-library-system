@@ -1,6 +1,7 @@
 package bg.softuni.online_library_system.service.impl;
 
 import bg.softuni.online_library_system.model.dto.AddBookDTO;
+import bg.softuni.online_library_system.model.dto.BookDTO;
 import bg.softuni.online_library_system.model.entity.AuthorEntity;
 import bg.softuni.online_library_system.model.entity.BookEntity;
 import bg.softuni.online_library_system.model.entity.BookGenreEntity;
@@ -9,6 +10,10 @@ import bg.softuni.online_library_system.repository.BookRepository;
 import bg.softuni.online_library_system.service.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -59,5 +64,13 @@ public class BookServiceImpl implements BookService {
                 .setPublisher(publisher);
 
         return this.bookRepository.save(newBook).getId();
+    }
+
+    @Override
+    public Page<BookDTO> getAllBooksOrderByFirstName(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("title").ascending());
+
+        return this.bookRepository.findAll(pageable)
+                .map(bookEntity -> this.modelMapper.map(bookEntity, BookDTO.class));
     }
 }

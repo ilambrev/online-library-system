@@ -22,7 +22,7 @@
             <ul class="header-list">
                 <li><a th:href="@{/about}">About Library</a></li>
                 <li><a th:href="@{/authors/all(page=0, size=6)}">Authors</a></li>
-                <li><a href="#">Books</a></li>
+                <li><a th:href="@{/books/all(page=0, size=6)}">Books</a></li>
                 <li><a href="#">Contacts</a></li>
                 <li class="dropdown" th:if="${@currentUser.isLogged() && @currentUser.role.equals('ADMIN')}">
                     <span>Add <img class="arrow-icon" th:src="@{/images/dropdown-arrow.png}" alt="arrow"></span>
