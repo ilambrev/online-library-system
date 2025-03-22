@@ -2,8 +2,11 @@ package bg.softuni.online_library_system.service.impl;
 
 import bg.softuni.online_library_system.model.dto.AddAuthorDTO;
 import bg.softuni.online_library_system.model.dto.AuthorDTO;
+import bg.softuni.online_library_system.model.dto.AuthorRestDTO;
 import bg.softuni.online_library_system.model.entity.AuthorEntity;
+import bg.softuni.online_library_system.model.entity.BookEntity;
 import bg.softuni.online_library_system.repository.AuthorRepository;
+import bg.softuni.online_library_system.repository.BookRepository;
 import bg.softuni.online_library_system.service.AuthorService;
 import bg.softuni.online_library_system.service.CloudinaryService;
 import org.modelmapper.ModelMapper;
@@ -14,20 +17,25 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static bg.softuni.online_library_system.common.constant.CloudinaryConstants.AUTHORS_IMAGES_DIRECTORY;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
+    private final BookRepository bookRepository;
     private final CloudinaryService cloudinaryService;
     private final ModelMapper modelMapper;
 
-    public AuthorServiceImpl(AuthorRepository authorRepository, CloudinaryService cloudinaryService,
-                             ModelMapper modelMapper) {
+    public AuthorServiceImpl(AuthorRepository authorRepository, BookRepository bookRepository,
+                             CloudinaryService cloudinaryService, ModelMapper modelMapper) {
         this.authorRepository = authorRepository;
+        this.bookRepository = bookRepository;
         this.cloudinaryService = cloudinaryService;
         this.modelMapper = modelMapper;
     }
@@ -62,28 +70,40 @@ public class AuthorServiceImpl implements AuthorService {
     public Page<AuthorDTO> getAllAuthorsOrderByFirstName(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("firstName").ascending());
 
-        return this.authorRepository.findAll(pageable)
-                .map(entity -> this.modelMapper.map(entity, AuthorDTO.class));
+        Page<AuthorEntity> authorsPage = this.authorRepository.findAll(pageable);
+        List<AuthorEntity> authors = authorsPage.getContent();
+
+        List<Long> authorIds = authors.stream().map(AuthorEntity::getId).toList();
+        List<BookEntity> books = this.bookRepository.findBooksByAuthorIds(authorIds);
+
+        Map<Long, List<BookEntity>> booksByAuthor = books.stream()
+                .collect(Collectors.groupingBy(BookEntity::getId));
+
+        authors.forEach(author -> author
+                .setBooks(booksByAuthor.getOrDefault(author.getId(), new ArrayList<>())));
+
+        return authorsPage
+                .map(authorEntity -> this.modelMapper.map(authorEntity, AuthorDTO.class));
     }
 
     @Override
-    public List<AuthorDTO> getAllAuthors() {
+    public List<AuthorRestDTO> getAllAuthors() {
         return mapAuthors(authorRepository.findAll());
     }
 
     @Override
-    public List<AuthorDTO> getAuthorsByFirstNameStartingWith(String letter) {
+    public List<AuthorRestDTO> getAuthorsByFirstNameStartingWith(String letter) {
         return mapAuthors(this.authorRepository.findByFirstNameStartingWith(letter));
     }
 
     @Override
-    public List<AuthorDTO> getAuthorsByLastNameStartingWith(String letter) {
+    public List<AuthorRestDTO> getAuthorsByLastNameStartingWith(String letter) {
         return mapAuthors(this.authorRepository.findByLastNameStartingWith(letter));
     }
 
-    private List<AuthorDTO> mapAuthors(List<AuthorEntity> authors) {
+    private List<AuthorRestDTO> mapAuthors(List<AuthorEntity> authors) {
         return authors.stream()
-                .map(a -> this.modelMapper.map(a, AuthorDTO.class))
+                .map(a -> this.modelMapper.map(a, AuthorRestDTO.class))
                 .toList();
     }
 }

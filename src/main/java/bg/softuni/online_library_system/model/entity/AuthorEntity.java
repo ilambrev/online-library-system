@@ -1,6 +1,7 @@
 package bg.softuni.online_library_system.model.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.List;
 
@@ -19,8 +20,9 @@ public class AuthorEntity extends BaseEntity {
     @Column(name = "image_url")
     private String imageURL;
 
-    @OneToMany(targetEntity = BookEntity.class, mappedBy = "author", fetch = FetchType.EAGER)
+    @BatchSize(size = 10)
     @OrderBy("title ASC")
+    @OneToMany(targetEntity = BookEntity.class, mappedBy = "author", fetch = FetchType.LAZY)
     private List<BookEntity> books;
 
     public AuthorEntity() {

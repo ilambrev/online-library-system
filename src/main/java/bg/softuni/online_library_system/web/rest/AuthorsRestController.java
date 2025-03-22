@@ -1,6 +1,6 @@
 package bg.softuni.online_library_system.web.rest;
 
-import bg.softuni.online_library_system.model.dto.AuthorDTO;
+import bg.softuni.online_library_system.model.dto.AuthorRestDTO;
 import bg.softuni.online_library_system.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,17 +20,17 @@ public class AuthorsRestController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<AuthorDTO>> getAll() {
+    public ResponseEntity<List<AuthorRestDTO>> getAllAuthors() {
         return ResponseEntity.ok(this.authorService.getAllAuthors());
     }
 
     @GetMapping("/first-name/{letter}")
-    public ResponseEntity<List<AuthorDTO>> getByFirstName(@PathVariable("letter") String letter) {
+    public ResponseEntity<List<AuthorRestDTO>> getByFirstName(@PathVariable("letter") String letter) {
         return ResponseEntity.ok(this.authorService.getAuthorsByFirstNameStartingWith(letter));
     }
 
     @GetMapping("/last-name/{letter}")
-    public ResponseEntity<List<AuthorDTO>> getByLastName(@PathVariable("letter") String letter) {
+    public ResponseEntity<List<AuthorRestDTO>> getByLastName(@PathVariable("letter") String letter) {
         return ResponseEntity.ok(this.authorService.getAuthorsByLastNameStartingWith(letter));
     }
 }

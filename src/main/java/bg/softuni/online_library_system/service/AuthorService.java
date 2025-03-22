@@ -2,6 +2,7 @@ package bg.softuni.online_library_system.service;
 
 import bg.softuni.online_library_system.model.dto.AddAuthorDTO;
 import bg.softuni.online_library_system.model.dto.AuthorDTO;
+import bg.softuni.online_library_system.model.dto.AuthorRestDTO;
 import bg.softuni.online_library_system.model.entity.AuthorEntity;
 import org.springframework.data.domain.Page;
 
@@ -18,9 +19,9 @@ public interface AuthorService {
 
     Page<AuthorDTO> getAllAuthorsOrderByFirstName(int page, int size);
 
-    List<AuthorDTO> getAllAuthors();
+    List<AuthorRestDTO> getAllAuthors();
 
-    List<AuthorDTO> getAuthorsByFirstNameStartingWith(String letter);
+    List<AuthorRestDTO> getAuthorsByFirstNameStartingWith(String letter);
 
-    List<AuthorDTO> getAuthorsByLastNameStartingWith(String letter);
+    List<AuthorRestDTO> getAuthorsByLastNameStartingWith(String letter);
 }

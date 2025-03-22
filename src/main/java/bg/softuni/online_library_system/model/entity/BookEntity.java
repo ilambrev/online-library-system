@@ -35,15 +35,15 @@ public class BookEntity extends BaseEntity {
     @Column(name = "is_available")
     private boolean isAvailable;
 
-    @ManyToOne(targetEntity = AuthorEntity.class)
+    @ManyToOne(targetEntity = AuthorEntity.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     private AuthorEntity author;
 
-    @ManyToOne(targetEntity = BookGenreEntity.class)
+    @ManyToOne(targetEntity = BookGenreEntity.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "genre_id", referencedColumnName = "id")
     private BookGenreEntity genre;
 
-    @ManyToOne(targetEntity = PublisherEntity.class)
+    @ManyToOne(targetEntity = PublisherEntity.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "publisher_id", referencedColumnName = "id")
     private PublisherEntity publisher;
 
