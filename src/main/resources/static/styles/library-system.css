@@ -298,11 +298,10 @@ footer {
     gap: 40px;
     background-color: rgb(0 0 0 / 0.5);
     max-width: 800px;
-    max-height: 500px;
+    max-height: 600px;
     padding: 30px 40px;
     border-radius: 20px;
     color: #e4d8c9;
-    overflow: auto;
 }
 
 .author-about-container .image-container {
@@ -335,6 +334,14 @@ footer {
     color: #f9d342;
     font-size: 20px;
     text-decoration: underline;
+}
+
+.author-description-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: auto;
+    padding-right: 20px;
 }
 
 .author-books-container {
@@ -657,6 +664,7 @@ h3 {
     flex-direction: column;
     height: 100%;
     overflow: auto;
+    padding-right: 20px;
 }
 
 .book-details-container {

@@ -37,8 +37,8 @@ public class AuthorController {
 
     @GetMapping("/all")
     public String getAllAuthors(@RequestParam(defaultValue = "0") int page,
-                         @RequestParam(defaultValue = "6") int size,
-                         Model model) {
+                                @RequestParam(defaultValue = "6") int size,
+                                Model model) {
 
         Page<AuthorDTO> authorsPage = this.authorService.getAllAuthorsOrderByFirstName(page, size);
 

@@ -9,8 +9,6 @@ import java.util.List;
 @Repository
 public interface AuthorRepository extends JpaRepository<AuthorEntity, Long> {
 
-    List<AuthorEntity> findAllByOrderByFirstNameAsc();
-
     List<AuthorEntity> findByFirstNameStartingWith(String letter);
 
     List<AuthorEntity> findByLastNameStartingWith(String letter);

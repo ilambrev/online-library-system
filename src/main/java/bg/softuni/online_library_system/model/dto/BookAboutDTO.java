@@ -22,6 +22,10 @@ public class BookAboutDTO {
 
     private Long authorId;
 
+    private String authorFirstName;
+
+    private String authorLastName;
+
     private BookGenreEnum bookGenre;
 
     private String publisherName;
@@ -107,6 +111,24 @@ public class BookAboutDTO {
 
     public BookAboutDTO setAuthorId(Long authorId) {
         this.authorId = authorId;
+        return this;
+    }
+
+    public String getAuthorFirstName() {
+        return authorFirstName;
+    }
+
+    public BookAboutDTO setAuthorFirstName(String authorFirstName) {
+        this.authorFirstName = authorFirstName;
+        return this;
+    }
+
+    public String getAuthorLastName() {
+        return authorLastName;
+    }
+
+    public BookAboutDTO setAuthorLastName(String authorLastName) {
+        this.authorLastName = authorLastName;
         return this;
     }
 

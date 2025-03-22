@@ -19,7 +19,8 @@
                 </div>
                 <div class="book-about-text-content-container">
                     <h2 th:text="*{title}">And Then There Were None</h2>
-                    <h4>by <a th:href="@{/authors/{id}/about (id=*{authorId})}">Agatha Christie</a></h4>
+                    <h4>by <a th:href="@{/authors/{id}/about (id=*{authorId})}">
+                        <span th:text="|*{authorFirstName} *{authorLastName}|">Agatha Christie</span></a></h4>
                     <div class="book-description-container">
                         <p th:text="*{description}">Ten people, each with something to hide and something to fear, are invited to an isolated mansion
                             on Indian Island by a host who, surprisingly, fails to appear. On the island they are cut off

@@ -16,8 +16,6 @@ public interface AuthorService {
 
     AuthorEntity getAuthorById(Long id);
 
-    List<AuthorDTO> getAllAuthorsOrderByFirstName();
-
     Page<AuthorDTO> getAllAuthorsOrderByFirstName(int page, int size);
 
     List<AuthorDTO> getAllAuthors();

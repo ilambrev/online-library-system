@@ -25,7 +25,8 @@ public class AuthorServiceImpl implements AuthorService {
     private final CloudinaryService cloudinaryService;
     private final ModelMapper modelMapper;
 
-    public AuthorServiceImpl(AuthorRepository authorRepository, CloudinaryService cloudinaryService, ModelMapper modelMapper) {
+    public AuthorServiceImpl(AuthorRepository authorRepository, CloudinaryService cloudinaryService,
+                             ModelMapper modelMapper) {
         this.authorRepository = authorRepository;
         this.cloudinaryService = cloudinaryService;
         this.modelMapper = modelMapper;
@@ -55,11 +56,6 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public AuthorEntity getAuthorById(Long id) {
         return this.authorRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public List<AuthorDTO> getAllAuthorsOrderByFirstName() {
-        return mapAuthors(this.authorRepository.findAllByOrderByFirstNameAsc());
     }
 
     @Override

@@ -1,5 +1,7 @@
 package bg.softuni.online_library_system.model.dto;
 
+import java.util.List;
+
 public class AuthorDTO {
 
     private Long id;
@@ -11,6 +13,8 @@ public class AuthorDTO {
     private String presentation;
 
     private String imageURL;
+
+    private List<BookDTO> books;
 
     public AuthorDTO() {
     }
@@ -57,6 +61,15 @@ public class AuthorDTO {
 
     public AuthorDTO setImageURL(String imageURL) {
         this.imageURL = imageURL;
+        return this;
+    }
+
+    public List<BookDTO> getBooks() {
+        return books;
+    }
+
+    public AuthorDTO setBooks(List<BookDTO> books) {
+        this.books = books;
         return this;
     }
 }

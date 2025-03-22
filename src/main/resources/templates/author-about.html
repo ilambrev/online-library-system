@@ -20,18 +20,21 @@
                 </div>
                 <div class="text-content-container">
                     <h2 th:text="|*{firstName} *{lastName}|">Astrid Lindgren</h2>
-                    <p th:text="*{presentation}">Astrid Anna Emilia Lindgren (Swedish - 14 November 1907 - 28
-                        January 2002) was a Swedish writer of fiction and screenplays. She is best known for several
-                        children's book series, featuring Pippi
-                        Longstocking, Emil of Lönneberga, Karlsson-on-the-Roof, and the Six Bullerby Children (Children of
-                        Noisy Village in the US), and for the children's fantasy novels Mio, My Son; Ronia the Robber's
-                        Daughter; and The Brothers Lionheart.
-                    </p>
+                    <div class="author-description-container">
+                        <p th:text="*{presentation}">Astrid Anna Emilia Lindgren (Swedish - 14 November 1907 - 28
+                            January 2002) was a Swedish writer of fiction and screenplays. She is best known for several
+                            children's book series, featuring Pippi
+                            Longstocking, Emil of Lönneberga, Karlsson-on-the-Roof, and the Six Bullerby Children (Children of
+                            Noisy Village in the US), and for the children's fantasy novels Mio, My Son; Ronia the Robber's
+                            Daughter; and The Brothers Lionheart.
+                        </p>
+                    </div>
                     <h3>Books by the author available in our library</h3>
                     <div class="author-books-container">
-                        <div class="book-container"><span>1.Pippi Longstocking</span><a href="#">View</a></div>
-                        <div class="book-container"><span>2.Emil of Lönneberga</span><a href="#">View</a></div>
-                        <div class="book-container"><span>3.Karlsson-on-the-Roof</span><a href="#">View</a></div>
+                        <div class="book-container" th:each="book : *{books}">
+                            <span th:text="${book.title}">1.Pippi Longstocking</span>
+                            <a th:href="@{/books/{id}/about (id=${book.id})}">View</a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -19,7 +19,8 @@ public class AuthorEntity extends BaseEntity {
     @Column(name = "image_url")
     private String imageURL;
 
-    @OneToMany(targetEntity = BookEntity.class)
+    @OneToMany(targetEntity = BookEntity.class, mappedBy = "author", fetch = FetchType.EAGER)
+    @OrderBy("title ASC")
     private List<BookEntity> books;
 
     public AuthorEntity() {
