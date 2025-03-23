@@ -64,7 +64,17 @@
                     <div>
                         <p><span th:text="${@currentUser.fullName}">User</span></p>
                     </div>
-                    <a th:href="@{/user/profile(username=${@currentUser.username})}">Profile</a>
+                    <div class="dropdown">
+                        <span>Profile <img class="arrow-icon" th:src="@{/images/dropdown-arrow.png}" alt="arrow"></span>
+                        <ul class="dropdown-content">
+                            <li>
+                                <a th:href="@{/user/profile(username=${@currentUser.username})}">Profile data</a>
+                            </li>
+                            <li>
+                                <a href="#">Change password</a>
+                            </li>
+                        </ul>
+                    </div>
                     <form th:action="@{/users/logout}" method="post">
                         <button type="submit">Logout</button>
                     </form>
