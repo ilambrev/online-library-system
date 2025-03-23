@@ -1,6 +1,7 @@
 package bg.softuni.online_library_system.model.dto;
 
 import bg.softuni.online_library_system.model.enums.GenderEnum;
+import bg.softuni.online_library_system.model.enums.UserRoleEnum;
 import org.springframework.web.multipart.MultipartFile;
 
 public class UserProfileDTO {
@@ -24,6 +25,8 @@ public class UserProfileDTO {
     private String imageURL;
 
     private GenderEnum gender;
+
+    private UserRoleEnum role;
 
     private MultipartFile imageFile;
 
@@ -117,6 +120,15 @@ public class UserProfileDTO {
 
     public UserProfileDTO setGender(GenderEnum gender) {
         this.gender = gender;
+        return this;
+    }
+
+    public UserRoleEnum getRole() {
+        return role;
+    }
+
+    public UserProfileDTO setRole(UserRoleEnum role) {
+        this.role = role;
         return this;
     }
 

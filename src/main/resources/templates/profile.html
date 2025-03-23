@@ -24,18 +24,22 @@
                             </div>
                             <div>
                                 <p th:text="*{username}">username</p>
+                                <p th:switch="*{role.name()}">[
+                                    <span th:case="'USER'">Reader</span>
+                                    <span th:case="'STAFF'">Librarian</span>
+                                    <span th:case="'ADMIN'">Administrator</span>
+                                    ]</p>
                             </div>
                         </div>
-                        <div class="change-password-container">
+                        <div class="verify-password-container">
                             <div class="input-field-container">
-                                <label for="oldPassword">Old password:</label>
-                                <input type="password" id="oldPassword" autocomplete="new-password" placeholder="Type your old password.."
-                                th:field="*{password}"/>
                             </div>
-                            <div class="input-field-container">
-                                <label for="newPassword">New password:</label>
-                                <input type="password" id="newPassword" autocomplete="new-password" placeholder="Type your new password.."
-                                th:field="*{newPassword}"/>
+                            <div class="input-field-container" id="password-container">
+                                <label for="password">Verify password:</label>
+                                <input type="password" id="password" autocomplete="new-password" placeholder="Type your password..."
+                                       th:field="*{password}"/>
+                                <div class="input-field-container">
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -547,11 +547,13 @@ h3 {
 .profile-image-container p {
     color: #f9d342;
     font-size: 18px;
+    text-align: center;
 }
 
-.change-password-container {
+.verify-password-container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: 100%;
     gap: 20px;
 }
