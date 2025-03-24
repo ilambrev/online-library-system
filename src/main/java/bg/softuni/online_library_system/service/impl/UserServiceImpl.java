@@ -1,5 +1,6 @@
 package bg.softuni.online_library_system.service.impl;
 
+import bg.softuni.online_library_system.model.dto.UserChangePasswordDTO;
 import bg.softuni.online_library_system.model.dto.UserLoginDTO;
 import bg.softuni.online_library_system.model.dto.UserProfileDTO;
 import bg.softuni.online_library_system.model.dto.UserRegistrationDTO;
@@ -106,8 +107,6 @@ public class UserServiceImpl implements UserService {
         if (!user.getLastName().equals(userProfileDTO.getLastName())) {
             user.setLastName(userProfileDTO.getLastName());
         }
-
-
         if (!user.getPhoneNumber().equals(userProfileDTO.getPhoneNumber())) {
             user.setPhoneNumber(userProfileDTO.getPhoneNumber());
         }
@@ -123,6 +122,18 @@ public class UserServiceImpl implements UserService {
             user.setImageURL(imageUrl);
         }
 
+        this.userRepository.save(user);
+
+        return true;
+    }
+
+    @Override
+    public boolean changeUserPassword(String username, UserChangePasswordDTO userChangePasswordDTO) {
+        UserEntity user = getUserByUsername(username);
+        if (!this.passwordEncoder.matches(userChangePasswordDTO.getPassword(), user.getPassword())) {
+            return false;
+        }
+        user.setPassword(this.passwordEncoder.encode(userChangePasswordDTO.getNewPassword()));
         this.userRepository.save(user);
 
         return true;

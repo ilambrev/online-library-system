@@ -1,5 +1,6 @@
 package bg.softuni.online_library_system.service;
 
+import bg.softuni.online_library_system.model.dto.UserChangePasswordDTO;
 import bg.softuni.online_library_system.model.dto.UserLoginDTO;
 import bg.softuni.online_library_system.model.dto.UserProfileDTO;
 import bg.softuni.online_library_system.model.dto.UserRegistrationDTO;
@@ -16,6 +17,8 @@ public interface UserService {
     UserProfileDTO getUserProfileData(String username);
 
     boolean editUser(UserProfileDTO userProfileDTO) throws IOException;
+
+    boolean changeUserPassword(String username, UserChangePasswordDTO userChangePasswordDTO);
 
     UserEntity getUserByUsername(String username);
 
