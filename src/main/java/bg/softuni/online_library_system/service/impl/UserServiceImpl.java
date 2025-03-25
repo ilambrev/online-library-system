@@ -1,7 +1,6 @@
 package bg.softuni.online_library_system.service.impl;
 
 import bg.softuni.online_library_system.model.dto.UserChangePasswordDTO;
-import bg.softuni.online_library_system.model.dto.UserLoginDTO;
 import bg.softuni.online_library_system.model.dto.UserProfileDTO;
 import bg.softuni.online_library_system.model.dto.UserRegistrationDTO;
 import bg.softuni.online_library_system.model.entity.UserEntity;
@@ -12,7 +11,6 @@ import bg.softuni.online_library_system.repository.UserRepository;
 import bg.softuni.online_library_system.repository.UserRoleRepository;
 import bg.softuni.online_library_system.service.CloudinaryService;
 import bg.softuni.online_library_system.service.UserService;
-import bg.softuni.online_library_system.util.CurrentUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,17 +27,15 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
     private final CloudinaryService cloudinaryService;
     private final PasswordEncoder passwordEncoder;
-    private final CurrentUser currentUser;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, UserRoleRepository userRoleRepository, ModelMapper modelMapper,
-                           CloudinaryService cloudinaryService, PasswordEncoder passwordEncoder, CurrentUser currentUser) {
+                           CloudinaryService cloudinaryService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.modelMapper = modelMapper;
         this.cloudinaryService = cloudinaryService;
         this.passwordEncoder = passwordEncoder;
-        this.currentUser = currentUser;
     }
 
     @Override
@@ -60,26 +56,6 @@ public class UserServiceImpl implements UserService {
         }
 
         this.userRepository.save(newUser);
-
-        return true;
-    }
-
-    @Override
-    public boolean loginUser(UserLoginDTO userLoginDTO) {
-        UserEntity user = getUserByUsername(userLoginDTO.getUsername());
-        if (user == null) {
-            return false;
-        }
-        if (!this.passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword())) {
-            return false;
-        }
-
-        this.currentUser.setUsername(user.getUsername())
-                .setFirstName(user.getFirstName())
-                .setLastName(user.getLastName())
-                .setImageURL(user.getImageURL())
-                .setRole(user.getRole().getRole().name())
-                .setLogged(true);
 
         return true;
     }
@@ -142,10 +118,5 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity getUserByUsername(String username) {
         return this.userRepository.findByUsername(username).orElse(null);
-    }
-
-    @Override
-    public void logoutUser() {
-        this.currentUser.logout();
     }
 }

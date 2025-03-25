@@ -27,6 +27,7 @@ logging:
   level:
     org.hibernate.orm.jdbc.bind: TRACE
     org.hibernate:sql: DEBUG
+    org.springframework.security: TRACE
 
 cloudinary:
   url: ${CLOUDINARY_URL:cloudinary://123456789012345:A12bc2BcdefGh34IjklM5678Nop@abcdefghi}

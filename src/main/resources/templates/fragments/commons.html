@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:fragment="head">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Old Library</title>
     <link rel="icon" type="image/x-icon" th:href="@{/images/logo.png}" />
-    <link rel="stylesheet" th:href="@{/styles/reset.css}" />
-    <link rel="stylesheet" th:href="@{/styles/library-system.css}" />
+    <link rel="stylesheet" th:href="@{/css/reset.css}" />
+    <link rel="stylesheet" th:href="@{/css/library-system.css}" />
 </head>
 
 <body>
@@ -24,7 +26,7 @@
                 <li><a th:href="@{/authors/all(page=0, size=6)}">Authors</a></li>
                 <li><a th:href="@{/books/all(page=0, size=6)}">Books</a></li>
                 <li><a href="#">Contacts</a></li>
-                <li class="dropdown" th:if="${@currentUser.isLogged() && @currentUser.role.equals('ADMIN')}">
+                <li class="dropdown" sec:authorize="hasRole('ADMIN')">
                     <span>Add <img class="arrow-icon" th:src="@{/images/dropdown-arrow.png}" alt="arrow"></span>
                     <ul class="dropdown-content">
                         <li>
@@ -35,7 +37,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="dropdown" th:if="${@currentUser.isLogged() && @currentUser.role.equals('ADMIN')}">
+                <li class="dropdown" sec:authorize="hasRole('ADMIN')">
                     <span>Edit <img class="arrow-icon" th:src="@{/images/dropdown-arrow.png}" alt="arrow"></span>
                     <ul class="dropdown-content">
                         <li>
@@ -49,29 +51,29 @@
                         </li>
                     </ul>
                 </li>
-                <li th:unless="${@currentUser.isLogged()}">
+                <li sec:authorize="!isAuthenticated()">
                     <a th:href="@{/users/register}">Register</a>
                 </li>
-                <li th:unless="${@currentUser.isLogged()}">
+                <li sec:authorize="!isAuthenticated()">
                     <a th:href="@{/users/login}">Login</a>
                 </li>
-                <li class="user-space" th:if="${@currentUser.isLogged()}">
+                <li class="user-space" sec:authorize="isAuthenticated()">
                     <div>
                         <div class="user-avatar-container">
-                            <img th:src="${@currentUser.imageURL}" alt="User avatar">
+                            <img src="" alt="User avatar">
                         </div>
                     </div>
                     <div>
-                        <p><span th:text="${@currentUser.fullName}">User</span></p>
+                        <p><span sec:authentication="name">User</span></p>
                     </div>
                     <div class="dropdown">
                         <span>Profile <img class="arrow-icon" th:src="@{/images/dropdown-arrow.png}" alt="arrow"></span>
                         <ul class="dropdown-content">
                             <li>
-                                <a th:href="@{/user/profile(username=${@currentUser.username})}">Profile data</a>
+                                <a th:href="@{/user/profile(username=${#authentication.getName()})}">Profile data</a>
                             </li>
                             <li>
-                                <a th:href="@{/user/change-password(username=${@currentUser.username})}">Change password</a>
+                                <a th:href="@{/user/change-password(username=${#authentication.getName()})}">Change password</a>
                             </li>
                         </ul>
                     </div>

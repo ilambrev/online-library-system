@@ -66,8 +66,6 @@ public class UserProfileController {
             return String.format("redirect:/user/change-password?username=%s", username);
         }
 
-        this.userService.logoutUser();
-
-        return "redirect:/users/login";
+        return "redirect:/users/logout";
     }
 }
