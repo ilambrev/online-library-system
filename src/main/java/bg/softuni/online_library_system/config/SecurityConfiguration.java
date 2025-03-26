@@ -19,24 +19,25 @@ public class SecurityConfiguration {
         httpSecurity.authorizeHttpRequests(
                 authorizeRequests -> authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/", "/users/login", "/users/login-error", "/users/register").permitAll()
+                        .requestMatchers(
+                                "/", "/about",
+                                "/authors/all", "/authors/*/about", "/api/authors/all",
+                                "/books/all", "/books/*/about",
+                                "/users/login", "/users/login-error", "/users/register"
+                        ).permitAll()
                         .anyRequest().authenticated()
         ).formLogin(
-                formLogin -> {
-                    formLogin
-                            .loginPage("/users/login")
-                            .usernameParameter("username")
-                            .passwordParameter("password")
-                            .defaultSuccessUrl("/")
-                            .failureForwardUrl("/users/login-error");
-                }
+                formLogin -> formLogin
+                        .loginPage("/users/login")
+                        .usernameParameter("username")
+                        .passwordParameter("password")
+                        .defaultSuccessUrl("/")
+                        .failureForwardUrl("/users/login-error")
         ).logout(
-                logout -> {
-                    logout
-                            .logoutUrl("/users/logout")
-                            .logoutSuccessUrl("/")
-                            .invalidateHttpSession(true);
-                }
+                logout -> logout
+                        .logoutUrl("/users/logout")
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true)
         );
         return httpSecurity.build();
     }

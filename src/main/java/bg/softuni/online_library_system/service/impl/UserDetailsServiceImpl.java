@@ -1,14 +1,15 @@
 package bg.softuni.online_library_system.service.impl;
 
 import bg.softuni.online_library_system.model.entity.UserEntity;
-import bg.softuni.online_library_system.model.entity.UserRoleEntity;
+import bg.softuni.online_library_system.model.security.CustomUserDetails;
 import bg.softuni.online_library_system.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import java.util.List;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
@@ -17,23 +18,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return this.userRepository.findByUsername(username)
-                .map(this::map)
+        UserEntity user = this.userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found!"));
-    }
 
-    private UserDetails map(UserEntity userEntity) {
-        return User
-                .withUsername(userEntity.getUsername())
-                .password(userEntity.getPassword())
-                .authorities(map(userEntity.getRole()))
-                .build();
-    }
+        List<GrantedAuthority> authorities =
+                List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().getRole().name()));
 
-    private static GrantedAuthority map(UserRoleEntity userRoleEntity) {
-        return new SimpleGrantedAuthority("ROLE_" + userRoleEntity.getRole().name());
+        return new CustomUserDetails(
+                user.getUsername(),
+                user.getPassword(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getImageURL(),
+                authorities);
     }
 }

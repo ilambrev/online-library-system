@@ -26,7 +26,7 @@
                 <li><a th:href="@{/authors/all(page=0, size=6)}">Authors</a></li>
                 <li><a th:href="@{/books/all(page=0, size=6)}">Books</a></li>
                 <li><a href="#">Contacts</a></li>
-                <li class="dropdown" sec:authorize="hasRole('ADMIN')">
+                <li class="dropdown" sec:authorize="hasRole('ADMIN') || hasRole('STAFF')">
                     <span>Add <img class="arrow-icon" th:src="@{/images/dropdown-arrow.png}" alt="arrow"></span>
                     <ul class="dropdown-content">
                         <li>
@@ -60,20 +60,20 @@
                 <li class="user-space" sec:authorize="isAuthenticated()">
                     <div>
                         <div class="user-avatar-container">
-                            <img src="" alt="User avatar">
+                            <img th:src="${#authentication.principal.imageURL}" alt="User avatar">
                         </div>
                     </div>
                     <div>
-                        <p><span sec:authentication="name">User</span></p>
+                        <p><span th:text="${#authentication.principal.getFullName()}">User</span></p>
                     </div>
                     <div class="dropdown">
                         <span>Profile <img class="arrow-icon" th:src="@{/images/dropdown-arrow.png}" alt="arrow"></span>
                         <ul class="dropdown-content">
                             <li>
-                                <a th:href="@{/user/profile(username=${#authentication.getName()})}">Profile data</a>
+                                <a th:href="@{/user/profile}">Profile data</a>
                             </li>
                             <li>
-                                <a th:href="@{/user/change-password(username=${#authentication.getName()})}">Change password</a>
+                                <a th:href="@{/user/change-password}">Change password</a>
                             </li>
                         </ul>
                     </div>
