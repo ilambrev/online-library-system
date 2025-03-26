@@ -1,7 +1,9 @@
 package bg.softuni.online_library_system.config;
 
+import bg.softuni.online_library_system.model.enums.UserRoleEnum;
 import bg.softuni.online_library_system.repository.UserRepository;
 import bg.softuni.online_library_system.service.impl.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +15,12 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfiguration {
+    private final AuthPropertiesConfiguration authPropertiesConfiguration;
+
+    @Autowired
+    public SecurityConfiguration(AuthPropertiesConfiguration authPropertiesConfiguration) {
+        this.authPropertiesConfiguration = authPropertiesConfiguration;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -23,8 +31,9 @@ public class SecurityConfiguration {
                                 "/", "/about",
                                 "/authors/all", "/authors/*/about", "/api/authors/all",
                                 "/books/all", "/books/*/about",
-                                "/users/login", "/users/login-error", "/users/register"
-                        ).permitAll()
+                                "/users/login", "/users/login-error", "/users/register").permitAll()
+                        .requestMatchers("/authors/add").hasAnyRole(UserRoleEnum.ADMIN.name(), UserRoleEnum.STAFF.name())
+                        .requestMatchers("/books/add").hasAnyRole(UserRoleEnum.ADMIN.name(), UserRoleEnum.STAFF.name())
                         .anyRequest().authenticated()
         ).formLogin(
                 formLogin -> formLogin
@@ -38,7 +47,13 @@ public class SecurityConfiguration {
                         .logoutUrl("/users/logout")
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
+        ).rememberMe(
+                rememberMe -> rememberMe
+                        .key(this.authPropertiesConfiguration.getRememberMeKey())
+                        .rememberMeParameter("rememberMe")
+                        .rememberMeCookieName("rememberMe")
         );
+
         return httpSecurity.build();
     }
 

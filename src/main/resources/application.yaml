@@ -31,3 +31,7 @@ logging:
 
 cloudinary:
   url: ${CLOUDINARY_URL:cloudinary://123456789012345:A12bc2BcdefGh34IjklM5678Nop@abcdefghi}
+
+online-library-system:
+  auth:
+    remember-me-key: ${REMEMBER_ME_KEY:12345}
