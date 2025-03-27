@@ -36,15 +36,15 @@ public class BookEntity extends BaseEntity {
     private boolean isAvailable;
 
     @ManyToOne(targetEntity = AuthorEntity.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id", referencedColumnName = "id")
+    @JoinColumn(name = "author_id", referencedColumnName = "id", nullable = false)
     private AuthorEntity author;
 
     @ManyToOne(targetEntity = BookGenreEntity.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "genre_id", referencedColumnName = "id")
+    @JoinColumn(name = "genre_id", referencedColumnName = "id", nullable = false)
     private BookGenreEntity genre;
 
     @ManyToOne(targetEntity = PublisherEntity.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "publisher_id", referencedColumnName = "id")
+    @JoinColumn(name = "publisher_id", referencedColumnName = "id", nullable = false)
     private PublisherEntity publisher;
 
     public BookEntity() {
