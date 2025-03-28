@@ -80,6 +80,12 @@
                     <form th:action="@{/users/logout}" method="post">
                         <button type="submit">Logout</button>
                     </form>
+                    <div class="cart" title="Books to borrow">
+                        <div>
+                            <a th:href="@{/cart/content}"><img class="cart-img" th:src="@{/images/cart.png}" alt="Cart"></a>
+                        </div>
+                        <div class="badge">0</div>
+                    </div>
                 </li>
             </ul>
         </nav>

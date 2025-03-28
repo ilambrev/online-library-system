@@ -155,7 +155,7 @@ main {
     justify-content: center;
     align-items: center;
     flex-grow: 1;
-    background-image: url('/images/background-library.jpg');
+    background-image: url('../images/background-library.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -460,7 +460,10 @@ footer {
     color: #f9d342;
 }
 
-.about-button {
+.about-button,
+.remove-button,
+.reserve-button,
+.close-button {
     background-color: #f9d342;
     padding: 6px 16px;
     border-radius: 20px;
@@ -761,9 +764,71 @@ h3 {
 .book-name-container {
     display: flex;
     justify-content: space-between;
+    gap: 20px;
     width: 100%;
     font-size: 20px;
     color: #f9d342;
+}
+
+/* Cart for books to borrow */
+
+.cart {
+    cursor: pointer;
+    width: 50px;
+    height: 40px;
+}
+
+.cart-img {
+    width: 50px;
+}
+
+.badge {
+    padding: 0 3px;
+    background-color: rgb(161, 7, 7);
+    color: #f9d342;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 50%;
+    position: relative;
+    top: -40px;
+    right: -30px;
+    width: 20px;
+}
+
+.cart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    background-color: rgb(0 0 0 / 0.5);
+    max-width: 800px;
+    max-height: 600px;
+    padding: 30px 40px;
+    border-radius: 20px;
+    color: #e4d8c9;
+    overflow: auto;
+}
+
+.cart-container h2 {
+    text-align: center;
+}
+
+.max-books-number-alert {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+
+.cart-books-names-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cart-buttons-container {
+    display: flex;
+    justify-content: space-around;
 }
 
 /* Error messages */

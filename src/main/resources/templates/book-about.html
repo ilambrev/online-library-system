@@ -39,7 +39,7 @@
                     </div>
                     <div class="book-about-buttons-container">
                         <p>Status: <span th:text="*{available} ? 'available' : 'unavailable'">available</span></p>
-                        <a th:if="*{available}" href="#">Borrow</a>
+                        <a th:if="*{available}" th:href="@{/cart/add(id=*{id})}">Borrow</a>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/commons.html::head}">
+    <title>The Old Library</title>
+</head>
+
+<body>
+    <div class="site">
+        <header th:replace="~{/fragments/commons.html::header}">
+        </header>
+
+        <main>
+            <div class="cart-container">
+                <div class="text-content-container">
+                    <h2>Your space for books borrowing</h2>
+                    <p class="max-books-number-alert">You can borrow up to 3 books at a time.</p>
+                    <p>Number of books already borrowed and not yet returned: <span>2</span></p>
+                    <p>Remaining number of books you can borrow: <span>1</span></p>
+                    <h3>Books to borrow</h3>
+                </div>
+                <div class="cart-books-names-container">
+                    <div class="book-container">
+                        <div class="book-image-container">
+                            <div class="book-image-holder">
+                                <img src="https://res.cloudinary.com/dpwcshnvl/image/upload/v1742576880/m0bcy3czufktydnxcadd.jpg"
+                                     alt="Author image">
+                            </div>
+                        </div>
+                        <div class="book-name-container">
+                            <div class="book-name-container">The Hitchhiker's Guide to the Galaxy</div>
+                            <div class="book-about">
+                                <a class="about-button" href="#">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-buttons-container">
+                    <a class="reserve-button" href="#">Reserve books</a>
+                    <a class="close-button" th:href="@{/}">Close</a>
+                </div>
+            </div>
+        </main>
+
+        <footer th:replace="~{/fragments/commons.html::footer}">
+        </footer>
+    </div>
+</body>
+
+</html>
