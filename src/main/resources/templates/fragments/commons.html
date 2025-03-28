@@ -84,7 +84,7 @@
                         <div>
                             <a th:href="@{/cart/content}"><img class="cart-img" th:src="@{/images/cart.png}" alt="Cart"></a>
                         </div>
-                        <div class="badge">0</div>
+                        <div class="badge" th:text="${#ctx.session.cartCount}">0</div>
                     </div>
                 </li>
             </ul>

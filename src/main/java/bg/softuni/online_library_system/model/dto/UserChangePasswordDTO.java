@@ -4,7 +4,7 @@ import bg.softuni.online_library_system.model.validation.FieldMatch;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 
-import static bg.softuni.online_library_system.common.constant.ValidationMessages.*;
+import static bg.softuni.online_library_system.common.constant.ValidationConstants.*;
 
 @FieldMatch(
         first = "newPassword",

@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
 
-import static bg.softuni.online_library_system.common.constant.ValidationMessages.*;
+import static bg.softuni.online_library_system.common.constant.ValidationConstants.*;
 
 @FieldMatch(
         first = "password",

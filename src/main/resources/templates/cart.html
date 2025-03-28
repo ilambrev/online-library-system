@@ -14,29 +14,29 @@
             <div class="cart-container">
                 <div class="text-content-container">
                     <h2>Your space for books borrowing</h2>
-                    <p class="max-books-number-alert">You can borrow up to 3 books at a time.</p>
-                    <p>Number of books already borrowed and not yet returned: <span>2</span></p>
-                    <p>Remaining number of books you can borrow: <span>1</span></p>
+                    <p class="max-books-number-alert" th:if="${remainingNumberOfBooks == 0}">You can borrow up to 3 books at a time.</p>
+                    <p>Number of books already borrowed and not yet returned: <span th:text="${borrowedBooks}">2</span></p>
+                    <p>Remaining number of books you can borrow: <span th:text="${remainingNumberOfBooks}">1</span></p>
                     <h3>Books to borrow</h3>
                 </div>
-                <div class="cart-books-names-container">
+                <div class="cart-books-names-container" th:each="book : ${selectedBooks}">
                     <div class="book-container">
                         <div class="book-image-container">
                             <div class="book-image-holder">
-                                <img src="https://res.cloudinary.com/dpwcshnvl/image/upload/v1742576880/m0bcy3czufktydnxcadd.jpg"
+                                <img th:src="${book.imageURL}"
                                      alt="Author image">
                             </div>
                         </div>
                         <div class="book-name-container">
-                            <div class="book-name-container">The Hitchhiker's Guide to the Galaxy</div>
+                            <div class="book-name-container" th:text="${book.title}">The Hitchhiker's Guide to the Galaxy</div>
                             <div class="book-about">
-                                <a class="about-button" href="#">Remove</a>
+                                <a class="about-button" th:href="@{/cart/remove(id=${book.id})}">Remove</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="cart-buttons-container">
-                    <a class="reserve-button" href="#">Reserve books</a>
+                    <a class="reserve-button" th:classappend="${selectedBooks.isEmpty()} ? 'disabled'" href="#">Reserve books</a>
                     <a class="close-button" th:href="@{/}">Close</a>
                 </div>
             </div>

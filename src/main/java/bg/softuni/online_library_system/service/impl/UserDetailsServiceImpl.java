@@ -32,6 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getImageURL(),
+                user.getBorrowedBooks().size(),
                 authorities);
     }
 }

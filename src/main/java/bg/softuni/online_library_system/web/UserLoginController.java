@@ -1,5 +1,6 @@
 package bg.softuni.online_library_system.web;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import static bg.softuni.online_library_system.common.constant.ValidationMessages.BAD_CREDENTIALS;
+import static bg.softuni.online_library_system.common.constant.CartConstants.INITIAL_CART_COUNT;
+import static bg.softuni.online_library_system.common.constant.ValidationConstants.BAD_CREDENTIALS;
 
 @Controller
 @RequestMapping("/users")
@@ -20,13 +22,14 @@ public class UserLoginController {
     }
 
     @GetMapping("/login")
-    public String login(Model model) {
+    public String login(Model model, HttpSession session) {
         if (!model.containsAttribute("username")) {
             model.addAttribute("username", null);
         }
         if (!model.containsAttribute("badCredentials")) {
             model.addAttribute("badCredentials", false);
         }
+        session.setAttribute("cartCount", INITIAL_CART_COUNT);
 
         return "login";
     }

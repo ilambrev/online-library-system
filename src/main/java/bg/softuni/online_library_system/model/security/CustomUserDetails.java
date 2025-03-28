@@ -11,15 +11,17 @@ public class CustomUserDetails implements UserDetails {
     private final String firstName;
     private final String lastName;
     private final String imageURL;
+    private final int borrowedBooks;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public CustomUserDetails(String username, String password, String firstName, String lastName,
-                             String imageURL, Collection<? extends GrantedAuthority> authorities) {
+                             String imageURL, int borrowedBooks, Collection<? extends GrantedAuthority> authorities) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.imageURL = imageURL;
+        this.borrowedBooks = borrowedBooks;
         this.authorities = authorities;
     }
 
@@ -33,6 +35,10 @@ public class CustomUserDetails implements UserDetails {
 
     public String getImageURL() {
         return imageURL;
+    }
+
+    public int getBorrowedBooks() {
+        return borrowedBooks;
     }
 
     @Override

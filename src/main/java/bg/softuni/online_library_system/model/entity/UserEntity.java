@@ -3,6 +3,9 @@ package bg.softuni.online_library_system.model.entity;
 import bg.softuni.online_library_system.model.enums.GenderEnum;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
@@ -41,8 +44,16 @@ public class UserEntity extends BaseEntity {
     @Column(name = "active", nullable = false)
     private boolean active;
 
+    @OneToMany(targetEntity = BookEntity.class, fetch = FetchType.EAGER)
+    @JoinTable(name = "users_books",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id")
+    )
+    private List<BookEntity> borrowedBooks;
+
     public UserEntity() {
         this.active = false;
+        this.borrowedBooks = new ArrayList<>();
     }
 
     public String getFirstName() {
@@ -141,6 +152,15 @@ public class UserEntity extends BaseEntity {
 
     public UserEntity setActive(boolean active) {
         this.active = active;
+        return this;
+    }
+
+    public List<BookEntity> getBorrowedBooks() {
+        return borrowedBooks;
+    }
+
+    public UserEntity setBorrowedBooks(List<BookEntity> borrowedBooks) {
+        this.borrowedBooks = borrowedBooks;
         return this;
     }
 }
