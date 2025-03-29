@@ -44,8 +44,10 @@ public class UserProfileController {
     }
 
     @PatchMapping("/profile")
-    public String editUserProfile(UserProfileDTO userProfileDTO) throws IOException {
-        this.userService.editUser(userProfileDTO);
+    public String editUserProfile(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                  HttpServletRequest request, HttpServletResponse response,
+                                  UserProfileDTO userProfileDTO) throws IOException {
+        this.userService.editUser(userProfileDTO.setUsername(userDetails.getUsername()), request, response);
 
         return "redirect:/user/profile";
     }

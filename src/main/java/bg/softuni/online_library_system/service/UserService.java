@@ -4,6 +4,8 @@ import bg.softuni.online_library_system.model.dto.UserChangePasswordDTO;
 import bg.softuni.online_library_system.model.dto.UserProfileDTO;
 import bg.softuni.online_library_system.model.dto.UserRegistrationDTO;
 import bg.softuni.online_library_system.model.entity.UserEntity;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
@@ -13,7 +15,8 @@ public interface UserService {
 
     UserProfileDTO getUserProfileData(String username);
 
-    boolean editUser(UserProfileDTO userProfileDTO) throws IOException;
+    boolean editUser(UserProfileDTO userProfileDTO, HttpServletRequest request,
+                     HttpServletResponse response) throws IOException;
 
     boolean changeUserPassword(String username, UserChangePasswordDTO userChangePasswordDTO);
 

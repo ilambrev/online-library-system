@@ -1,5 +1,5 @@
 const passwordInputContainer = document.querySelector("#password-container")
-const inputFields = Array.from(document.querySelectorAll('input'));
+const inputFields = Array.from(document.querySelectorAll('input')).filter(f => f.type!=='hidden');
 const editButton = document.querySelector('#edit-btn');
 const closeButton = document.querySelector('#close-btn');
 const saveButton = document.querySelector('#save-btn');

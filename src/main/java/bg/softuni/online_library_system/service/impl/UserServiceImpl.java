@@ -11,9 +11,18 @@ import bg.softuni.online_library_system.repository.UserRepository;
 import bg.softuni.online_library_system.repository.UserRoleRepository;
 import bg.softuni.online_library_system.service.CloudinaryService;
 import bg.softuni.online_library_system.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -24,15 +33,20 @@ import static bg.softuni.online_library_system.common.constant.CloudinaryConstan
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
+    private final UserDetailsService userDetailsService;
+    private final SecurityContextRepository securityContextRepository;
     private final ModelMapper modelMapper;
     private final CloudinaryService cloudinaryService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserRoleRepository userRoleRepository, ModelMapper modelMapper,
-                           CloudinaryService cloudinaryService, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, UserRoleRepository userRoleRepository,
+                           UserDetailsService userDetailsService, SecurityContextRepository securityContextRepository,
+                           ModelMapper modelMapper, CloudinaryService cloudinaryService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
+        this.userDetailsService = userDetailsService;
+        this.securityContextRepository = securityContextRepository;
         this.modelMapper = modelMapper;
         this.cloudinaryService = cloudinaryService;
         this.passwordEncoder = passwordEncoder;
@@ -69,7 +83,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean editUser(UserProfileDTO userProfileDTO) throws IOException {
+    public boolean editUser(UserProfileDTO userProfileDTO, HttpServletRequest request,
+                            HttpServletResponse response) throws IOException {
         UserEntity user = getUserByUsername(userProfileDTO.getUsername());
         if (user == null) {
             return false;
@@ -100,6 +115,8 @@ public class UserServiceImpl implements UserService {
 
         this.userRepository.save(user);
 
+        refreshAuthenticatedUser(userProfileDTO.getUsername(), request, response);
+
         return true;
     }
 
@@ -118,5 +135,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity getUserByUsername(String username) {
         return this.userRepository.findByUsername(username).orElse(null);
+    }
+
+    private void refreshAuthenticatedUser(String username, HttpServletRequest request, HttpServletResponse response) {
+        UserDetails updatedUserDetails = this.userDetailsService.loadUserByUsername(username);
+
+        Authentication newAuth = new UsernamePasswordAuthenticationToken(
+                updatedUserDetails,
+                updatedUserDetails.getPassword(),
+                updatedUserDetails.getAuthorities()
+        );
+
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+        securityContext.setAuthentication(newAuth);
+        SecurityContextHolder.setContext(securityContext);
+
+        this.securityContextRepository.saveContext(securityContext, request, response);
     }
 }
