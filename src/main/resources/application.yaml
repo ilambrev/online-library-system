@@ -35,3 +35,9 @@ cloudinary:
 online-library-system:
   auth:
     remember-me-key: ${REMEMBER_ME_KEY:12345}
+
+#server:
+#  error:
+#    include-stacktrace: always
+#    whitelabel:
+#      enabled: off

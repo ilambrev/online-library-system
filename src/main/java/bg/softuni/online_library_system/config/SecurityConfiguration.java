@@ -33,7 +33,7 @@ public class SecurityConfiguration {
                         authorizeRequests -> authorizeRequests
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .requestMatchers(
-                                        "/", "/about",
+                                        "/", "/about", "/contacts", "/error",
                                         "/authors/all", "/authors/*/about", "/api/authors/all",
                                         "/books/all", "/books/*/about",
                                         "/users/login", "/users/login-error", "/users/register").permitAll()

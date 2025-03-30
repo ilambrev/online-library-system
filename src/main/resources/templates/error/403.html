@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/commons.html::head}">
+    <title>The Old Library</title>
+</head>
+
+<body>
+    <div class="site">
+        <header th:replace="~{/fragments/commons.html::header}">
+        </header>
+
+        <main>
+            <div class="error-container">
+                <div class="error-text-container">
+                    <p>Forbidden!</p>
+                    <p>You don't have permission to access this page.</p>
+                    <p>403</p>
+                </div>
+                <div class="error-img-container">
+                    <img th:src="@{/images/dog.png}" alt="Dog guard">
+                </div>
+                <div class="error-buttons-container">
+                    <a class="back-to-home-button" th:href="@{/}">Back to Home</a>
+                    <a class="contacts-button" th:href="@{/contacts}">Contacts</a>
+                </div>
+            </div>
+        </main>
+
+        <footer th:replace="~{/fragments/commons.html::footer}">
+        </footer>
+    </div>
+</body>
+
+</html>
