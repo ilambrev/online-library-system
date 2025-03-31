@@ -672,7 +672,7 @@ h3 {
 }
 
 .profile-form input:focus {
-    background-color: lightblue;
+    background-color: #add8e6;
 }
 
 .profile-buttons-container {
@@ -699,6 +699,31 @@ h3 {
 #cancel-btn,
 #save-btn {
     display: none;
+}
+
+/* User Profile change role */
+
+.user-input-field-container {
+    display: flex;
+    flex-direction: column;
+    width: calc((100% - 20px) / 2);
+}
+
+.user-data-field {
+    background-color: #ffffff;
+    padding: 10px 0;
+    font-size: 14px;
+    color: #323538;
+    border-radius: 6px;
+    border-left: 10px solid #ffffff;
+    border-right: 10px solid #ffffff;
+    outline: 1px solid #074c74;
+    margin-top: 6px;
+    overflow-x: scroll;
+}
+
+.user-data-field p {
+    display: block;
 }
 
 /* Book About */

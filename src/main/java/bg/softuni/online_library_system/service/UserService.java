@@ -5,6 +5,7 @@ import bg.softuni.online_library_system.model.dto.UserChangeRoleDTO;
 import bg.softuni.online_library_system.model.dto.UserProfileDTO;
 import bg.softuni.online_library_system.model.dto.UserRegistrationDTO;
 import bg.softuni.online_library_system.model.entity.UserEntity;
+import bg.softuni.online_library_system.model.enums.UserRoleEnum;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Page;
@@ -25,4 +26,8 @@ public interface UserService {
     UserEntity getUserByUsername(String username);
 
     Page<UserChangeRoleDTO> getAllUsersOrderByFirstName(int page, int size);
+
+    UserChangeRoleDTO getUserDataToChangeRole(Long id);
+
+    void changeUserRole(Long id, UserRoleEnum role);
 }

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/commons.html::head}">
+    <title>The Old Library</title>
+</head>
+
+<body>
+    <div class="site">
+        <header th:replace="~{/fragments/commons.html::header}">
+        </header>
+
+        <main>
+            <div class="profile-container">
+                <form class="profile-form"
+                      th:action="@{/admin/users/{id}/change-role (id=*{id})}"
+                      th:method="patch" th:object="${userChangeRoleDTO}">
+                    <div class="form-row-container">
+                        <div class="profile-image-container">
+                            <div class="profile-image-holder">
+                                <img th:src="*{imageURL}"
+                                     alt="User image">
+                            </div>
+                            <div>
+                                <p th:text="*{username}">lombardo</p>
+                            </div>
+                        </div>
+                        <div class="verify-password-container">
+                            <div class="input-field-container">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row-container">
+                        <div class="user-input-field-container">
+                            <p>First name:</p>
+                            <div class="user-data-field">
+                                <p th:text="*{firstName}">Dave</p>
+                            </div>
+                        </div>
+                        <div class="user-input-field-container">
+                            <p>Last name:</p>
+                            <div class="user-data-field">
+                                <p th:text="*{lastName}">Lombardo</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row-container">
+                        <div class="user-input-field-container">
+                            <p>E-mail:</p>
+                            <div class="user-data-field">
+                                <p th:text="*{email}">lombardo@test.bg</p>
+                            </div>
+                        </div>
+                        <div class="user-input-field-container">
+                            <p>Phone number:</p>
+                            <div class="user-data-field">
+                                <p th:text="*{phoneNumber}">+359832123098</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row-container">
+                        <div class="user-input-field-container">
+                            <p>Gender:</p>
+                            <div class="user-data-field">
+                                <p th:text="${#strings.capitalizeWords(#strings.toLowerCase(userChangeRoleDTO.gender.name()))}">Male</p>
+                            </div>
+                        </div>
+                        <div class="user-input-field-container">
+                            <p>Address:</p>
+                            <div class="user-data-field">
+                                <p>Sofia, Old Tree, 25</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row-container">
+                        <div class="input-field-container">
+                            <p>Role:</p>
+                            <div class="radio-input-container">
+                                <div th:each="r : ${roles}">
+                                    <label th:for="${#strings.toLowerCase(r)}"
+                                           th:text="${#strings.capitalizeWords(#strings.toLowerCase(r))}">User</label>
+                                    <input type="radio" th:id="${#strings.toLowerCase(r)}"
+                                           th:field="*{role}"
+                                           th:value="${r}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-buttons-container">
+                        <a href="" id="edit-btn">Edit</a>
+                        <a href="" id="close-btn">Close</a>
+                        <input type="submit" id="save-btn" value="Save" />
+                        <a href="" id="cancel-btn">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer th:replace="~{/fragments/commons.html::footer}">
+        </footer>
+    </div>
+    <script th:src="@{/js/profile-change-role.js}"></script>
+</body>
+
+</html>

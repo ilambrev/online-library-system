@@ -1,14 +1,14 @@
 package bg.softuni.online_library_system.web;
 
 import bg.softuni.online_library_system.model.dto.UserChangeRoleDTO;
+import bg.softuni.online_library_system.model.enums.GenderEnum;
+import bg.softuni.online_library_system.model.enums.UserRoleEnum;
 import bg.softuni.online_library_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -33,5 +33,20 @@ public class AdminController {
         model.addAttribute("totalPages", booksPage.getTotalPages());
 
         return "users";
+    }
+
+    @GetMapping("/users/{id}/change-role")
+    public String changeUserRole(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("userChangeRoleDTO", this.userService.getUserDataToChangeRole(id));
+        model.addAttribute("roles", UserRoleEnum.values());
+
+        return "profile-change-role";
+    }
+
+    @PatchMapping("/users/{id}/change-role")
+    public String changeUserRole(@PathVariable("id") Long id, UserChangeRoleDTO userChangeRoleDTO) {
+        this.userService.changeUserRole(id, userChangeRoleDTO.getRole());
+
+        return String.format("redirect:/admin/users/%d/change-role", id);
     }
 }

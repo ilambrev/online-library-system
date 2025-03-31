@@ -50,7 +50,7 @@
                             <td th:text="${user.role.name()}">ADMIN</td>
                             <td>
                                 <div class="edit-button-container">
-                                    <a class="edit-button" th:href="@{/admin/users/{id}/edit (id=${user.id})}">Edit</a>
+                                    <a class="edit-button" th:href="@{/admin/users/{id}/change-role (id=${user.id})}">Edit</a>
                                 </div>
                             </td>
                         </tr>

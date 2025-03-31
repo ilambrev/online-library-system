@@ -1,5 +1,6 @@
 package bg.softuni.online_library_system.service.impl;
 
+import bg.softuni.online_library_system.exception.ObjectNotFoundException;
 import bg.softuni.online_library_system.model.dto.UserChangePasswordDTO;
 import bg.softuni.online_library_system.model.dto.UserChangeRoleDTO;
 import bg.softuni.online_library_system.model.dto.UserProfileDTO;
@@ -148,6 +149,22 @@ public class UserServiceImpl implements UserService {
 
         return this.userRepository.findAll(pageable)
                 .map(userEntity -> this.modelMapper.map(userEntity, UserChangeRoleDTO.class));
+    }
+
+    @Override
+    public UserChangeRoleDTO getUserDataToChangeRole(Long id) {
+        return this.userRepository.findById(id)
+                .map(userEntity -> this.modelMapper.map(userEntity, UserChangeRoleDTO.class))
+                .orElseThrow(() -> new ObjectNotFoundException(String.format("User with id %d not found.", id)));
+    }
+
+    @Override
+    public void changeUserRole(Long id, UserRoleEnum role) {
+        UserEntity user = this.userRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException(String.format("User with id %d not found.", id)));
+        UserRoleEntity newRole = this.userRoleRepository.findByRole(role);
+        user.setRole(newRole);
+        this.userRepository.save(user);
     }
 
     private void refreshAuthenticatedUser(String username, HttpServletRequest request, HttpServletResponse response) {
