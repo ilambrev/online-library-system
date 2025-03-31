@@ -38,10 +38,10 @@
                     </ul>
                 </li>
                 <li class="dropdown" sec:authorize="hasRole('ADMIN')">
-                    <span>Edit <img class="arrow-icon" th:src="@{/images/dropdown-arrow.png}" alt="arrow"></span>
+                    <span>Admin <img class="arrow-icon" th:src="@{/images/dropdown-arrow.png}" alt="arrow"></span>
                     <ul class="dropdown-content">
                         <li>
-                            <a href="#">Users</a>
+                            <a th:href="@{/admin/users}">Users</a>
                         </li>
                         <li>
                             <a href="#">Authors</a>

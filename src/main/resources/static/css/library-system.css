@@ -511,6 +511,83 @@ h3 {
     padding: 0;
 }
 
+/* Users */
+
+.all-users-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: rgb(0 0 0 / 0.4);
+    width: 700px;
+    height: 100%;
+    padding: 30px 30px;
+    color: #e4d8c9;
+}
+
+.all-users-container h2 {
+    text-align: center;
+    color: #f9d342;
+    text-decoration: underline;
+}
+
+.users-names-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: auto;
+    padding-right: 20px;
+}
+
+.user-image-holder {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.user-image-container img {
+    width: 100%;
+}
+
+.users-table {
+    width: 100%;
+}
+
+.users-table th,
+.users-table td {
+    padding: 6px;
+    text-align: left;
+    font-size: 20px;
+    color: #f9d342;
+}
+
+.users-table th:nth-child(1) {
+    width: 62px;
+}
+
+.users-table th:nth-child(3) {
+    width: 35%;
+}
+
+.users-table th:nth-child(6) {
+    width: 72px;
+}
+
+.edit-button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.edit-button {
+    background-color: #f9d342;
+    width: 60px;
+    text-align: center;
+    padding: 6px 16px;
+    border-radius: 20px;
+    color: blue;
+    font-size: 14px;
+}
+
 /* User Profile */
 
 .profile-container {

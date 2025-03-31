@@ -1,11 +1,13 @@
 package bg.softuni.online_library_system.service;
 
 import bg.softuni.online_library_system.model.dto.UserChangePasswordDTO;
+import bg.softuni.online_library_system.model.dto.UserChangeRoleDTO;
 import bg.softuni.online_library_system.model.dto.UserProfileDTO;
 import bg.softuni.online_library_system.model.dto.UserRegistrationDTO;
 import bg.softuni.online_library_system.model.entity.UserEntity;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.data.domain.Page;
 
 import java.io.IOException;
 
@@ -21,4 +23,6 @@ public interface UserService {
     boolean changeUserPassword(String username, UserChangePasswordDTO userChangePasswordDTO);
 
     UserEntity getUserByUsername(String username);
+
+    Page<UserChangeRoleDTO> getAllUsersOrderByFirstName(int page, int size);
 }

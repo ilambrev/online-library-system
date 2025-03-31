@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/commons.html::head}">
+    <title>The Old Library</title>
+</head>
+
+<body>
+    <div class="site">
+        <header th:replace="~{/fragments/commons.html::header}">
+        </header>
+
+        <main>
+            <div class="all-users-container">
+                <h2>Users</h2>
+                <div class="pagination-container">
+                    <p>Number of users: <span th:text="${usersCount}">25</span></p>
+                    <div class="page-nav">
+                        <a class="page-nav-button" th:if="${currentPage > 0}"
+                           th:href="@{/authors/all(page=${currentPage - 1}, size=6)}">&lt;&lt;</a>
+                        <span th:text="'Page ' + (${currentPage} + 1) + ' of ' + ${totalPages}"></span>
+                        <a class="page-nav-button" th:if="${currentPage + 1 < totalPages}"
+                           th:href="@{/authors/all(page=${currentPage + 1}, size=6)}">&gt;&gt;</a>
+                    </div>
+                </div>
+                <div class="users-names-container">
+                    <table class="users-table">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Username</th>
+                            <th>Role</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${users}">
+                            <td>
+                                <div class="user-image-container">
+                                    <div class="user-image-holder">
+                                        <img th:src="${user.imageURL}" alt="User image">
+                                    </div>
+                                </div>
+                            </td>
+                            <td th:text="${user.id}">1</td>
+                            <td th:text="${user.firstName} + ' ' + ${user.lastName}">Old Librarian</td>
+                            <td th:text="${user.username}">admin</td>
+                            <td th:text="${user.role.name()}">ADMIN</td>
+                            <td>
+                                <div class="edit-button-container">
+                                    <a class="edit-button" th:href="@{/admin/users/{id}/edit (id=${user.id})}">Edit</a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <footer th:replace="~{/fragments/commons.html::footer}">
+        </footer>
+    </div>
+</body>
+
+</html>

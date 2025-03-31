@@ -1,6 +1,7 @@
 package bg.softuni.online_library_system.service.impl;
 
 import bg.softuni.online_library_system.model.dto.UserChangePasswordDTO;
+import bg.softuni.online_library_system.model.dto.UserChangeRoleDTO;
 import bg.softuni.online_library_system.model.dto.UserProfileDTO;
 import bg.softuni.online_library_system.model.dto.UserRegistrationDTO;
 import bg.softuni.online_library_system.model.entity.UserEntity;
@@ -15,6 +16,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -135,6 +140,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity getUserByUsername(String username) {
         return this.userRepository.findByUsername(username).orElse(null);
+    }
+
+    @Override
+    public Page<UserChangeRoleDTO> getAllUsersOrderByFirstName(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("firstName").ascending());
+
+        return this.userRepository.findAll(pageable)
+                .map(userEntity -> this.modelMapper.map(userEntity, UserChangeRoleDTO.class));
     }
 
     private void refreshAuthenticatedUser(String username, HttpServletRequest request, HttpServletResponse response) {
