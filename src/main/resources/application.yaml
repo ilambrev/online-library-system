@@ -36,7 +36,10 @@ online-library-system:
   auth:
     remember-me-key: ${REMEMBER_ME_KEY:12345}
 
-#server:
+server:
+  servlet:
+    session:
+      timeout: 1m
 #  error:
 #    include-stacktrace: always
 #    whitelabel:

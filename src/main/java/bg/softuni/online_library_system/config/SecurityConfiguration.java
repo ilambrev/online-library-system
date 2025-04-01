@@ -33,7 +33,7 @@ public class SecurityConfiguration {
                         authorizeRequests -> authorizeRequests
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .requestMatchers(
-                                        "/", "/about", "/contacts", "/error",
+                                        "/", "/about", "/contacts", "/error", "/session-expired",
                                         "/authors/all", "/authors/*/about", "/api/authors/all",
                                         "/books/all", "/books/*/about",
                                         "/users/login", "/users/login-error", "/users/register").permitAll()
@@ -59,6 +59,10 @@ public class SecurityConfiguration {
                                 .key(this.authPropertiesConfiguration.getRememberMeKey())
                                 .rememberMeParameter("rememberMe")
                                 .rememberMeCookieName("rememberMe")
+                ).sessionManagement(
+                        session -> session
+                                .maximumSessions(1)
+                                .expiredUrl("/session-expired")
                 );
 
         return httpSecurity.build();
