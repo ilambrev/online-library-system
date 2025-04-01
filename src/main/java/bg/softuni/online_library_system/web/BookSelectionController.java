@@ -9,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -97,6 +98,15 @@ public class BookSelectionController {
         }
 
         return "redirect:/cart/content";
+    }
+
+    @PostMapping("/reserve")
+    public String reserveBooks(HttpSession session) {
+        this.bookService.reserveBooks(getBooksIdsFromSession(session.getAttribute("selectedBooks")));
+        session.setAttribute("selectedBooks", new ArrayList<Long>());
+        session.setAttribute("cartCount", 0);
+
+        return "redirect:/";
     }
 
     private List<Long> getBooksIdsFromSession(Object selectedBooksObject) {

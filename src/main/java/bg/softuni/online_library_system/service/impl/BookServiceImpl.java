@@ -108,4 +108,19 @@ public class BookServiceImpl implements BookService {
     public boolean isBookAvailable(Long id) {
         return this.bookRepository.findById(id).map(BookEntity::isAvailable).orElse(false);
     }
+
+    @Override
+    public void reserveBooks(List<Long> ids) {
+
+    }
+
+    @Override
+    public void makeBooksAvailable(List<Long> ids) {
+        List<BookEntity> books = this.bookRepository.findBooksByIds(ids)
+                .stream()
+                .map(b -> b.setAvailable(true))
+                .toList();
+
+        this.bookRepository.saveAll(books);
+    }
 }

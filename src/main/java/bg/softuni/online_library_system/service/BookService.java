@@ -22,4 +22,8 @@ public interface BookService {
     List<BookCartDTO> getAllBooksById(List<Long> ids);
 
     boolean isBookAvailable(Long id);
+
+    void reserveBooks(List<Long> ids);
+
+    void makeBooksAvailable(List<Long> ids);
 }

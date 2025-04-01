@@ -33,7 +33,7 @@ public class SecurityConfiguration {
                         authorizeRequests -> authorizeRequests
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .requestMatchers(
-                                        "/", "/about", "/contacts", "/error", "/session-expired",
+                                        "/", "/home", "/about", "/contacts", "/error", "/session-expired",
                                         "/authors/all", "/authors/*/about", "/api/authors/all",
                                         "/books/all", "/books/*/about",
                                         "/users/login", "/users/login-error", "/users/register").permitAll()
@@ -51,14 +51,15 @@ public class SecurityConfiguration {
                 ).logout(
                         logout -> logout
                                 .logoutUrl("/users/logout")
-                                .logoutSuccessUrl("/")
+                                .logoutSuccessUrl("/home")
                                 .invalidateHttpSession(true)
-                                .deleteCookies("JSESSIONID")
+                                .deleteCookies("JSESSIONID", "rememberMe")
                 ).rememberMe(
                         rememberMe -> rememberMe
                                 .key(this.authPropertiesConfiguration.getRememberMeKey())
                                 .rememberMeParameter("rememberMe")
                                 .rememberMeCookieName("rememberMe")
+                                .tokenValiditySeconds(86400 * 3)
                 ).sessionManagement(
                         session -> session
                                 .invalidSessionUrl("/session-expired")

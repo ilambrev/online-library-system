@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import static bg.softuni.online_library_system.common.constant.CartConstants.INITIAL_CART_COUNT;
 import static bg.softuni.online_library_system.common.constant.ValidationConstants.BAD_CREDENTIALS;
 
 @Controller
@@ -29,7 +28,6 @@ public class UserLoginController {
         if (!model.containsAttribute("badCredentials")) {
             model.addAttribute("badCredentials", false);
         }
-        session.setAttribute("cartCount", INITIAL_CART_COUNT);
 
         return "login";
     }

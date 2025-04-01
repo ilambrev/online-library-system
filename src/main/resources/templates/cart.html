@@ -36,7 +36,10 @@
                     </div>
                 </div>
                 <div class="cart-buttons-container">
-                    <a class="reserve-button" th:classappend="${selectedBooks.isEmpty()} ? 'disabled'" href="#">Reserve books</a>
+                    <form th:action="@{/cart/reserve}" th:method="post">
+                        <button type="submit" class="reserve-button"
+                                th:classappend="${selectedBooks.isEmpty()} ? 'disabled'">Reserve books</button>
+                    </form>
                     <a class="close-button" th:href="@{/}">Close</a>
                 </div>
             </div>

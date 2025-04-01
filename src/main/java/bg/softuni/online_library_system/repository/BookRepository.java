@@ -22,4 +22,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
     @EntityGraph(attributePaths = {"genre", "publisher"})
     @Query("SELECT b FROM BookEntity b WHERE b.author.id IN :authorIds")
     List<BookEntity> findBooksByAuthorIds(@Param("authorIds") List<Long> authorIds);
+
+    @Query("SELECT b FROM BookEntity b WHERE b.id IN :booksIds")
+    List<BookEntity> findBooksByIds(@Param("booksIds") List<Long> booksIds);
 }

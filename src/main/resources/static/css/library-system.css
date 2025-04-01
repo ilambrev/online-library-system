@@ -461,14 +461,13 @@ footer {
 }
 
 .about-button,
-.remove-button,
-.reserve-button,
-.close-button {
+.remove-button {
     background-color: #f9d342;
     padding: 6px 16px;
     border-radius: 20px;
     color: blue;
     font-size: 14px;
+    text-align: center;
 }
 
 /* About Library */
@@ -901,11 +900,11 @@ h3 {
 .cart-container {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
     background-color: rgb(0 0 0 / 0.5);
     max-width: 800px;
     max-height: 600px;
-    padding: 30px 40px;
+    padding: 20px 40px;
     border-radius: 20px;
     color: #e4d8c9;
     overflow: auto;
@@ -938,6 +937,22 @@ a.disabled {
     cursor: default;
     background-color: #808080;
     color: #f5f5f5;
+}
+
+.close-button,
+.reserve-button {
+    width: 130px;
+    background-color: #f9d342;
+    padding: 6px 0;
+    border-radius: 20px;
+    color: blue;
+    font-size: 14px;
+    text-align: center;
+}
+
+.reserve-button {
+    border: none;
+    cursor: pointer;
 }
 
 /* Error messages */
