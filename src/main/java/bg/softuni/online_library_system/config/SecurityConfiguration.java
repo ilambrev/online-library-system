@@ -61,6 +61,7 @@ public class SecurityConfiguration {
                                 .rememberMeCookieName("rememberMe")
                 ).sessionManagement(
                         session -> session
+                                .invalidSessionUrl("/session-expired")
                                 .maximumSessions(1)
                                 .expiredUrl("/session-expired")
                 );
