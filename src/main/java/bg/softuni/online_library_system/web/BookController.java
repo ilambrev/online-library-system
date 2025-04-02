@@ -4,9 +4,12 @@ import bg.softuni.online_library_system.model.dto.AddBookDTO;
 import bg.softuni.online_library_system.model.dto.BookAboutDTO;
 import bg.softuni.online_library_system.model.dto.BookDTO;
 import bg.softuni.online_library_system.model.enums.BookGenreEnum;
+import bg.softuni.online_library_system.model.security.CustomUserDetails;
 import bg.softuni.online_library_system.service.BookService;
+import bg.softuni.online_library_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +20,12 @@ import java.io.IOException;
 @RequestMapping("/books")
 public class BookController {
     private final BookService bookService;
+    private final UserService userService;
 
     @Autowired
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, UserService userService) {
         this.bookService = bookService;
+        this.userService = userService;
     }
 
     @GetMapping("/add")
@@ -64,5 +69,14 @@ public class BookController {
         }
 
         return "redirect:/books/all";
+    }
+
+    @GetMapping("/overdue-warning")
+    public String overdueWarning(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                 Model model) {
+
+        model.addAttribute("overdueBooks", this.userService.getUserOverdueBooks(userDetails.getUsername()));
+
+        return "overdue-warning";
     }
 }

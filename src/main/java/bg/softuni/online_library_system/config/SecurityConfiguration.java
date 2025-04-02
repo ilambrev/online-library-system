@@ -3,6 +3,7 @@ package bg.softuni.online_library_system.config;
 import bg.softuni.online_library_system.model.enums.UserRoleEnum;
 import bg.softuni.online_library_system.repository.UserRepository;
 import bg.softuni.online_library_system.service.impl.UserDetailsServiceImpl;
+import bg.softuni.online_library_system.util.CustomLoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -20,10 +21,13 @@ import org.springframework.security.web.context.SecurityContextRepository;
 @Configuration
 public class SecurityConfiguration {
     private final AuthPropertiesConfiguration authPropertiesConfiguration;
+    private final CustomLoginSuccessHandler loginSuccessHandler;
 
     @Autowired
-    public SecurityConfiguration(AuthPropertiesConfiguration authPropertiesConfiguration) {
+    public SecurityConfiguration(AuthPropertiesConfiguration authPropertiesConfiguration,
+                                 CustomLoginSuccessHandler loginSuccessHandler) {
         this.authPropertiesConfiguration = authPropertiesConfiguration;
+        this.loginSuccessHandler = loginSuccessHandler;
     }
 
     @Bean
@@ -46,7 +50,7 @@ public class SecurityConfiguration {
                                 .loginPage("/users/login")
                                 .usernameParameter("username")
                                 .passwordParameter("password")
-                                .defaultSuccessUrl("/")
+                                .successHandler(loginSuccessHandler)
                                 .failureForwardUrl("/users/login-error")
                 ).logout(
                         logout -> logout

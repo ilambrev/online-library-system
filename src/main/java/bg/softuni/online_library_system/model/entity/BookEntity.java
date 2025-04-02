@@ -29,8 +29,14 @@ public class BookEntity extends BaseEntity {
     @Column(name = "created", nullable = false)
     private LocalDateTime created;
 
-    @Column(name = "read_counter")
-    private int readCounter;
+    @Column(name = "borrow_date")
+    private LocalDateTime borrowDate;
+
+    @Column(name = "return_date")
+    private LocalDateTime returnDate;
+
+    @Column(name = "borrow_counter")
+    private int borrowCounter;
 
     @Column(name = "is_available")
     private boolean isAvailable;
@@ -113,12 +119,30 @@ public class BookEntity extends BaseEntity {
         return this;
     }
 
-    public int getReadCounter() {
-        return readCounter;
+    public LocalDateTime getBorrowDate() {
+        return borrowDate;
     }
 
-    public BookEntity setReadCounter(int readCounter) {
-        this.readCounter = readCounter;
+    public BookEntity setBorrowDate(LocalDateTime borrowDate) {
+        this.borrowDate = borrowDate;
+        return this;
+    }
+
+    public LocalDateTime getReturnDate() {
+        return returnDate;
+    }
+
+    public BookEntity setReturnDate(LocalDateTime returnDate) {
+        this.returnDate = returnDate;
+        return this;
+    }
+
+    public int getBorrowCounter() {
+        return borrowCounter;
+    }
+
+    public BookEntity setBorrowCounter(int borrowCounter) {
+        this.borrowCounter = borrowCounter;
         return this;
     }
 

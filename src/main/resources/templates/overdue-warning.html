@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/commons.html::head}">
+    <title>The Old Library</title>
+</head>
+
+<body>
+    <div class="site">
+        <header th:replace="~{/fragments/commons.html::header}">
+        </header>
+
+        <main>
+            <div class="error-container">
+                <div class="error-text-container">
+                    <p>You have <span th:text="${overdueBooks.size()}">2</span> overdue borrowed book<span th:if="${overdueBooks.size() > 1}">s</span>!
+                    </p>
+                </div>
+                <div class="books-names-container">
+                    <div class="book-container" th:each="b : ${overdueBooks}">
+                        <div class="book-image-container">
+                            <div class="book-image-holder">
+                                <img th:src="*{b.imageURL}"
+                                     alt="Book image">
+                            </div>
+                        </div>
+                        <div class="book-name-container">
+                            <div class="book-name-container" th:text="*{b.title}">And Then There Were None </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="error-text-container">
+                    <p>Please, return book<span th:if="${overdueBooks.size() > 1}">s</span>.</p>
+                    <p>The borrowing period is 14 days.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer th:replace="~{/fragments/commons.html::footer}">
+        </footer>
+    </div>
+</body>
+
+</html>

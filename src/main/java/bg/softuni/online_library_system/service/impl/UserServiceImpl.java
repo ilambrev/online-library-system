@@ -1,10 +1,7 @@
 package bg.softuni.online_library_system.service.impl;
 
 import bg.softuni.online_library_system.exception.ObjectNotFoundException;
-import bg.softuni.online_library_system.model.dto.UserChangePasswordDTO;
-import bg.softuni.online_library_system.model.dto.UserChangeRoleDTO;
-import bg.softuni.online_library_system.model.dto.UserProfileDTO;
-import bg.softuni.online_library_system.model.dto.UserRegistrationDTO;
+import bg.softuni.online_library_system.model.dto.*;
 import bg.softuni.online_library_system.model.entity.UserEntity;
 import bg.softuni.online_library_system.model.entity.UserRoleEntity;
 import bg.softuni.online_library_system.model.enums.GenderEnum;
@@ -32,6 +29,9 @@ import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static bg.softuni.online_library_system.common.constant.CloudinaryConstants.USERS_IMAGES_DIRECTORY;
 
@@ -165,6 +165,21 @@ public class UserServiceImpl implements UserService {
         UserRoleEntity newRole = this.userRoleRepository.findByRole(role);
         user.setRole(newRole);
         this.userRepository.save(user);
+    }
+
+    @Override
+    public List<BookDTO> getUserOverdueBooks(String username) {
+        UserEntity user = getUserByUsername(username);
+        List<BookDTO> overdueBooks = new ArrayList<>();
+        if (user != null) {
+            overdueBooks = user.getBorrowedBooks()
+                    .stream()
+                    .filter(b -> b.getBorrowDate().isBefore(LocalDateTime.now().plusDays(10)))
+                    .map(bookEntity -> this.modelMapper.map(bookEntity, BookDTO.class))
+                    .toList();
+        }
+
+        return overdueBooks;
     }
 
     private void refreshAuthenticatedUser(String username, HttpServletRequest request, HttpServletResponse response) {

@@ -1,9 +1,6 @@
 package bg.softuni.online_library_system.service;
 
-import bg.softuni.online_library_system.model.dto.UserChangePasswordDTO;
-import bg.softuni.online_library_system.model.dto.UserChangeRoleDTO;
-import bg.softuni.online_library_system.model.dto.UserProfileDTO;
-import bg.softuni.online_library_system.model.dto.UserRegistrationDTO;
+import bg.softuni.online_library_system.model.dto.*;
 import bg.softuni.online_library_system.model.entity.UserEntity;
 import bg.softuni.online_library_system.model.enums.UserRoleEnum;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Page;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface UserService {
 
@@ -30,4 +28,6 @@ public interface UserService {
     UserChangeRoleDTO getUserDataToChangeRole(Long id);
 
     void changeUserRole(Long id, UserRoleEnum role);
+
+    List<BookDTO> getUserOverdueBooks(String username);
 }

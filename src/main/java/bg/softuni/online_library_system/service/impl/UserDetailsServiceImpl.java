@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -33,6 +34,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 user.getLastName(),
                 user.getImageURL(),
                 user.getBorrowedBooks().size(),
+                hasOverdueBooks(user),
                 authorities);
+    }
+
+    private boolean hasOverdueBooks(UserEntity user) {
+        return !user.getBorrowedBooks()
+                .stream()
+                .filter(b -> b.getBorrowDate().isBefore(LocalDateTime.now().plusDays(10)))
+                .toList().isEmpty();
     }
 }
