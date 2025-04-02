@@ -910,6 +910,21 @@ h3 {
     overflow: auto;
 }
 
+.cart-stat-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: solid 1px #e4d8c9;
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+
+.cart-stat-container-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .cart-container h2 {
     text-align: center;
 }

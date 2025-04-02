@@ -14,9 +14,22 @@
             <div class="cart-container">
                 <div class="text-content-container">
                     <h2>Your space for books borrowing</h2>
-                    <p class="max-books-number-alert" th:if="${remainingNumberOfBooks == 0}">You can borrow up to 3 books at a time.</p>
-                    <p>Number of books already borrowed and not yet returned: <span th:text="${borrowedBooks}">2</span></p>
-                    <p>Remaining number of books you can borrow: <span th:text="${remainingNumberOfBooks}">1</span></p>
+                    <p class="max-books-number-alert"
+                       th:if="${remainingNumberOfBooks == 0}">You can borrow up to 3 books at a time.</p>
+                    <div class="cart-stat-container">
+                        <div class="cart-stat-container-row">
+                            <p>Number of books already borrowed and not yet returned:</p>
+                            <span th:text="${borrowedBooks}">2</span>
+                        </div>
+                        <div class="cart-stat-container-row">
+                            <p>Number of books already reserved: </p>
+                            <span th:text="${reservedBooks}">1</span>
+                        </div>
+                        <div class="cart-stat-container-row">
+                            <p>Remaining number of books you can add for reservation: </p>
+                            <span th:text="${remainingNumberOfBooks}">1</span>
+                        </div>
+                    </div>
                     <h3>Books to borrow</h3>
                 </div>
                 <div class="cart-books-names-container" th:each="book : ${selectedBooks}">

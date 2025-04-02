@@ -1,6 +1,7 @@
 package bg.softuni.online_library_system.config;
 
 import bg.softuni.online_library_system.model.enums.UserRoleEnum;
+import bg.softuni.online_library_system.repository.BookStatusRepository;
 import bg.softuni.online_library_system.repository.UserRepository;
 import bg.softuni.online_library_system.service.impl.UserDetailsServiceImpl;
 import bg.softuni.online_library_system.util.CustomLoginSuccessHandler;
@@ -75,8 +76,9 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(UserRepository userRepository) {
-        return new UserDetailsServiceImpl(userRepository);
+    public UserDetailsService userDetailsService(UserRepository userRepository,
+                                                 BookStatusRepository bookStatusRepository) {
+        return new UserDetailsServiceImpl(userRepository, bookStatusRepository);
     }
 
     @Bean

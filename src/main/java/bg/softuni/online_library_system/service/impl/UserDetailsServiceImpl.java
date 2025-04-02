@@ -2,6 +2,7 @@ package bg.softuni.online_library_system.service.impl;
 
 import bg.softuni.online_library_system.model.entity.UserEntity;
 import bg.softuni.online_library_system.model.security.CustomUserDetails;
+import bg.softuni.online_library_system.repository.BookStatusRepository;
 import bg.softuni.online_library_system.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,9 +15,11 @@ import java.util.List;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
+    private final BookStatusRepository bookStatusRepository;
 
-    public UserDetailsServiceImpl(UserRepository userRepository) {
+    public UserDetailsServiceImpl(UserRepository userRepository, BookStatusRepository bookStatusRepository) {
         this.userRepository = userRepository;
+        this.bookStatusRepository = bookStatusRepository;
     }
 
     @Override
@@ -34,6 +37,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 user.getLastName(),
                 user.getImageURL(),
                 user.getBorrowedBooks().size(),
+                getNumOfReservedBooks(user.getId()),
                 hasOverdueBooks(user),
                 authorities);
     }
@@ -43,5 +47,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .stream()
                 .filter(b -> b.getBorrowDate().isBefore(LocalDateTime.now().plusDays(10)))
                 .toList().isEmpty();
+    }
+
+    private int getNumOfReservedBooks(Long userId) {
+        return this.bookStatusRepository.countByUserId(userId);
     }
 }

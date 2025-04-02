@@ -12,11 +12,12 @@ public class CustomUserDetails implements UserDetails {
     private final String lastName;
     private final String imageURL;
     private final int borrowedBooks;
+    private final int reservedBooks;
     private final boolean overdueBooks;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public CustomUserDetails(String username, String password, String firstName, String lastName,
-                             String imageURL, int borrowedBooks, boolean overdueBooks,
+                             String imageURL, int borrowedBooks, int reservedBooks, boolean overdueBooks,
                              Collection<? extends GrantedAuthority> authorities) {
         this.username = username;
         this.password = password;
@@ -24,6 +25,7 @@ public class CustomUserDetails implements UserDetails {
         this.lastName = lastName;
         this.imageURL = imageURL;
         this.borrowedBooks = borrowedBooks;
+        this.reservedBooks = reservedBooks;
         this.overdueBooks = overdueBooks;
         this.authorities = authorities;
     }
@@ -42,6 +44,10 @@ public class CustomUserDetails implements UserDetails {
 
     public int getBorrowedBooks() {
         return borrowedBooks;
+    }
+
+    public int getReservedBooks() {
+        return reservedBooks;
     }
 
     public boolean hasOverdueBooks() {

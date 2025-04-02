@@ -43,7 +43,7 @@ public class BookSelectionController {
         } else {
             selectedBooksIds = getBooksIdsFromSession(session.getAttribute("selectedBooks"));
         }
-        int borrowedBooks = userDetails.getBorrowedBooks() + selectedBooksIds.size();
+        int borrowedBooks = userDetails.getBorrowedBooks() + userDetails.getReservedBooks() + selectedBooksIds.size();
         if (borrowedBooks > 2) {
 
             return "redirect:/cart/content";
@@ -71,10 +71,11 @@ public class BookSelectionController {
             books = this.bookSelectionService.getAllBooksById(selectedBooksIds);
         }
         model.addAttribute("selectedBooks", books);
-        int remainingNumberOfBooksToBorrow =
-                MAX_NUMBER_OF_BORROWED_BOOKS - (books.size() + userDetails.getBorrowedBooks());
-        model.addAttribute("remainingNumberOfBooks", remainingNumberOfBooksToBorrow);
+        int remainingNumberOfBooksToBorrow = MAX_NUMBER_OF_BORROWED_BOOKS -
+                        (books.size() + userDetails.getBorrowedBooks() + userDetails.getReservedBooks());
         model.addAttribute("borrowedBooks", userDetails.getBorrowedBooks());
+        model.addAttribute("reservedBooks", userDetails.getReservedBooks());
+        model.addAttribute("remainingNumberOfBooks", remainingNumberOfBooksToBorrow);
 
         return "cart";
     }
