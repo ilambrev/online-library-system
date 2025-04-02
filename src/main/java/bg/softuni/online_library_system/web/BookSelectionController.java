@@ -2,7 +2,7 @@ package bg.softuni.online_library_system.web;
 
 import bg.softuni.online_library_system.model.dto.BookCartDTO;
 import bg.softuni.online_library_system.model.security.CustomUserDetails;
-import bg.softuni.online_library_system.service.BookService;
+import bg.softuni.online_library_system.service.BookSelectionService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,11 +22,11 @@ import static bg.softuni.online_library_system.common.constant.CartConstants.MAX
 @Controller
 @RequestMapping("/cart")
 public class BookSelectionController {
-    private final BookService bookService;
+    private final BookSelectionService bookSelectionService;
 
     @Autowired
-    public BookSelectionController(BookService bookService) {
-        this.bookService = bookService;
+    public BookSelectionController(BookSelectionService bookSelectionService) {
+        this.bookSelectionService = bookSelectionService;
     }
 
     @GetMapping("/add")
@@ -48,14 +48,14 @@ public class BookSelectionController {
 
             return "redirect:/cart/content";
         }
-        if (this.bookService.isBookAvailable(id)) {
+        if (this.bookSelectionService.isBookAvailable(id)) {
             selectedBooksIds.add(id);
             session.setAttribute("selectedBooks", selectedBooksIds);
             int cartCount = (int) session.getAttribute("cartCount");
             cartCount++;
             session.setAttribute("cartCount", cartCount);
             boolean isBookAvailable = false;
-            this.bookService.changeBookStatus(id, isBookAvailable);
+            this.bookSelectionService.changeBookStatus(id, isBookAvailable);
         }
 
         return String.format("redirect:/books/%d/about", id);
@@ -68,7 +68,7 @@ public class BookSelectionController {
         List<Long> selectedBooksIds = getBooksIdsFromSession(session.getAttribute("selectedBooks"));
         List<BookCartDTO> books = new ArrayList<>();
         if (!selectedBooksIds.isEmpty()) {
-            books = this.bookService.getAllBooksById(selectedBooksIds);
+            books = this.bookSelectionService.getAllBooksById(selectedBooksIds);
         }
         model.addAttribute("selectedBooks", books);
         int remainingNumberOfBooksToBorrow =
@@ -88,7 +88,7 @@ public class BookSelectionController {
                 selectedBooksIds.remove(indexOfBookToRemove);
                 session.setAttribute("selectedBooks", selectedBooksIds);
                 boolean isBookAvailable = true;
-                this.bookService.changeBookStatus(id, isBookAvailable);
+                this.bookSelectionService.changeBookStatus(id, isBookAvailable);
                 int cartCount = (int) session.getAttribute("cartCount");
                 if (cartCount > 0) {
                     cartCount--;
@@ -101,8 +101,11 @@ public class BookSelectionController {
     }
 
     @PostMapping("/reserve")
-    public String reserveBooks(HttpSession session) {
-        this.bookService.reserveBooks(getBooksIdsFromSession(session.getAttribute("selectedBooks")));
+    public String reserveBooks(@AuthenticationPrincipal CustomUserDetails userDetails,
+                               HttpSession session) {
+
+        this.bookSelectionService.reserveBooks(getBooksIdsFromSession(session.getAttribute("selectedBooks")),
+                userDetails.getUsername());
         session.setAttribute("selectedBooks", new ArrayList<Long>());
         session.setAttribute("cartCount", 0);
 

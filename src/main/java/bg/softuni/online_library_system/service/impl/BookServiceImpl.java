@@ -2,7 +2,6 @@ package bg.softuni.online_library_system.service.impl;
 
 import bg.softuni.online_library_system.model.dto.AddBookDTO;
 import bg.softuni.online_library_system.model.dto.BookAboutDTO;
-import bg.softuni.online_library_system.model.dto.BookCartDTO;
 import bg.softuni.online_library_system.model.dto.BookDTO;
 import bg.softuni.online_library_system.model.entity.AuthorEntity;
 import bg.softuni.online_library_system.model.entity.BookEntity;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -87,40 +85,5 @@ public class BookServiceImpl implements BookService {
         BookEntity book = bookOptional.get();
 
         return this.modelMapper.map(book, BookAboutDTO.class);
-    }
-
-    @Override
-    public void changeBookStatus(Long id, boolean isBookAvailable) {
-        BookEntity book = this.bookRepository.findById(id).orElseThrow(RuntimeException::new);
-        book.setAvailable(isBookAvailable);
-        this.bookRepository.save(book);
-    }
-
-    @Override
-    public List<BookCartDTO> getAllBooksById(List<Long> ids) {
-        return this.bookRepository.findAllById(ids)
-                .stream()
-                .map(bookEntity -> this.modelMapper.map(bookEntity, BookCartDTO.class))
-                .toList();
-    }
-
-    @Override
-    public boolean isBookAvailable(Long id) {
-        return this.bookRepository.findById(id).map(BookEntity::isAvailable).orElse(false);
-    }
-
-    @Override
-    public void reserveBooks(List<Long> ids) {
-
-    }
-
-    @Override
-    public void makeBooksAvailable(List<Long> ids) {
-        List<BookEntity> books = this.bookRepository.findBooksByIds(ids)
-                .stream()
-                .map(b -> b.setAvailable(true))
-                .toList();
-
-        this.bookRepository.saveAll(books);
     }
 }

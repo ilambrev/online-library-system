@@ -1,6 +1,6 @@
 package bg.softuni.online_library_system.util;
 
-import bg.softuni.online_library_system.service.BookService;
+import bg.softuni.online_library_system.service.BookSelectionService;
 import jakarta.servlet.http.HttpSessionEvent;
 import jakarta.servlet.http.HttpSessionListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +10,12 @@ import java.util.List;
 
 @Component
 public class SessionListener implements HttpSessionListener {
-    private final BookService bookService;
+    private final BookSelectionService bookSelectionService;
 
     @Autowired
-    public SessionListener(BookService bookService) {
-        this.bookService = bookService;
+    public SessionListener(BookSelectionService bookSelectionService) {
+
+        this.bookSelectionService = bookSelectionService;
     }
 
     @Override
@@ -28,7 +29,7 @@ public class SessionListener implements HttpSessionListener {
                     .map(item -> (Long) item)
                     .toList();
             if (!selectedBooksIds.isEmpty()) {
-                this.bookService.makeBooksAvailable(selectedBooksIds);
+                this.bookSelectionService.makeBooksAvailable(selectedBooksIds);
             }
         }
     }
