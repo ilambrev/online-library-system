@@ -182,7 +182,8 @@ public class UserServiceImpl implements UserService {
         return overdueBooks;
     }
 
-    private void refreshAuthenticatedUser(String username, HttpServletRequest request, HttpServletResponse response) {
+    @Override
+    public void refreshAuthenticatedUser(String username, HttpServletRequest request, HttpServletResponse response) {
         UserDetails updatedUserDetails = this.userDetailsService.loadUserByUsername(username);
 
         Authentication newAuth = new UsernamePasswordAuthenticationToken(

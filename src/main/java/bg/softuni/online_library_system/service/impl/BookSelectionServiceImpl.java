@@ -1,6 +1,6 @@
 package bg.softuni.online_library_system.service.impl;
 
-import bg.softuni.online_library_system.model.dto.BookCartDTO;
+import bg.softuni.online_library_system.model.dto.BookDTO;
 import bg.softuni.online_library_system.model.entity.BookEntity;
 import bg.softuni.online_library_system.model.entity.BookStatusEntity;
 import bg.softuni.online_library_system.model.entity.UserEntity;
@@ -45,10 +45,10 @@ public class BookSelectionServiceImpl implements BookSelectionService {
     }
 
     @Override
-    public List<BookCartDTO> getAllBooksById(List<Long> ids) {
+    public List<BookDTO> getAllBooksById(List<Long> ids) {
         return this.bookRepository.findAllById(ids)
                 .stream()
-                .map(bookEntity -> this.modelMapper.map(bookEntity, BookCartDTO.class))
+                .map(bookEntity -> this.modelMapper.map(bookEntity, BookDTO.class))
                 .toList();
     }
 

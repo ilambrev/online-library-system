@@ -1,12 +1,14 @@
 package bg.softuni.online_library_system.web;
 
-import bg.softuni.online_library_system.model.dto.AddBookDTO;
-import bg.softuni.online_library_system.model.dto.BookAboutDTO;
-import bg.softuni.online_library_system.model.dto.BookDTO;
+import bg.softuni.online_library_system.model.dto.*;
 import bg.softuni.online_library_system.model.enums.BookGenreEnum;
+import bg.softuni.online_library_system.model.enums.BookStatusEnum;
 import bg.softuni.online_library_system.model.security.CustomUserDetails;
 import bg.softuni.online_library_system.service.BookService;
+import bg.softuni.online_library_system.service.BookStatusService;
 import bg.softuni.online_library_system.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,17 +17,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/books")
 public class BookController {
     private final BookService bookService;
     private final UserService userService;
+    private final BookStatusService bookStatusService;
 
     @Autowired
-    public BookController(BookService bookService, UserService userService) {
+    public BookController(BookService bookService, UserService userService,
+                          BookStatusService bookStatusService) {
         this.bookService = bookService;
         this.userService = userService;
+        this.bookStatusService = bookStatusService;
     }
 
     @GetMapping("/add")
@@ -69,6 +76,42 @@ public class BookController {
         }
 
         return "redirect:/books/all";
+    }
+
+    @GetMapping("/reservations")
+    public String searchBookReservations(@RequestParam(required = false) String username, Model model) {
+        boolean isSearchMade = username != null && !username.isEmpty();
+        List<BookStatusDTO> reservations = new ArrayList<>();
+
+        if (isSearchMade) {
+            reservations = this.bookStatusService.getAllByUserIdAndStatus(username, BookStatusEnum.RESERVED);
+            model.addAttribute("user", username);
+        }
+        model.addAttribute("isSearchMade", isSearchMade);
+        model.addAttribute("reservations", reservations);
+        model.addAttribute("userSearchDTO", new UserSearchDTO());
+
+        return "book-reservations";
+    }
+
+    @PatchMapping("/reservations")
+    public String confirmBookReservations(@RequestParam String username,
+                                          UserSearchDTO userSearchDTO) {
+
+        return String.format("redirect:/books/reservations?username=%s", username);
+    }
+
+    @PatchMapping("/reservations/cancel")
+    public String cancelBookReservation(@RequestParam Long id, String username,
+                                        @AuthenticationPrincipal CustomUserDetails userDetails,
+                                        HttpServletRequest request, HttpServletResponse response) {
+        this.bookStatusService.cancelReservation(id);
+
+        if (userDetails.getUsername().equals(username)) {
+            this.userService.refreshAuthenticatedUser(userDetails.getUsername(), request, response);
+        }
+
+        return String.format("redirect:/books/reservations?username=%s", username);
     }
 
     @GetMapping("/overdue-warning")

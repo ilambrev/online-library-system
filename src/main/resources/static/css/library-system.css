@@ -970,6 +970,41 @@ a.disabled {
     cursor: pointer;
 }
 
+/* Books reservation */
+
+.books-reservation-form input[type="text"] {
+    display: block;
+    width: 100%;
+    padding: 6px;
+    font-size: 14px;
+    color: #323538;
+    border-radius: 6px;
+    border: 1px solid #074c74;
+    outline: none;
+}
+
+.search-button {
+    width: 100px;
+    background-color:#e4d8c9;
+    border: none;
+    cursor: pointer;
+    padding: 6px 0;
+    border-radius: 6px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.reservation-cancel-button {
+    background-color: #f9d342;
+    padding: 6px 16px;
+    border-radius: 20px;
+    color: blue;
+    font-size: 14px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
 /* Error messages */
 
 .validation-error-message {

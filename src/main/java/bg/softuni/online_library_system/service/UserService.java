@@ -30,4 +30,6 @@ public interface UserService {
     void changeUserRole(Long id, UserRoleEnum role);
 
     List<BookDTO> getUserOverdueBooks(String username);
+
+    void refreshAuthenticatedUser(String username, HttpServletRequest request, HttpServletResponse response);
 }

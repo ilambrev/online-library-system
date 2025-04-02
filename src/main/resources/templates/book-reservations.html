@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/commons.html::head}">
+    <title>The Old Library</title>
+</head>
+
+<body>
+    <div class="site">
+        <header th:replace="~{/fragments/commons.html::header}">
+        </header>
+
+        <main>
+            <div class="cart-container">
+                <div class="text-content-container">
+                    <h2>Book reservations</h2>
+                    <form class="books-reservation-form"
+                          th:action="@{/books/reservations(username=*{username})}"
+                          th:method="get"
+                          th:object="${userSearchDTO}">
+                        <div class="form-row-container">
+                            <label for="username">Search by username:</label>
+                        </div>
+                        <div class="form-row-container">
+                            <input type="text" id="username" placeholder="Type username..."
+                                   th:field="*{username}">
+                            <input class="search-button" type="submit" value="Search">
+                        </div>
+                    </form>
+                    <div class="cart-stat-container" th:if="${isSearchMade}">
+                        <div class="cart-stat-container-row">
+                            <p>Reservations found: </p>
+                            <span th:text="${reservations.size()}">2</span>
+                        </div>
+                    </div>
+                    <h3 th:if="${reservations.size() > 0}">Books to borrow</h3>
+                </div>
+                <div class="cart-books-names-container" th:each="r : ${reservations}">
+                    <div class="book-container">
+                        <div class="book-image-container">
+                            <div class="book-image-holder">
+                                <img th:src="${r.bookImageURL}"
+                                     alt="Author image">
+                            </div>
+                        </div>
+                        <div class="book-name-container">
+                            <div class="book-name-container" th:text="${r.bookTitle}">The Hitchhiker's Guide to the Galaxy</div>
+                            <div class="book-about">
+                                <form th:action="@{/books/reservations/cancel(id=${r.id}, username=${user})}" th:method="patch">
+                                    <button type="submit" class="reservation-cancel-button">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-buttons-container" th:if="${reservations.size() > 0}">
+                    <form th:action="@{/}" th:method="patch">
+                        <button type="submit" class="reserve-button">Confirm</button>
+                    </form>
+                    <a class="close-button" href="#">Close</a>
+                </div>
+            </div>
+        </main>
+
+        <footer th:replace="~{/fragments/commons.html::footer}">
+        </footer>
+    </div>
+</body>
+
+</html>

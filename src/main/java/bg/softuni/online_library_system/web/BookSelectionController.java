@@ -1,8 +1,11 @@
 package bg.softuni.online_library_system.web;
 
-import bg.softuni.online_library_system.model.dto.BookCartDTO;
+import bg.softuni.online_library_system.model.dto.BookDTO;
 import bg.softuni.online_library_system.model.security.CustomUserDetails;
 import bg.softuni.online_library_system.service.BookSelectionService;
+import bg.softuni.online_library_system.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,10 +26,12 @@ import static bg.softuni.online_library_system.common.constant.CartConstants.MAX
 @RequestMapping("/cart")
 public class BookSelectionController {
     private final BookSelectionService bookSelectionService;
+    private final UserService userService;
 
     @Autowired
-    public BookSelectionController(BookSelectionService bookSelectionService) {
+    public BookSelectionController(BookSelectionService bookSelectionService, UserService userService) {
         this.bookSelectionService = bookSelectionService;
+        this.userService = userService;
     }
 
     @GetMapping("/add")
@@ -66,13 +71,13 @@ public class BookSelectionController {
                                  HttpSession session, Model model) {
 
         List<Long> selectedBooksIds = getBooksIdsFromSession(session.getAttribute("selectedBooks"));
-        List<BookCartDTO> books = new ArrayList<>();
+        List<BookDTO> books = new ArrayList<>();
         if (!selectedBooksIds.isEmpty()) {
             books = this.bookSelectionService.getAllBooksById(selectedBooksIds);
         }
         model.addAttribute("selectedBooks", books);
         int remainingNumberOfBooksToBorrow = MAX_NUMBER_OF_BORROWED_BOOKS -
-                        (books.size() + userDetails.getBorrowedBooks() + userDetails.getReservedBooks());
+                (books.size() + userDetails.getBorrowedBooks() + userDetails.getReservedBooks());
         model.addAttribute("borrowedBooks", userDetails.getBorrowedBooks());
         model.addAttribute("reservedBooks", userDetails.getReservedBooks());
         model.addAttribute("remainingNumberOfBooks", remainingNumberOfBooksToBorrow);
@@ -103,12 +108,15 @@ public class BookSelectionController {
 
     @PostMapping("/reserve")
     public String reserveBooks(@AuthenticationPrincipal CustomUserDetails userDetails,
+                               HttpServletRequest request, HttpServletResponse response,
                                HttpSession session) {
 
         this.bookSelectionService.reserveBooks(getBooksIdsFromSession(session.getAttribute("selectedBooks")),
                 userDetails.getUsername());
         session.setAttribute("selectedBooks", new ArrayList<Long>());
         session.setAttribute("cartCount", 0);
+
+        this.userService.refreshAuthenticatedUser(userDetails.getUsername(), request, response);
 
         return "redirect:/";
     }

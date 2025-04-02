@@ -1,6 +1,7 @@
 package bg.softuni.online_library_system.service.impl;
 
 import bg.softuni.online_library_system.model.entity.UserEntity;
+import bg.softuni.online_library_system.model.enums.BookStatusEnum;
 import bg.softuni.online_library_system.model.security.CustomUserDetails;
 import bg.softuni.online_library_system.repository.BookStatusRepository;
 import bg.softuni.online_library_system.repository.UserRepository;
@@ -50,6 +51,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     private int getNumOfReservedBooks(Long userId) {
-        return this.bookStatusRepository.countByUserId(userId);
+        return this.bookStatusRepository.countByUserIdAndStatus(userId, BookStatusEnum.RESERVED);
     }
 }
