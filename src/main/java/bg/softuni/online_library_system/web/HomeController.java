@@ -1,13 +1,11 @@
 package bg.softuni.online_library_system.web;
 
-import bg.softuni.online_library_system.model.entity.MostReadBookEntity;
 import bg.softuni.online_library_system.repository.MostReadBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
-import java.util.List;
 
 @Controller
 public class HomeController {
@@ -18,9 +16,9 @@ public class HomeController {
         this.mostReadBookRepository = mostReadBookRepository;
     }
 
-    @ModelAttribute("mostReadBooks")
-    public List<MostReadBookEntity> getMostReadBooks() {
-        return this.mostReadBookRepository.findAll();
+    @ModelAttribute
+    public void getMostReadBooks(Model model) {
+        model.addAttribute("mostReadBooks", this.mostReadBookRepository.findAll());
     }
 
     @GetMapping("/")
