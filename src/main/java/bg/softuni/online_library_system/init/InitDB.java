@@ -1,12 +1,14 @@
 package bg.softuni.online_library_system.init;
 
 import bg.softuni.online_library_system.model.entity.BookGenreEntity;
+import bg.softuni.online_library_system.model.entity.MostReadBookEntity;
 import bg.softuni.online_library_system.model.entity.UserEntity;
 import bg.softuni.online_library_system.model.entity.UserRoleEntity;
 import bg.softuni.online_library_system.model.enums.BookGenreEnum;
 import bg.softuni.online_library_system.model.enums.GenderEnum;
 import bg.softuni.online_library_system.model.enums.UserRoleEnum;
 import bg.softuni.online_library_system.repository.BookGenreRepository;
+import bg.softuni.online_library_system.repository.MostReadBookRepository;
 import bg.softuni.online_library_system.repository.UserRepository;
 import bg.softuni.online_library_system.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -26,14 +29,17 @@ public class InitDB implements CommandLineRunner {
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
     private final BookGenreRepository bookGenreRepository;
+    private final MostReadBookRepository mostReadBookRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public InitDB(UserRepository userRepository, UserRoleRepository userRoleRepository,
-                  BookGenreRepository bookGenreRepository, PasswordEncoder passwordEncoder) {
+                  BookGenreRepository bookGenreRepository, MostReadBookRepository mostReadBookRepository,
+                  PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.bookGenreRepository = bookGenreRepository;
+        this.mostReadBookRepository = mostReadBookRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -108,6 +114,24 @@ public class InitDB implements CommandLineRunner {
                     .toList();
 
             this.bookGenreRepository.saveAll(genres);
+        }
+
+        if (this.mostReadBookRepository.count() == 0) {
+            List<MostReadBookEntity> mostReadBooks = new ArrayList<>();
+
+            for (int i = 1; i <= 3; i++) {
+                MostReadBookEntity mostReadBook = new MostReadBookEntity()
+                        .setBookId(0L)
+                        .setTitle("Thinking in Java")
+                        .setImageURL("/images/sample_book.png")
+                        .setBorrowCounter(i)
+                        .setAuthorId(0L)
+                        .setAuthorFirstName("Bruce")
+                        .setAuthorLastName("Eckel");
+                mostReadBooks.add(mostReadBook);
+            }
+
+            this.mostReadBookRepository.saveAll(mostReadBooks);
         }
     }
 }

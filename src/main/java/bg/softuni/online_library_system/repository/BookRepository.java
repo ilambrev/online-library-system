@@ -1,6 +1,7 @@
 package bg.softuni.online_library_system.repository;
 
 import bg.softuni.online_library_system.model.entity.BookEntity;
+import org.springframework.data.domain.Limit;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,4 +26,6 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
 
     @Query("SELECT b FROM BookEntity b WHERE b.id IN :booksIds")
     List<BookEntity> findBooksByIds(@Param("booksIds") List<Long> booksIds);
+
+    List<BookEntity> findByOrderByBorrowCounterDesc(Limit limit);
 }

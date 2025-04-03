@@ -11,7 +11,24 @@
         </header>
 
         <main>
-
+            <div class="most-read-book-container">
+                <div>
+                    <h2>The three most read books</h2>
+                </div>
+                <div class="most-read-books-cards-holder">
+                    <div class="book-card" th:each="b : ${mostReadBooks}">
+                        <div class="book-card-image-container">
+                            <img th:src="${b.imageURL}" alt="Book image">
+                        </div>
+                        <div class="book-card-text-container">
+                            <a th:href="@{/books/{id}/about (id=${b.bookId})}"
+                               th:text="${b.title}">Thinking in Java</a>
+                            <a th:href="@{/authors/{id}/about (id=${b.authorId})}"
+                               th:text="|${b.authorFirstName} ${b.authorLastName}|">by Bruce Eckel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <footer th:replace="~{/fragments/commons.html::footer}">
