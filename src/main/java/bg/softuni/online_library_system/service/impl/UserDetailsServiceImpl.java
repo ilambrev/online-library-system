@@ -1,5 +1,6 @@
 package bg.softuni.online_library_system.service.impl;
 
+import bg.softuni.online_library_system.model.entity.BookStatusEntity;
 import bg.softuni.online_library_system.model.entity.UserEntity;
 import bg.softuni.online_library_system.model.enums.BookStatusEnum;
 import bg.softuni.online_library_system.model.security.CustomUserDetails;
@@ -13,6 +14,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static bg.softuni.online_library_system.common.constant.CartConstants.BOOK_BORROW_PERIOD;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
@@ -31,26 +34,32 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<GrantedAuthority> authorities =
                 List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().getRole().name()));
 
+        List<BookStatusEntity> borrowedBooks = getBorrowedBooks(user.getId());
+
         return new CustomUserDetails(
                 user.getUsername(),
                 user.getPassword(),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getImageURL(),
-                user.getBorrowedBooks().size(),
+                borrowedBooks.size(),
                 getNumOfReservedBooks(user.getId()),
-                hasOverdueBooks(user),
+                hasOverdueBooks(borrowedBooks),
                 authorities);
     }
 
-    private boolean hasOverdueBooks(UserEntity user) {
-        return !user.getBorrowedBooks()
+    private boolean hasOverdueBooks(List<BookStatusEntity> borrowedBooks) {
+        return !borrowedBooks
                 .stream()
-                .filter(b -> b.getBorrowDate().isBefore(LocalDateTime.now().plusDays(10)))
+                .filter(b -> b.getBorrowDate().plusDays(BOOK_BORROW_PERIOD).isBefore(LocalDateTime.now()))
                 .toList().isEmpty();
     }
 
     private int getNumOfReservedBooks(Long userId) {
         return this.bookStatusRepository.countByUserIdAndStatus(userId, BookStatusEnum.RESERVED);
+    }
+
+    private List<BookStatusEntity> getBorrowedBooks(Long userId) {
+        return this.bookStatusRepository.findAllByUserId(userId);
     }
 }

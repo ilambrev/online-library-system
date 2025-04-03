@@ -99,7 +99,6 @@ public class BookController {
                                           @RequestParam String username) {
 
 
-
         return String.format("redirect:/books/reservations?username=%s", username);
     }
 
@@ -121,7 +120,8 @@ public class BookController {
     public String overdueWarning(@AuthenticationPrincipal CustomUserDetails userDetails,
                                  Model model) {
 
-        model.addAttribute("overdueBooks", this.userService.getUserOverdueBooks(userDetails.getUsername()));
+        model.addAttribute("overdueBooks",
+                this.bookStatusService.getUserOverdueBooks(userDetails.getUsername()));
 
         return "overdue-warning";
     }

@@ -29,12 +29,6 @@ public class BookEntity extends BaseEntity {
     @Column(name = "created", nullable = false)
     private LocalDateTime created;
 
-    @Column(name = "borrow_date")
-    private LocalDateTime borrowDate;
-
-    @Column(name = "return_date")
-    private LocalDateTime returnDate;
-
     @Column(name = "borrow_counter")
     private int borrowCounter;
 
@@ -116,24 +110,6 @@ public class BookEntity extends BaseEntity {
 
     public BookEntity setCreated(LocalDateTime created) {
         this.created = created;
-        return this;
-    }
-
-    public LocalDateTime getBorrowDate() {
-        return borrowDate;
-    }
-
-    public BookEntity setBorrowDate(LocalDateTime borrowDate) {
-        this.borrowDate = borrowDate;
-        return this;
-    }
-
-    public LocalDateTime getReturnDate() {
-        return returnDate;
-    }
-
-    public BookEntity setReturnDate(LocalDateTime returnDate) {
-        this.returnDate = returnDate;
         return this;
     }
 
