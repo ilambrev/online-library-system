@@ -54,10 +54,12 @@
                     </div>
                 </div>
                 <div class="cart-buttons-container" th:if="${reservations.size() > 0}">
-                    <form th:action="@{/}" th:method="patch">
+                    <form th:action="@{/books/reservations/confirm}" th:method="patch">
+                        <input th:each="r : ${reservations}" type="hidden" name="id" th:value="*{r.id}">
+                        <input type="hidden" name="username" th:value="*{user}">
                         <button type="submit" class="reserve-button">Confirm</button>
                     </form>
-                    <a class="close-button" href="#">Close</a>
+                    <a class="close-button" th:href="@{/}">Close</a>
                 </div>
             </div>
         </main>

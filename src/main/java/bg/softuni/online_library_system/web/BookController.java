@@ -94,15 +94,18 @@ public class BookController {
         return "book-reservations";
     }
 
-    @PatchMapping("/reservations")
-    public String confirmBookReservations(@RequestParam String username,
-                                          UserSearchDTO userSearchDTO) {
+    @PatchMapping("/reservations/confirm")
+    public String confirmBookReservations(@RequestParam List<Long> id,
+                                          @RequestParam String username) {
+
+
 
         return String.format("redirect:/books/reservations?username=%s", username);
     }
 
     @PatchMapping("/reservations/cancel")
-    public String cancelBookReservation(@RequestParam Long id, String username,
+    public String cancelBookReservation(@RequestParam Long id,
+                                        @RequestParam String username,
                                         @AuthenticationPrincipal CustomUserDetails userDetails,
                                         HttpServletRequest request, HttpServletResponse response) {
         this.bookStatusService.cancelReservation(id);
