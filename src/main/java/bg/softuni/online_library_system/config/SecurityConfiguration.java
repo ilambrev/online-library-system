@@ -44,7 +44,10 @@ public class SecurityConfiguration {
                                         "/users/login", "/users/login-error", "/users/register").permitAll()
                                 .requestMatchers("/authors/add").hasAnyRole(UserRoleEnum.ADMIN.name(), UserRoleEnum.STAFF.name())
                                 .requestMatchers("/books/add").hasAnyRole(UserRoleEnum.ADMIN.name(), UserRoleEnum.STAFF.name())
-                                .requestMatchers("/admin/*").hasRole(UserRoleEnum.ADMIN.name())
+                                .requestMatchers("/admin/**").hasRole(UserRoleEnum.ADMIN.name())
+                                .requestMatchers("/books/reservations").hasAnyRole(UserRoleEnum.ADMIN.name(), UserRoleEnum.STAFF.name())
+                                .requestMatchers("/books/reservations/confirm").hasAnyRole(UserRoleEnum.ADMIN.name(), UserRoleEnum.STAFF.name())
+                                .requestMatchers("/books/reservations/cancel").hasAnyRole(UserRoleEnum.ADMIN.name(), UserRoleEnum.STAFF.name())
                                 .anyRequest().authenticated()
                 ).formLogin(
                         formLogin -> formLogin

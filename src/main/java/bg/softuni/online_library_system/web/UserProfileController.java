@@ -2,8 +2,10 @@ package bg.softuni.online_library_system.web;
 
 import bg.softuni.online_library_system.model.dto.UserChangePasswordDTO;
 import bg.softuni.online_library_system.model.dto.UserProfileDTO;
+import bg.softuni.online_library_system.model.enums.BookStatusEnum;
 import bg.softuni.online_library_system.model.enums.GenderEnum;
 import bg.softuni.online_library_system.model.security.CustomUserDetails;
+import bg.softuni.online_library_system.service.BookStatusService;
 import bg.softuni.online_library_system.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,10 +17,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
@@ -29,10 +28,12 @@ import static bg.softuni.online_library_system.common.constant.ValidationConstan
 @RequestMapping("/user")
 public class UserProfileController {
     private final UserService userService;
+    private final BookStatusService bookStatusService;
 
     @Autowired
-    public UserProfileController(UserService userService) {
+    public UserProfileController(UserService userService, BookStatusService bookStatusService) {
         this.userService = userService;
+        this.bookStatusService = bookStatusService;
     }
 
     @GetMapping("/profile")
@@ -84,5 +85,26 @@ public class UserProfileController {
                 .logout(request, response, SecurityContextHolder.getContext().getAuthentication());
 
         return "redirect:/users/login";
+    }
+
+    @GetMapping("/reservations")
+    public String searchBookReservations(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                         Model model) {
+
+        model.addAttribute("reservations",
+                this.bookStatusService.getAllByUserIdAndStatus(userDetails.getUsername(), BookStatusEnum.RESERVED));
+
+        return "user-book-reservations";
+    }
+
+    @PatchMapping("/reservations/cancel")
+    public String cancelBookReservation(@RequestParam Long id,
+                                        @AuthenticationPrincipal CustomUserDetails userDetails,
+                                        HttpServletRequest request, HttpServletResponse response) {
+
+        this.bookStatusService.cancelReservation(id);
+        this.userService.refreshAuthenticatedUser(userDetails.getUsername(), request, response);
+
+        return "redirect:/user/reservations";
     }
 }
