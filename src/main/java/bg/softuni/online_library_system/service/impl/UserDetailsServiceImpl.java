@@ -51,7 +51,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private boolean hasOverdueBooks(List<BookStatusEntity> borrowedBooks) {
         return !borrowedBooks
                 .stream()
-                .filter(b -> b.getBorrowDate().plusDays(BOOK_BORROW_PERIOD).isBefore(LocalDateTime.now()))
+                .filter(b -> b.getBorrowDate() != null &&
+                        b.getBorrowDate().plusDays(BOOK_BORROW_PERIOD).isBefore(LocalDateTime.now()))
                 .toList().isEmpty();
     }
 
@@ -60,6 +61,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     private List<BookStatusEntity> getBorrowedBooks(Long userId) {
-        return this.bookStatusRepository.findAllByUserId(userId);
+        return this.bookStatusRepository.findAllByUserIdAndStatus(userId, BookStatusEnum.BORROWED);
     }
 }

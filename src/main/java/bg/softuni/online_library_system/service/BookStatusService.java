@@ -13,4 +13,6 @@ public interface BookStatusService {
     void cancelReservation(Long id);
 
     List<BookDTO> getUserOverdueBooks(String username);
+
+    void confirmBookReservations(List<Long> ids);
 }

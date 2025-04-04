@@ -96,8 +96,15 @@ public class BookController {
 
     @PatchMapping("/reservations/confirm")
     public String confirmBookReservations(@RequestParam List<Long> id,
-                                          @RequestParam String username) {
+                                          @RequestParam String username,
+                                          @AuthenticationPrincipal CustomUserDetails userDetails,
+                                          HttpServletRequest request, HttpServletResponse response) {
 
+        this.bookStatusService.confirmBookReservations(id);
+
+        if (userDetails.getUsername().equals(username)) {
+            this.userService.refreshAuthenticatedUser(userDetails.getUsername(), request, response);
+        }
 
         return String.format("redirect:/books/reservations?username=%s", username);
     }

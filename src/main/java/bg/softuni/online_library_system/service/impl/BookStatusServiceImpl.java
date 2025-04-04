@@ -84,4 +84,14 @@ public class BookStatusServiceImpl implements BookStatusService {
 
         return overdueBooks;
     }
+
+    @Override
+    public void confirmBookReservations(List<Long> ids) {
+        List<BookStatusEntity> bookStatuses = this.bookStatusRepository.findBookStatusesByIds(ids)
+                .stream()
+                .map(s -> s.setStatus(BookStatusEnum.BORROWED).setBorrowDate(LocalDateTime.now()))
+                .toList();
+
+        this.bookStatusRepository.saveAll(bookStatuses);
+    }
 }
