@@ -25,9 +25,9 @@ public class MostReadBookScheduler {
     }
 
     @Transactional
-    @Scheduled(cron = "0 */5 * * * *")
-    //    @Scheduled(cron = "0 0 0 * * *")
-    public void updateMostBorrowedBooks() {
+    // @Scheduled(cron = "0 */5 * * * *") // For testing purposes on every 5 min
+    @Scheduled(cron = "0 0 0 * * *")
+    public void updateMostReadBooks() {
         List<BookEntity> books = this.bookRepository.findByOrderByBorrowCounterDesc(Limit.of(3));
         List<MostReadBookEntity> mostReadBooks = this.mostReadBookRepository.findAll();
 
