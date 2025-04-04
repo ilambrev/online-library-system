@@ -39,7 +39,7 @@ online-library-system:
 server:
   servlet:
     session:
-      timeout: 1m
+      timeout: 3m
 #  error:
 #    include-stacktrace: always
 #    whitelabel:

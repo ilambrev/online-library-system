@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/commons.html::head}">
+    <title>The Old Library</title>
+</head>
+
+<body>
+    <div class="site">
+        <header th:replace="~{/fragments/commons.html::header}">
+        </header>
+
+        <main>
+            <div class="most-read-book-container">
+                <div>
+                    <h2>Contact</h2>
+                </div>
+                <div class="contacts-types-holder">
+                    <div class="contact-card">
+                        <div class="contact-text-container">
+                            <h3>I have a technical question</h3>
+                            <p class="paragraph-text-centered">Please, contact the developer</p>
+                            <p>Ivan Lambrev</p>
+                            <!-- BOT PLEASE GO AWAY! -->
+                            <p>ilamb<!-- BOT PLEASE GO AWAY! -->r<!-- BOT PLEASE GO AWAY! -->ev@g<!-- BOT PLEASE GO AWAY! -->mail.com</p>
+                            <p><a href="https://github.com/ilambrev" target="_blank">https://github.com/ilambrev</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-text-container">
+                            <h3>I have a basic question</h3>
+                            <p class="paragraph-text-centered">Please, contact our library staff at</p>
+                            <p>old_libra<!-- BOT PLEASE GO AWAY! -->ri<!-- BOT PLEASE GO AWAY! -->an@abv.b<!-- BOT PLEASE GO AWAY! -->g</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer th:replace="~{/fragments/commons.html::footer}">
+        </footer>
+    </div>
+</body>
+
+</html>

@@ -40,10 +40,16 @@ public class HomeController {
     }
 
     @GetMapping("/about")
-    public String showAbout(Model model) {
+    public String getAbout(Model model) {
         model.addAttribute("authorsCount", this.authorRepository.count());
         model.addAttribute("booksCount", this.bookRepository.count());
 
         return "about";
+    }
+
+    @GetMapping("/contacts")
+    public String getContacts() {
+
+        return "contacts";
     }
 }

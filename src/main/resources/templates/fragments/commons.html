@@ -28,11 +28,11 @@
                 <li sec:authorize="!isAuthenticated()">
                     <a th:href="@{/authors/all(page=0, size=6)}">Authors</a>
                 </li>
-                <li class="dropdown"sec:authorize="hasRole('ADMIN') || hasRole('STAFF')">
+                <li class="dropdown" sec:authorize="hasRole('ADMIN') || hasRole('STAFF')">
                     <span>Authors <img class="arrow-icon" th:src="@{/images/dropdown-arrow.png}" alt="arrow"></span>
                     <ul class="dropdown-content">
                         <li>
-                            <a th:href="@{/authors/all(page=0, size=6)}">Show authors</a>
+                            <a th:href="@{/authors/all(page=0, size=6)}">Search authors</a>
                         </li>
                         <li>
                             <a th:href="@{/authors/add}">Add author</a>
@@ -46,13 +46,16 @@
                     <span>Books <img class="arrow-icon" th:src="@{/images/dropdown-arrow.png}" alt="arrow"></span>
                     <ul class="dropdown-content">
                         <li>
-                            <a th:href="@{/books/all(page=0, size=6)}">Show books</a>
+                            <a th:href="@{/books/all(page=0, size=6)}">Search books</a>
                         </li>
                         <li>
                             <a th:href="@{/books/add}">Add book</a>
                         </li>
                         <li>
-                            <a th:href="@{/books/reservations}">Book reservations</a>
+                            <a th:href="@{/books/reservations}">Borrow books</a>
+                        </li>
+                        <li>
+                            <a href="#">Return books</a>
                         </li>
                     </ul>
                 </li>
