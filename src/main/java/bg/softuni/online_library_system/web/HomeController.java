@@ -1,5 +1,7 @@
 package bg.softuni.online_library_system.web;
 
+import bg.softuni.online_library_system.repository.AuthorRepository;
+import bg.softuni.online_library_system.repository.BookRepository;
 import bg.softuni.online_library_system.repository.MostReadBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,10 +11,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
 public class HomeController {
+    private final AuthorRepository authorRepository;
+    private final BookRepository bookRepository;
     private final MostReadBookRepository mostReadBookRepository;
 
     @Autowired
-    public HomeController(MostReadBookRepository mostReadBookRepository) {
+    public HomeController(AuthorRepository authorRepository, BookRepository bookRepository, MostReadBookRepository mostReadBookRepository) {
+        this.authorRepository = authorRepository;
+        this.bookRepository = bookRepository;
         this.mostReadBookRepository = mostReadBookRepository;
     }
 
@@ -34,7 +40,9 @@ public class HomeController {
     }
 
     @GetMapping("/about")
-    public String showAbout() {
+    public String showAbout(Model model) {
+        model.addAttribute("authorsCount", this.authorRepository.count());
+        model.addAttribute("booksCount", this.bookRepository.count());
 
         return "about";
     }
