@@ -34,7 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<GrantedAuthority> authorities =
                 List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().getRole().name()));
 
-        List<BookStatusEntity> borrowedBooks = getBorrowedBooks(user.getId());
+        List<BookStatusEntity> statuses = getStatusesBorrowed(user.getId());
 
         return new CustomUserDetails(
                 user.getUsername(),
@@ -42,14 +42,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getImageURL(),
-                borrowedBooks.size(),
+                statuses.size(),
                 getNumOfReservedBooks(user.getId()),
-                hasOverdueBooks(borrowedBooks),
+                hasOverdueBooks(statuses),
                 authorities);
     }
 
-    private boolean hasOverdueBooks(List<BookStatusEntity> borrowedBooks) {
-        return !borrowedBooks
+    private boolean hasOverdueBooks(List<BookStatusEntity> statuses) {
+        return !statuses
                 .stream()
                 .filter(b -> b.getBorrowDate() != null &&
                         b.getBorrowDate().plusDays(BOOK_BORROW_PERIOD).isBefore(LocalDateTime.now()))
@@ -60,7 +60,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return this.bookStatusRepository.countByUserIdAndStatus(userId, BookStatusEnum.RESERVED);
     }
 
-    private List<BookStatusEntity> getBorrowedBooks(Long userId) {
+    private List<BookStatusEntity> getStatusesBorrowed(Long userId) {
         return this.bookStatusRepository.findAllByUserIdAndStatus(userId, BookStatusEnum.BORROWED);
     }
 }
