@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: online-library-system
+  datasource:
+    driver-class-name: org.hsqldb.jdbc.JDBCDriver
+    url: jdbc:hsqldb:mem:test_db;sql.syntax_mys=true;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: never
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+logging:
+  level:
+    org.hibernate.orm.jdbc.bind: TRACE
+    org.hibernate:sql: DEBUG
+#    org.springframework.security: TRACE
+
+cloudinary:
+  url: cloudinary://123456789012345:A12bc2BcdefGh34IjklM5678Nop@abcdefghi
+
+online-library-system:
+  auth:
+    remember-me-key: 12345
+
+server:
+  servlet:
+    session:
+      timeout: 3m

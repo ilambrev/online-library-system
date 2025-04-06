@@ -3,6 +3,7 @@ package bg.softuni.online_library_system.model.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.BatchSize;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,6 +27,7 @@ public class AuthorEntity extends BaseEntity {
     private List<BookEntity> books;
 
     public AuthorEntity() {
+        this.books = new ArrayList<>();
     }
 
     public String getFirstName() {

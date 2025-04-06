@@ -1,5 +1,6 @@
 package bg.softuni.online_library_system.service.impl;
 
+import bg.softuni.online_library_system.exception.ObjectNotFoundException;
 import bg.softuni.online_library_system.model.dto.AddAuthorDTO;
 import bg.softuni.online_library_system.model.dto.AuthorDTO;
 import bg.softuni.online_library_system.model.dto.AuthorRestDTO;
@@ -20,7 +21,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static bg.softuni.online_library_system.common.constant.CloudinaryConstants.AUTHORS_IMAGES_DIRECTORY;
@@ -52,11 +52,10 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public AuthorDTO getAuthor(Long id) {
-        Optional<AuthorEntity> authorOptional = this.authorRepository.findById(id);
-        if (authorOptional.isEmpty()) {
-            return null;
+        AuthorEntity author = getAuthorById(id);
+        if (author == null) {
+            throw new ObjectNotFoundException(String.format("Author with id %d not found.", id));
         }
-        AuthorEntity author = authorOptional.get();
 
         return this.modelMapper.map(author, AuthorDTO.class);
     }
