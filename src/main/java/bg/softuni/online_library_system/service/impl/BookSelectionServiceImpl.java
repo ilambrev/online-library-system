@@ -1,5 +1,6 @@
 package bg.softuni.online_library_system.service.impl;
 
+import bg.softuni.online_library_system.exception.ObjectNotFoundException;
 import bg.softuni.online_library_system.model.dto.BookDTO;
 import bg.softuni.online_library_system.model.entity.BookEntity;
 import bg.softuni.online_library_system.model.entity.BookStatusEntity;
@@ -34,8 +35,10 @@ public class BookSelectionServiceImpl implements BookSelectionService {
 
     @Override
     public void changeBookStatus(Long id, boolean isBookAvailable) {
-        BookEntity book = this.bookRepository.findById(id).orElseThrow(RuntimeException::new);
+        BookEntity book = this.bookRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException(String.format("Book with id %d not found.", id)));
         book.setAvailable(isBookAvailable);
+
         this.bookRepository.save(book);
     }
 

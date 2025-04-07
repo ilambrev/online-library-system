@@ -1,12 +1,13 @@
 package bg.softuni.online_library_system.service.impl;
 
+import bg.softuni.online_library_system.model.dto.BookDTO;
 import bg.softuni.online_library_system.model.entity.*;
 import bg.softuni.online_library_system.model.enums.BookGenreEnum;
 import bg.softuni.online_library_system.model.enums.BookStatusEnum;
 import bg.softuni.online_library_system.model.enums.GenderEnum;
 import bg.softuni.online_library_system.model.enums.UserRoleEnum;
 import bg.softuni.online_library_system.repository.*;
-import bg.softuni.online_library_system.service.BookStatusService;
+import bg.softuni.online_library_system.service.BookSelectionService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,22 +16,22 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class BookStatusServiceImplTestIT {
+public class BookSelectionServiceImplTestIT {
 
     @Autowired
-    private BookStatusService bookStatusServiceToTest;
-
-    @Autowired
-    private BookStatusRepository bookStatusRepository;
+    private BookSelectionService bookSelectionServiceToTest;
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private BookStatusRepository bookStatusRepository;
 
     @Autowired
     private BookGenreRepository bookGenreRepository;
@@ -71,7 +72,60 @@ public class BookStatusServiceImplTestIT {
     }
 
     @Test
-    void testCancelReservation() {
+    void testChangeBookStatusWithExistingId() {
+        boolean isBookAvailable = false;
+        Long id = saveTestBookEntity(isBookAvailable);
+
+        bookSelectionServiceToTest.changeBookStatus(id, !isBookAvailable);
+        Optional<BookEntity> result = bookRepository.findById(id);
+
+        assertTrue(result.map(BookEntity::isAvailable).orElse(false));
+    }
+
+    @Test
+    void testisBookAvailableWithExistingId() {
+        boolean isBookAvailable = true;
+        Long id = saveTestBookEntity(isBookAvailable);
+
+        assertTrue(bookSelectionServiceToTest.isBookAvailable(id));
+    }
+
+    @Test
+    void testisBookAvailableWithNoExistingId() {
+        boolean isBookAvailable = true;
+        saveTestBookEntity(isBookAvailable);
+        Long id2 = 0L;
+
+        assertFalse(bookSelectionServiceToTest.isBookAvailable(id2));
+    }
+
+    @Test
+    void testGetAllBooksById() {
+        boolean isBookAvailable = true;
+        Long id = saveTestBookEntity(isBookAvailable);
+
+        List<BookDTO> result = bookSelectionServiceToTest.getAllBooksById(List.of(id));
+
+        assertEquals(1, result.size());
+        assertEquals(id, result.get(0).getId());
+        assertEquals("The Hitchhiker's Guide to the Galaxy", result.get(0).getTitle());
+        assertEquals("https://someimage.com", result.get(0).getImageURL());
+    }
+
+    @Test
+    void testMakeBooksAvailable() {
+        boolean isBookAvailable = false;
+        Long id = saveTestBookEntity(isBookAvailable);
+
+        bookSelectionServiceToTest.makeBooksAvailable(List.of(id));
+
+        Optional<BookEntity> result = bookRepository.findById(id);
+
+        assertTrue(result.map(BookEntity::isAvailable).orElse(false));
+    }
+
+    @Test
+    void testReserveBooks() {
         UserRoleEntity testUserRoleEntity = new UserRoleEntity()
                 .setRole(UserRoleEnum.USER)
                 .setDescription("User");
@@ -84,6 +138,21 @@ public class BookStatusServiceImplTestIT {
 
         UserEntity savedTestUserEntity = userRepository.save(testUserEntity);
 
+        boolean isBookAvailable = false;
+        Long id = saveTestBookEntity(isBookAvailable);
+
+        bookSelectionServiceToTest.reserveBooks(List.of(id), savedTestUserEntity.getUsername());
+
+        List<BookStatusEntity> bookStatusEntities = bookStatusRepository
+                .findAllByUserIdAndStatus(savedTestUserEntity.getId(), BookStatusEnum.RESERVED);
+
+        assertEquals(1, bookStatusEntities.size());
+        assertEquals(id, bookStatusEntities.get(0).getBook().getId());
+        assertEquals(BookStatusEnum.RESERVED, bookStatusEntities.get(0).getStatus());
+        assertEquals(savedTestUserEntity.getId(), bookStatusEntities.get(0).getUser().getId());
+    }
+
+    private Long saveTestBookEntity(boolean isBookAvailable) {
         PublisherEntity testPublisherEntity = createTestPublisherEntity();
         testPublisherEntity.setCreated(LocalDateTime.now());
         PublisherEntity savedTestPublisherEntity = publisherRepository.save(testPublisherEntity);
@@ -98,26 +167,11 @@ public class BookStatusServiceImplTestIT {
         testBookEntity.setGenre(testBookGenreEntity);
         testBookEntity.setCreated(LocalDateTime.now());
         testBookEntity.setAuthor(savedTestAuthorEntity);
+        testBookEntity.setAvailable(isBookAvailable);
 
         BookEntity savedTestBookEntity = bookRepository.save(testBookEntity);
 
-        BookStatusEntity testBookStatusEntity = createTestBookStatus();
-        testBookStatusEntity
-                .setUser(savedTestUserEntity)
-                .setBook(savedTestBookEntity)
-                .setReservationDate(LocalDateTime.now());
-
-        BookStatusEntity savedTestBookStatusEntity = bookStatusRepository.save(testBookStatusEntity);
-
-        bookStatusServiceToTest.cancelReservation(savedTestBookStatusEntity.getId());
-
-        Optional<BookStatusEntity> result = bookStatusRepository.findById(savedTestBookStatusEntity.getId());
-
-        assertEquals(BookStatusEnum.CANCELLED_RESERVATION.name(),
-                result.<Object>map(bookStatusEntity -> bookStatusEntity.getStatus()
-                        .name()).orElse(null));
-        assertTrue(result.map(bookStatusEntity -> bookStatusEntity.getBook().isAvailable())
-                .orElse(false));
+        return savedTestBookEntity.getId();
     }
 
     private static UserEntity createTestUserEntity() {
@@ -148,13 +202,7 @@ public class BookStatusServiceImplTestIT {
                 .setIsbn("9781400052929")
                 .setYear(2004)
                 .setPages(224)
-                .setImageURL("https://someimage.com")
-                .setAvailable(false);
-    }
-
-    private static BookStatusEntity createTestBookStatus() {
-        return new BookStatusEntity()
-                .setStatus(BookStatusEnum.RESERVED);
+                .setImageURL("https://someimage.com");
     }
 
     private static PublisherEntity createTestPublisherEntity() {
