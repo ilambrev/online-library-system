@@ -80,8 +80,6 @@ public class BookStatusServiceImpl implements BookStatusService {
                     .toList();
         }
 
-        System.out.println(overdueBooks);
-
         return overdueBooks;
     }
 

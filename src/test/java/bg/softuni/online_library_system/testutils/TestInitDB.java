@@ -1,4 +1,4 @@
-package bg.softuni.online_library_system.init;
+package bg.softuni.online_library_system.testutils;
 
 import bg.softuni.online_library_system.model.entity.BookGenreEntity;
 import bg.softuni.online_library_system.model.entity.MostReadBookEntity;
@@ -21,21 +21,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static bg.softuni.online_library_system.common.constant.AdministratorDataConstants.*;
 import static bg.softuni.online_library_system.common.constant.UserRoleDescriptionConstants.*;
 
-@Component
-public class InitDB implements CommandLineRunner {
+//@Component
+public class TestInitDB implements CommandLineRunner {
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
     private final BookGenreRepository bookGenreRepository;
     private final MostReadBookRepository mostReadBookRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public InitDB(UserRepository userRepository, UserRoleRepository userRoleRepository,
-                  BookGenreRepository bookGenreRepository, MostReadBookRepository mostReadBookRepository,
-                  PasswordEncoder passwordEncoder) {
+//    @Autowired
+    public TestInitDB(UserRepository userRepository, UserRoleRepository userRoleRepository,
+                      BookGenreRepository bookGenreRepository, MostReadBookRepository mostReadBookRepository,
+                      PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.bookGenreRepository = bookGenreRepository;
@@ -57,18 +56,18 @@ public class InitDB implements CommandLineRunner {
         }
 
         if (this.userRepository.count() == 0) {
-            UserRoleEntity administratorRole = this.userRoleRepository.findByRole(UserRoleEnum.ADMIN);
+            UserRoleEntity userRole = this.userRoleRepository.findByRole(UserRoleEnum.USER);
             UserEntity administrator = new UserEntity()
-                    .setFirstName(FIRST_NAME)
-                    .setLastName(LAST_NAME)
-                    .setUsername(USER_NAME)
-                    .setPassword(this.passwordEncoder.encode(PASSWORD))
-                    .setEmail(EMAIL)
-                    .setPhoneNumber(PHONE_NUMBER)
-                    .setAddress(ADDRESS)
-                    .setImageURL("/images/admin_m.png")
+                    .setFirstName("Dave")
+                    .setLastName("Lombardo")
+                    .setUsername("lombardo")
+                    .setPassword(this.passwordEncoder.encode("1234567890"))
+                    .setEmail("lombardo@test.com")
+                    .setPhoneNumber("+359555111222")
+                    .setAddress("Somewhere")
+                    .setImageURL("https://someimage.com")
                     .setGender(GenderEnum.MALE)
-                    .setRole(administratorRole)
+                    .setRole(userRole)
                     .setActive(true);
 
             this.userRepository.save(administrator);

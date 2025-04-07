@@ -20,8 +20,8 @@ public class UserRegistrationControllerTestIT {
 
     @Test
     void userRegisterGet() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/users/register").with(csrf())
-                ).andExpect(status().isOk())
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/register").with(csrf()))
+                .andExpect(status().isOk())
                 .andExpect(view().name("register"));
     }
 
@@ -38,8 +38,8 @@ public class UserRegistrationControllerTestIT {
                         .param("address", "Sofia, 25 Somewhere Str.")
                         .param("imageFile", "")
                         .param("gender", GenderEnum.MALE.name())
-                        .with(csrf())
-                ).andExpect(status().is3xxRedirection())
+                        .with(csrf()))
+                .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/users/register"));
     }
 }
