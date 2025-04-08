@@ -88,7 +88,7 @@ public class UserProfileController {
     }
 
     @GetMapping("/reservations")
-    public String searchBookReservations(@AuthenticationPrincipal CustomUserDetails userDetails,
+    public String getBookReservations(@AuthenticationPrincipal CustomUserDetails userDetails,
                                          Model model) {
 
         model.addAttribute("reservations",
@@ -106,5 +106,15 @@ public class UserProfileController {
         this.userService.refreshAuthenticatedUser(userDetails.getUsername(), request, response);
 
         return "redirect:/user/reservations";
+    }
+
+    @GetMapping("/borrowed-books")
+    public String getBorrowedBooks(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                      Model model) {
+
+        model.addAttribute("borrowedBooks",
+                this.bookStatusService.getAllByUserIdAndStatus(userDetails.getUsername(), BookStatusEnum.BORROWED));
+
+        return "user-borrowed-books";
     }
 }

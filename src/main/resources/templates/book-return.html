@@ -45,7 +45,7 @@
                         <div class="book-name-container">
                             <div class="book-return-name-container">
                                 <p th:text="${b.bookTitle}">The Hitchhiker's Guide to the Galaxy</p>
-                                <p class="date" th:text="${b.getReturnDeadline()}">Return deadline: 21/04/2025 17:21</p>
+                                <p class="date">Return deadline: <span th:text="${b.getReturnDeadline()}">21/04/2025 17:21</span></p>
                             </div>
                             <div>
                                 <form th:action="@{/books/borrow/return(id=${b.id}, username=${user})}" th:method="patch">

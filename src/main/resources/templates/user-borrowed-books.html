@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/commons.html::head}">
+    <title>The Old Library</title>
+</head>
+
+<body>
+    <div class="site">
+        <header th:replace="~{/fragments/commons.html::header}">
+        </header>
+
+        <main>
+            <div class="cart-container">
+                <div class="text-content-container">
+                    <h2>Borrowed books</h2>
+                    <h3>List of books</h3>
+                </div>
+                <div class="cart-books-names-container">
+                    <div class="book-container" th:each="b : ${borrowedBooks}">
+                        <div class="book-image-container">
+                            <div class="book-image-holder">
+                                <img th:src="${b.bookImageURL}" alt="Author image">
+                            </div>
+                        </div>
+                        <div class="book-name-container">
+                            <div class="book-return-name-container">
+                                <p th:text="${b.bookTitle}">The Hitchhiker's Guide to the Galaxy</p>
+                                <p class="date">Return deadline: <span th:text="${b.getReturnDeadline()}">21/04/2025 17:21</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-buttons-container">
+                    <a class="close-button" th:href="@{/}">Close</a>
+                </div>
+            </div>
+        </main>
+
+        <footer th:replace="~{/fragments/commons.html::footer}">
+        </footer>
+    </div>
+</body>
+
+</html>
