@@ -92,4 +92,20 @@ public class BookStatusServiceImpl implements BookStatusService {
 
         this.bookStatusRepository.saveAll(bookStatuses);
     }
+
+    @Override
+    public void returnBook(Long id) {
+        BookStatusEntity bookStatus = this.bookStatusRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException(String.format("Status with id %d not found.", id)));
+        BookEntity book = this.bookRepository.findById(bookStatus.getBook().getId())
+                .orElseThrow(() -> new ObjectNotFoundException(String
+                        .format("Book with id %d not found.", bookStatus.getBook().getId())));
+        bookStatus.setStatus(BookStatusEnum.RETURNED).setReturnDate(LocalDateTime.now());
+
+        this.bookStatusRepository.save(bookStatus);
+
+        book.setAvailable(true);
+
+        this.bookRepository.save(book);
+    }
 }

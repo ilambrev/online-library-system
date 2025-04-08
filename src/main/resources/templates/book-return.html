@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/commons.html::head}">
+    <title>The Old Library</title>
+</head>
+
+<body>
+    <div class="site">
+        <header th:replace="~{/fragments/commons.html::header}">
+        </header>
+
+        <main>
+            <div class="cart-container">
+                <div class="text-content-container">
+                    <h2>Borrowed books</h2>
+                    <form class="books-reservation-form"
+                          th:action="@{/books/borrow(username=*{username})}"
+                          th:method="get"
+                          th:object="${userSearchDTO}">
+                        <div class="form-row-container">
+                            <label for="username">Search by username:</label>
+                        </div>
+                        <div class="form-row-container">
+                            <input type="text" id="username" placeholder="Type username..."
+                                   th:field="*{username}">
+                            <input class="search-button" type="submit" value="Search">
+                        </div>
+                    </form>
+                    <div class="cart-stat-container" th:if="${isSearchMade}">
+                        <div class="cart-stat-container-row">
+                            <p>Books found: </p>
+                            <span th:text="${borrowedBooks.size()}">2</span>
+                        </div>
+                    </div>
+                    <h3 th:if="${borrowedBooks.size() > 0}">Books to return</h3>
+                </div>
+                <div class="cart-books-names-container" th:each="b : ${borrowedBooks}">
+                    <div class="book-container">
+                        <div class="book-image-container">
+                            <div class="book-image-holder">
+                                <img th:src="${b.bookImageURL}" alt="Author image">
+                            </div>
+                        </div>
+                        <div class="book-name-container">
+                            <div class="book-return-name-container">
+                                <p th:text="${b.bookTitle}">The Hitchhiker's Guide to the Galaxy</p>
+                                <p class="date" th:text="${b.getReturnDeadline()}">Return deadline: 21/04/2025 17:21</p>
+                            </div>
+                            <div>
+                                <form th:action="@{/books/borrow/return(id=${b.id}, username=${user})}" th:method="patch">
+                                    <button type="submit" class="book-return-button">Return</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-buttons-container">
+                    <a class="close-button" th:href="@{/}">Close</a>
+                </div>
+            </div>
+        </main>
+
+        <footer th:replace="~{/fragments/commons.html::footer}">
+        </footer>
+    </div>
+</body>
+
+</html>

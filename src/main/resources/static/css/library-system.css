@@ -874,6 +874,7 @@ h3 {
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
+    padding-right: 20px;
 }
 
 .book-about-buttons-container a {
@@ -882,6 +883,17 @@ h3 {
     border-radius: 20px;
     color: blue;
     font-size: 14px;
+}
+
+.book-reserve-button {
+    background-color: #f9d342;
+    padding: 6px 16px;
+    border-radius: 20px;
+    color: blue;
+    font-size: 14px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
 }
 
 /* Books */
@@ -969,7 +981,7 @@ h3 {
     gap: 20px;
     background-color: rgb(0 0 0 / 0.5);
     max-width: 800px;
-    max-height: 600px;
+    max-height: 640px;
     padding: 20px 40px;
     border-radius: 20px;
     color: #e4d8c9;
@@ -1061,6 +1073,29 @@ h3 {
 }
 
 .reservation-cancel-button {
+    background-color: #f9d342;
+    padding: 6px 16px;
+    border-radius: 20px;
+    color: blue;
+    font-size: 14px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
+/* Book return */
+
+.book-return-name-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.date {
+    font-size: 12px;
+}
+
+.book-return-button {
     background-color: #f9d342;
     padding: 6px 16px;
     border-radius: 20px;

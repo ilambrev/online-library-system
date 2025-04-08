@@ -15,4 +15,6 @@ public interface BookStatusService {
     List<BookDTO> getUserOverdueBooks(String username);
 
     void confirmBookReservations(List<Long> ids);
+
+    void returnBook(Long id);
 }

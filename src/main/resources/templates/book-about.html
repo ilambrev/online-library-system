@@ -39,7 +39,9 @@
                     </div>
                     <div class="book-about-buttons-container">
                         <p>Status: <span th:text="*{available} ? 'available' : 'unavailable'">available</span></p>
-                        <a th:if="*{available}" th:href="@{/cart/add(id=*{id})}">Reserve</a>
+                        <form th:if="*{available}" th:action="@{/cart/add(id=*{id})}" th:method="post">
+                            <button type="submit" class="book-reserve-button">Reserve</button>
+                        </form>
                     </div>
                 </div>
             </div>

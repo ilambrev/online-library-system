@@ -94,6 +94,36 @@ public class BookController {
         return "book-reservations";
     }
 
+    @GetMapping("/borrow")
+    public String searchBorrowedBooks(@RequestParam(required = false) String username, Model model) {
+        boolean isSearchMade = username != null && !username.isEmpty();
+        List<BookStatusDTO> borrowedBooks = new ArrayList<>();
+
+        if (isSearchMade) {
+            borrowedBooks = this.bookStatusService.getAllByUserIdAndStatus(username, BookStatusEnum.BORROWED);
+            model.addAttribute("user", username);
+        }
+        model.addAttribute("isSearchMade", isSearchMade);
+        model.addAttribute("borrowedBooks", borrowedBooks);
+        model.addAttribute("userSearchDTO", new UserSearchDTO());
+
+        return "book-return";
+    }
+
+    @PatchMapping("/borrow/return")
+    public String returnBook(@RequestParam Long id,
+                             @RequestParam String username,
+                             @AuthenticationPrincipal CustomUserDetails userDetails,
+                             HttpServletRequest request, HttpServletResponse response) {
+        this.bookStatusService.returnBook(id);
+
+        if (userDetails.getUsername().equals(username)) {
+            this.userService.refreshAuthenticatedUser(userDetails.getUsername(), request, response);
+        }
+
+        return String.format("redirect:/books/borrow?username=%s", username);
+    }
+
     @PatchMapping("/reservations/confirm")
     public String confirmBookReservations(@RequestParam List<Long> id,
                                           @RequestParam String username,

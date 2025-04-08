@@ -34,13 +34,13 @@ public class BookSelectionController {
         this.userService = userService;
     }
 
-    @GetMapping("/add")
+    @PostMapping("/add")
     public String addBookToCart(@RequestParam Long id,
                                 @AuthenticationPrincipal CustomUserDetails userDetails,
                                 HttpSession session) {
         if (userDetails.getBorrowedBooks() == MAX_NUMBER_OF_BORROWED_BOOKS) {
 
-            return "cart";
+            return "redirect:/cart/content";
         }
         List<Long> selectedBooksIds = new ArrayList<>();
         if (session.getAttribute("selectedBooks") == null) {

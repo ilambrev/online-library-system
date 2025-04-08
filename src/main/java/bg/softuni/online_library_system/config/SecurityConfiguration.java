@@ -48,6 +48,8 @@ public class SecurityConfiguration {
                                 .requestMatchers("/books/reservations").hasAnyRole(UserRoleEnum.ADMIN.name(), UserRoleEnum.STAFF.name())
                                 .requestMatchers("/books/reservations/confirm").hasAnyRole(UserRoleEnum.ADMIN.name(), UserRoleEnum.STAFF.name())
                                 .requestMatchers("/books/reservations/cancel").hasAnyRole(UserRoleEnum.ADMIN.name(), UserRoleEnum.STAFF.name())
+                                .requestMatchers("/books/borrow").hasAnyRole(UserRoleEnum.ADMIN.name(), UserRoleEnum.STAFF.name())
+                                .requestMatchers("/books/borrow/return").hasAnyRole(UserRoleEnum.ADMIN.name(), UserRoleEnum.STAFF.name())
                                 .anyRequest().authenticated()
                 ).formLogin(
                         formLogin -> formLogin
