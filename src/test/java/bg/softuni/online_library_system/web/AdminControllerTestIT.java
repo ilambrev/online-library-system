@@ -2,7 +2,6 @@ package bg.softuni.online_library_system.web;
 
 import bg.softuni.online_library_system.model.security.CustomUserDetails;
 import bg.softuni.online_library_system.repository.UserRepository;
-import bg.softuni.online_library_system.repository.UserRoleRepository;
 import bg.softuni.online_library_system.testutils.CustomUserDetailsTestHelper;
 import bg.softuni.online_library_system.testutils.TestUtil;
 import org.junit.jupiter.api.AfterEach;
@@ -31,9 +30,6 @@ public class AdminControllerTestIT {
     private UserRepository userRepository;
 
     @Autowired
-    private UserRoleRepository userRoleRepository;
-
-    @Autowired
     private TestUtil testUtil;
 
     @BeforeEach
@@ -44,7 +40,6 @@ public class AdminControllerTestIT {
         SecurityContextHolder.getContext().setAuthentication(auth);
 
         userRepository.deleteAll();
-        userRoleRepository.deleteAll();
     }
 
     @AfterEach
@@ -52,7 +47,6 @@ public class AdminControllerTestIT {
         SecurityContextHolder.clearContext();
 
         userRepository.deleteAll();
-        userRoleRepository.deleteAll();
     }
 
     @Test

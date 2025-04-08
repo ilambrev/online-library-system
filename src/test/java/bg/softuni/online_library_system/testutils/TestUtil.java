@@ -35,9 +35,8 @@ public class TestUtil {
         this.passwordEncoder = passwordEncoder;
     }
 
-
     public UserEntity createUser() {
-        UserRoleEntity userRole = createUserRole();
+        UserRoleEntity userRole = this.userRoleRepository.findByRole(UserRoleEnum.ADMIN);
 
         UserEntity user = new UserEntity()
                 .setFirstName("Dave")
@@ -53,14 +52,6 @@ public class TestUtil {
                 .setRole(userRole);
 
         return this.userRepository.save(user);
-    }
-
-    public UserRoleEntity createUserRole() {
-        UserRoleEntity userRole = new UserRoleEntity()
-                .setRole(UserRoleEnum.ADMIN)
-                .setDescription("Admin");
-
-        return this.userRoleRepository.save(userRole);
     }
 
     public BookEntity createBook() {
