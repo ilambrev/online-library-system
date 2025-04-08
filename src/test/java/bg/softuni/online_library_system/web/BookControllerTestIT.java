@@ -87,9 +87,20 @@ public class BookControllerTestIT {
 
     @Test
     void searchBookReservationsGet() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/books/reservations").with(csrf()))
+        mockMvc.perform(MockMvcRequestBuilders.get("/books/reservations")
+                        .queryParam("username", "lombardo")
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("book-reservations"));
+    }
+
+    @Test
+    void searchBorrowedBooksGet() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/books/borrow")
+                        .queryParam("username", "lombardo")
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("book-return"));
     }
 
     @Test
