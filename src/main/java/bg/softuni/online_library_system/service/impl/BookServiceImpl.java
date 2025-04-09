@@ -70,8 +70,7 @@ public class BookServiceImpl implements BookService {
             newBook.setImageURL(imageUrl);
         }
 
-        return 7L;
-//        return this.bookRepository.save(newBook).getId();
+        return this.bookRepository.save(newBook).getId();
     }
 
     @Override

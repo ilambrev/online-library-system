@@ -42,6 +42,9 @@ public final class ValidationConstants {
     public static final String ISBN_VALID_TYPE = "ISBN must be 10 or 13 digit valid number.";
     public static final String ISBN_NOT_NULL = "ISBN must be provided.";
     public static final String GENRE_NOT_NULL = "Genre must be provided.";
+    public static final String AUTHOR_REQUIRED = "Author name must be provided";
+    public static final String AUTHOR_NAME_LENGTH = "Author name must be between 5 and 41 symbols.";
+    public static final String NON_EXISTING_AUTHOR = "The author's name was not found. You must first enter the author in the database.";
 
     public static final String INVALID_FILE_SIZE = "File size must be less than 2MB.";
     public static final String INVALID_FILE_TYPE = "Invalid file type. Only JPEG, PNG, and GIF are allowed.";

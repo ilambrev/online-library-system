@@ -1,6 +1,7 @@
 package bg.softuni.online_library_system.model.dto;
 
 import bg.softuni.online_library_system.model.enums.BookGenreEnum;
+import bg.softuni.online_library_system.model.validation.ExistingAuthor;
 import bg.softuni.online_library_system.model.validation.ValidImageType;
 import bg.softuni.online_library_system.model.validation.YearNotInTheFuture;
 import jakarta.validation.constraints.*;
@@ -34,7 +35,9 @@ public class AddBookDTO {
     @ValidImageType(message = INVALID_FILE_TYPE)
     private MultipartFile imageFile;
 
-    @NotEmpty(message = "Author is not present. Add author to DB first.")
+    @NotEmpty(message = AUTHOR_REQUIRED)
+    @Size(min = 5, max = 41, message = AUTHOR_NAME_LENGTH)
+    @ExistingAuthor(message = NON_EXISTING_AUTHOR)
     private String author;
 
     @NotNull(message = GENRE_NOT_NULL)
