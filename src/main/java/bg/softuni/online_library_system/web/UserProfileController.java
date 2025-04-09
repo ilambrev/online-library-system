@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 
 import static bg.softuni.online_library_system.common.constant.ValidationConstants.BINDING_RESULT_PATH;
+import static bg.softuni.online_library_system.common.constant.ValidationConstants.INVALID_FILE_SIZE;
 
 @Controller
 @RequestMapping("/user")
@@ -37,18 +38,45 @@ public class UserProfileController {
         this.bookStatusService = bookStatusService;
     }
 
+    @ModelAttribute
+    public void addErrorMessage(Model model) {
+        model.addAttribute("errorMessage", INVALID_FILE_SIZE);
+    }
+
+    @ModelAttribute
+    public void addProfileInfo(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+        UserProfileDTO userProfileDTO = this.userService.getUserProfileData(userDetails.getUsername());
+
+        model.addAttribute("username", userDetails.getUsername());
+        model.addAttribute("role", userProfileDTO.getRole());
+        model.addAttribute("imageURL", userDetails.getImageURL());
+        model.addAttribute("genders", GenderEnum.values());
+    }
+
     @GetMapping("/profile")
     public String getUserProfile(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
-        model.addAttribute("userProfileDTO", this.userService.getUserProfileData(userDetails.getUsername()));
-        model.addAttribute("genders", GenderEnum.values());
+        UserProfileDTO userProfileDTO = this.userService.getUserProfileData(userDetails.getUsername());
+
+        if (!model.containsAttribute("userProfileDTO")) {
+            model.addAttribute("userProfileDTO", userProfileDTO);
+        }
+        if (!model.containsAttribute("isFileSizeExceeded")) {
+            model.addAttribute("isFileSizeExceeded", false);
+        }
 
         return "profile";
     }
 
     @PatchMapping("/profile")
-    public String editUserProfile(@AuthenticationPrincipal CustomUserDetails userDetails,
-                                  HttpServletRequest request, HttpServletResponse response,
-                                  UserProfileDTO userProfileDTO) throws IOException {
+    public String editUserProfile(@Valid @ModelAttribute("userProfileDTO") UserProfileDTO userProfileDTO,
+                                  BindingResult bindingResult,
+                                  @AuthenticationPrincipal CustomUserDetails userDetails,
+                                  HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        if (bindingResult.hasErrors()) {
+            return "profile";
+        }
+
         this.userService.editUser(userProfileDTO.setUsername(userDetails.getUsername()), request, response);
 
         return "redirect:/user/profile";

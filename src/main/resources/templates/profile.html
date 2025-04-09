@@ -12,19 +12,19 @@
 
         <main>
             <div class="profile-container">
-                <form class="profile-form" autocomplete="off" enctype="multipart/form-data"
+                <form class="profile-form" autocomplete="off" enctype="multipart/form-data" novalidate
                       th:action="@{/user/profile}"
                       th:method="patch"
                       th:object="${userProfileDTO}" >
                     <div class="form-row-container">
                         <div class="profile-image-container">
                             <div class="profile-image-holder">
-                                <img th:src="*{imageURL}" alt="User image"
+                                <img th:src="${imageURL}" alt="User image"
                                 th:field="*{imageURL}">
                             </div>
                             <div>
-                                <p th:text="*{username}">username</p>
-                                <p th:switch="*{role.name()}">[
+                                <p th:text="${username}">username</p>
+                                <p th:switch="${role.name()}">[
                                     <span th:case="'USER'">Reader</span>
                                     <span th:case="'STAFF'">Librarian</span>
                                     <span th:case="'ADMIN'">Administrator</span>
@@ -33,11 +33,14 @@
                         </div>
                         <div class="verify-password-container">
                             <div class="input-field-container">
+                                <p class="validation-error-message-profile"
+                                   th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Message</p>
                             </div>
                             <div class="input-field-container" id="password-container">
                                 <label for="password">Verify password:</label>
                                 <input type="password" id="password" autocomplete="new-password" placeholder="Type your password..."
-                                       th:field="*{password}"/>
+                                       th:field="*{password}"
+                                       th:errorclass="'input-validation-error'"/>
                                 <div class="input-field-container">
                                 </div>
                             </div>
@@ -47,31 +50,46 @@
                         <div class="input-field-container">
                             <label for="firstName">First name:</label>
                             <input type="text" id="firstName"
-                            th:field="*{firstName}"/>
+                                   th:field="*{firstName}"
+                                   th:errorclass="'input-validation-error'"/>
+                            <p class="validation-error-message-profile"
+                               th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Message</p>
                         </div>
                         <div class="input-field-container">
                             <label for="lastName">Last name:</label>
                             <input type="text" id="lastName"
-                            th:field="*{lastName}"/>
+                                   th:field="*{lastName}"
+                                   th:errorclass="'input-validation-error'"/>
+                            <p class="validation-error-message-profile"
+                               th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Message</p>
                         </div>
                     </div>
                     <div class="form-row-container">
                         <div class="input-field-container">
                             <label for="email">E-mail:</label>
                             <input type="email" id="email"
-                            th:field="*{email}"/>
+                                   th:field="*{email}"
+                                   th:errorclass="'input-validation-error'"/>
+                            <p class="validation-error-message-profile"
+                               th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Message</p>
                         </div>
                         <div class="input-field-container">
                             <label for="phoneNumber">Phone number:</label>
                             <input type="text" id="phoneNumber"
-                            th:field="*{phoneNumber}"/>
+                                   th:field="*{phoneNumber}"
+                                   th:errorclass="'input-validation-error'"/>
+                            <p class="validation-error-message-profile"
+                               th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Message</p>
                         </div>
                     </div>
                     <div class="form-row-container">
                         <div class="input-field-container">
                             <label for="address">Address:</label>
                             <input type="text" id="address"
-                            th:field="*{address}"/>
+                                   th:field="*{address}"
+                                   th:errorclass="'input-validation-error'"/>
+                            <p class="validation-error-message-profile"
+                               th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Message</p>
                         </div>
                     </div>
                     <div class="form-row-container">
@@ -83,14 +101,21 @@
                                            th:text="${#strings.capitalizeWords(#strings.toLowerCase(g))}">Male</label>
                                     <input type="radio" th:id="${#strings.toLowerCase(g)}"
                                            th:field="*{gender}"
-                                           th:value="${g}"/>
+                                           th:value="${g}"
+                                           th:errorclass="'input-validation-error'"/>
                                 </div>
+                                <p class="validation-error-message-profile"
+                                   th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">Message</p>
                             </div>
                         </div>
                         <div class="input-field-container input-file-width">
                             <label for="imageFile">Image:</label>
                             <input type="file" id="imageFile" multiple="multiple"
                             th:field="*{imageFile}"/>
+                            <p class="validation-error-message-profile"
+                               th:if="${isFileSizeExceeded}" th:text="${errorMessage}">Message</p>
+                            <p class="validation-error-message-profile"
+                               th:if="${#fields.hasErrors('imageFile')}" th:errors="*{imageFile}">Message</p>
                         </div>
                     </div>
                     <div class="profile-buttons-container">

@@ -2,32 +2,51 @@ package bg.softuni.online_library_system.model.dto;
 
 import bg.softuni.online_library_system.model.enums.GenderEnum;
 import bg.softuni.online_library_system.model.enums.UserRoleEnum;
+import bg.softuni.online_library_system.model.validation.ValidImageType;
+import bg.softuni.online_library_system.model.validation.ValidPassword;
+import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import static bg.softuni.online_library_system.common.constant.ValidationConstants.*;
 
 public class UserProfileDTO {
 
+    @NotEmpty(message = FIRST_NAME_REQUIRED)
+    @Size(min = 2, max = 20, message = FIRST_NAME_LENGTH)
     private String firstName;
 
+    @NotEmpty(message = LAST_NAME_REQUIRED)
+    @Size(min = 2, max = 20, message = LAST_NAME_LENGTH)
     private String lastName;
 
     private String username;
 
+    @ValidPassword
     private String password;
 
     private String newPassword;
 
+    @NotNull(message = EMAIL_REQUIRED)
+    @Email(message = EMAIL_FORMAT)
+    @Size(min = 6, max = 40, message = EMAIL_LENGTH)
     private String email;
 
+    @NotEmpty(message = PHONE_NUMBER_REQUIRED)
+    @Pattern(regexp = PHONE_NUMBER_PATTERN, message = PHONE_NUMBER_WRONG_FORMAT)
     private String phoneNumber;
 
+    @NotEmpty(message = ADDRESS_REQUIRED)
+    @Size(min = 3, max = 60, message = ADDRESS_LENGTH)
     private String address;
 
     private String imageURL;
 
+    @NotNull(message = GENDER_NOT_NULL)
     private GenderEnum gender;
 
     private UserRoleEnum role;
 
+    @ValidImageType(message = INVALID_FILE_TYPE)
     private MultipartFile imageFile;
 
     public UserProfileDTO() {
