@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,7 +56,20 @@ public class UserServiceImplTestIT {
     void testRegisterUser() throws IOException {
         UserRegistrationDTO testUserRegistrationDTO = createTestUserRegistrationDTO();
 
-        assertTrue(userServiceToTest.registerUser(testUserRegistrationDTO));
+        userServiceToTest.registerUser(testUserRegistrationDTO);
+
+        Optional<UserEntity> result = this.userRepository.findByUsername(testUserRegistrationDTO.getUsername());
+
+        assertTrue(result.isPresent());
+        UserEntity user = result.get();
+        assertEquals(testUserRegistrationDTO.getFirstName(), user.getFirstName());
+        assertEquals(testUserRegistrationDTO.getLastName(), user.getLastName());
+        assertTrue(this.passwordEncoder.matches(testUserRegistrationDTO.getPassword(), user.getPassword()));
+        assertEquals(testUserRegistrationDTO.getEmail(), user.getEmail());
+        assertEquals(testUserRegistrationDTO.getAddress(), user.getAddress());
+        assertEquals(testUserRegistrationDTO.getPhoneNumber(), user.getPhoneNumber());
+        assertEquals("/images/user_m.png", user.getImageURL());
+        assertEquals(testUserRegistrationDTO.getGender(), user.getGender());
     }
 
     @Test
