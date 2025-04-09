@@ -112,6 +112,13 @@ public class UserServiceImpl implements UserService {
         }
         if (!user.getGender().equals(userProfileDTO.getGender())) {
             user.setGender(userProfileDTO.getGender());
+            if (user.getImageURL().startsWith("/images/")) {
+                String imageURL = user.getImageURL();
+                imageURL = userProfileDTO.getGender().equals(GenderEnum.MALE) ?
+                        imageURL.replace("_f", "_m") :
+                        imageURL.replace("_m", "_f");
+                user.setImageURL(imageURL);
+            }
         }
         if (!userProfileDTO.getImageFile().isEmpty()) {
             this.cloudinaryService.deleteFile(user.getImageURL());
@@ -158,6 +165,23 @@ public class UserServiceImpl implements UserService {
     public void changeUserRole(Long id, UserRoleEnum role) {
         UserEntity user = this.userRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException(String.format("User with id %d not found.", id)));
+
+        if (user.getImageURL().startsWith("/images/")) {
+            if (user.getGender().equals(GenderEnum.MALE)) {
+                switch (role) {
+                    case USER -> user.setImageURL("/images/user_m.png");
+                    case STAFF -> user.setImageURL("/images/staff_m.png");
+                    case ADMIN -> user.setImageURL("/images/admin_m.png");
+                }
+            } else {
+                switch (role) {
+                    case USER -> user.setImageURL("/images/user_f.png");
+                    case STAFF -> user.setImageURL("/images/staff_f.png");
+                    case ADMIN -> user.setImageURL("/images/admin_f.png");
+                }
+            }
+        }
+
         UserRoleEntity newRole = this.userRoleRepository.findByRole(role);
         user.setRole(newRole);
         this.userRepository.save(user);
