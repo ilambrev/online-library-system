@@ -1,6 +1,7 @@
 package bg.softuni.online_library_system.model.dto;
 
 import bg.softuni.online_library_system.model.validation.FieldMatch;
+import bg.softuni.online_library_system.model.validation.ValidPassword;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 
@@ -12,8 +13,8 @@ import static bg.softuni.online_library_system.common.constant.ValidationConstan
         message = NEW_PASSWORDS_MATCH
 )
 public class UserChangePasswordDTO {
-    
-    @NotEmpty(message = EMPTY_PASSWORD)
+
+    @ValidPassword
     private String password;
 
     @NotEmpty(message = NOT_EMPTY_NEW_PASSWORD)

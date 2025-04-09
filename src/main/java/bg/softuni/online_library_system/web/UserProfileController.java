@@ -7,6 +7,7 @@ import bg.softuni.online_library_system.model.enums.GenderEnum;
 import bg.softuni.online_library_system.model.security.CustomUserDetails;
 import bg.softuni.online_library_system.service.BookStatusService;
 import bg.softuni.online_library_system.service.UserService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -77,19 +78,23 @@ public class UserProfileController {
             return "redirect:/user/change-password";
         }
 
-        if (!this.userService.changeUserPassword(userDetails.getUsername(), userChangePasswordDTO)) {
-            return "redirect:/user/change-password";
-        }
+        this.userService.changeUserPassword(userDetails.getUsername(), userChangePasswordDTO);
 
-        new SecurityContextLogoutHandler()
-                .logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+        SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+        logoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+
+        Cookie cookie = new Cookie("JSESSIONID", null);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
 
         return "redirect:/users/login";
     }
 
     @GetMapping("/reservations")
     public String getBookReservations(@AuthenticationPrincipal CustomUserDetails userDetails,
-                                         Model model) {
+                                      Model model) {
 
         model.addAttribute("reservations",
                 this.bookStatusService.getAllByUserIdAndStatus(userDetails.getUsername(), BookStatusEnum.RESERVED));
@@ -110,7 +115,7 @@ public class UserProfileController {
 
     @GetMapping("/borrowed-books")
     public String getBorrowedBooks(@AuthenticationPrincipal CustomUserDetails userDetails,
-                                      Model model) {
+                                   Model model) {
 
         model.addAttribute("borrowedBooks",
                 this.bookStatusService.getAllByUserIdAndStatus(userDetails.getUsername(), BookStatusEnum.BORROWED));

@@ -127,15 +127,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean changeUserPassword(String username, UserChangePasswordDTO userChangePasswordDTO) {
+    public void changeUserPassword(String username, UserChangePasswordDTO userChangePasswordDTO) {
         UserEntity user = getUserByUsername(username);
-        if (!this.passwordEncoder.matches(userChangePasswordDTO.getPassword(), user.getPassword())) {
-            return false;
-        }
         user.setPassword(this.passwordEncoder.encode(userChangePasswordDTO.getNewPassword()));
-        this.userRepository.save(user);
 
-        return true;
+        this.userRepository.save(user);
     }
 
     @Override

@@ -21,7 +21,7 @@ public interface UserService {
     boolean editUser(UserProfileDTO userProfileDTO, HttpServletRequest request,
                      HttpServletResponse response) throws IOException;
 
-    boolean changeUserPassword(String username, UserChangePasswordDTO userChangePasswordDTO);
+    void changeUserPassword(String username, UserChangePasswordDTO userChangePasswordDTO);
 
     UserEntity getUserByUsername(String username);
 
