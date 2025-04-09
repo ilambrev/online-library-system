@@ -1,26 +1,47 @@
 package bg.softuni.online_library_system.model.dto;
 
 import bg.softuni.online_library_system.model.enums.BookGenreEnum;
+import bg.softuni.online_library_system.model.validation.ValidImageType;
+import bg.softuni.online_library_system.model.validation.YearNotInTheFuture;
+import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import static bg.softuni.online_library_system.common.constant.ValidationConstants.*;
 
 public class AddBookDTO {
 
+    @NotEmpty(message = TITLE_REQUIRED)
+    @Size(min = 2, max = 100, message = TITLE_SIZE)
     private String title;
 
+    @NotEmpty(message = DESCRIPTION_REQUIRED)
+    @Size(min = 5, max = 1024, message = DESCRIPTION_SIZE)
     private String description;
 
+    @NotNull(message = ISBN_NOT_NULL)
+    @Pattern(regexp = ISB_PATTERN, message = ISBN_VALID_TYPE)
     private String isbn;
 
+    @NotNull(message = YEAR_NOT_NULL)
+    @YearNotInTheFuture(message = YEAR_IN_THE_FUTURE)
+    @Min(value = 1000, message = YEAR_VALUE)
     private int year;
 
+    @NotNull(message = PAGES_NOT_NULL)
+    @Positive(message = PAGES_POSITIVE)
     private int pages;
 
+    @ValidImageType(message = INVALID_FILE_TYPE)
     private MultipartFile imageFile;
 
+    @NotEmpty(message = "Author is not present. Add author to DB first.")
     private String author;
 
+    @NotNull(message = GENRE_NOT_NULL)
     private BookGenreEnum genre;
 
+    @NotEmpty(message = PUBLISHER_REQUIRED)
+    @Size(min = 2, max = 100, message = PUBLISHER_NAME_SIZE)
     private String publisher;
 
     public AddBookDTO() {

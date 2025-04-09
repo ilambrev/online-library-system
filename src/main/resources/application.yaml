@@ -1,6 +1,10 @@
 spring:
   application:
     name: online-library-system
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${DB_URL:localhost}:3306/library_db?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC

@@ -20,28 +20,38 @@
                             <label for="title">Book title:</label>
                             <input class="validation-error-input" type="text" id="title"
                                    placeholder="Type book title..."
-                                   th:field="*{title}"/>
+                                   th:field="*{title}"
+                                   th:errorclass="'input-validation-error'"/>
+                            <p class="validation-error-message"
+                               th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Message</p>
                         </div>
                         <div class="input-field-container">
                             <label for="isbn">ISBN:</label>
                             <input class="validation-error-input" type="text" id="isbn"
                                    placeholder="Type book ISBN..."
-                                   th:field="*{isbn}"/>
+                                   th:field="*{isbn}"
+                                   th:errorclass="'input-validation-error'"/>
+                            <p class="validation-error-message"
+                               th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}">Message</p>
                         </div>
                     </div>
                     <div class="form-row-container">
                         <div class="input-field-container">
                             <label for="authorName">Book author:</label>
                             <input type="hidden" id="hidden-author-input"
-                                   th:field="*{author}">
+                                   th:field="*{author}"
+                                   th:errorclass="'input-validation-error'">
                             <input type="text" list="authors" name="authorName" id="authorName"
                                    placeholder="Select book author..."/>
                             <datalist id="authors"></datalist>
+                            <p class="validation-error-message"
+                               th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Message</p>
                         </div>
                         <div class="input-field-container">
                             <label for="genre">Book genre:</label>
                             <select class="validation-error-input" id="genre"
-                                    th:field="*{genre}">
+                                    th:field="*{genre}"
+                                    th:errorclass="'input-validation-error'">
                                 <option value="">-- Select book genre --</option>
                                 <option
                                         th:each="bookGenre : ${bookGenres}"
@@ -49,6 +59,8 @@
                                         th:text="${bookGenre.label}">Adventure
                                 </option>
                             </select>
+                            <p class="validation-error-message"
+                               th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}">Message</p>
                         </div>
                     </div>
                     <div class="form-row-container">
@@ -56,12 +68,18 @@
                             <div class="input-field-container">
                                 <label for="year">Year of publication:</label>
                                 <input class="validation-error-input" type="number" id="year"
-                                       th:field="*{year}"/>
+                                       th:field="*{year}"
+                                       th:errorclass="'input-validation-error'"/>
+                                <p class="validation-error-message"
+                                   th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Message</p>
                             </div>
                             <div class="input-field-container">
                                 <label for="pages">Number of pages:</label>
                                 <input class="validation-error-input" type="number" id="pages"
-                                       th:field="*{pages}"/>
+                                       th:field="*{pages}"
+                                       th:errorclass="'input-validation-error'"/>
+                                <p class="validation-error-message"
+                                   th:if="${#fields.hasErrors('pages')}" th:errors="*{pages}">Message</p>
                             </div>
                         </div>
                     </div>
@@ -69,8 +87,11 @@
                         <div class="input-field-container">
                             <label for="description">Book description:</label>
                             <textarea rows="4" id="description" placeholder="Enter book description..."
-                                      th:field="*{description}">
+                                      th:field="*{description}"
+                                      th:errorclass="'input-validation-error'">
                             </textarea>
+                            <p class="validation-error-message"
+                               th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Message</p>
                         </div>
                     </div>
                     <div class="form-row-container">
@@ -78,13 +99,20 @@
                             <label for="publisher">Publisher:</label>
                             <input class="validation-error-input" type="text" list="publishers" id="publisher"
                                    placeholder="Type name of publisher."
-                                   th:field="*{publisher}"/>
+                                   th:field="*{publisher}"
+                                   th:errorclass="'input-validation-error'"/>
+                            <p class="validation-error-message"
+                               th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}">Message</p>
                             <datalist id="publishers"></datalist>
                         </div>
                         <div class="input-field-container input-file-width">
                             <label for="imageFile">Choose book image:</label>
                             <input class="validation-error-input" type="file" id="imageFile" multiple="multiple"
                                    th:field="*{imageFile}"/>
+                            <p class="validation-error-message"
+                               th:if="${isFileSizeExceeded}" th:text="${errorMessage}">Message</p>
+                            <p class="validation-error-message"
+                               th:if="${#fields.hasErrors('imageFile')}" th:errors="*{imageFile}">Message</p>
                         </div>
                     </div>
                     <div class="form-row-container">

@@ -9,16 +9,21 @@ import bg.softuni.online_library_system.service.BookStatusService;
 import bg.softuni.online_library_system.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static bg.softuni.online_library_system.common.constant.ValidationConstants.*;
 
 @Controller
 @RequestMapping("/books")
@@ -35,16 +40,38 @@ public class BookController {
         this.bookStatusService = bookStatusService;
     }
 
+    @ModelAttribute
+    public void addErrorMessage(Model model) {
+        model.addAttribute("errorMessage", INVALID_FILE_SIZE);
+    }
+
     @GetMapping("/add")
     public String addBook(Model model) {
-        model.addAttribute("addBookDTO", new AddBookDTO());
-        model.addAttribute("bookGenres", BookGenreEnum.values());
+        if (!model.containsAttribute("addBookDTO")) {
+            model.addAttribute("addBookDTO", new AddBookDTO());
+        }
+        if (!model.containsAttribute("bookGenres")) {
+            model.addAttribute("bookGenres", BookGenreEnum.values());
+        }
+        if (!model.containsAttribute("isFileSizeExceeded")) {
+            model.addAttribute("isFileSizeExceeded", false);
+        }
 
         return "book-add";
     }
 
     @PostMapping("/add")
-    public String addBook(AddBookDTO addBookDTO) throws IOException {
+    public String addBook(@Valid AddBookDTO addBookDTO,
+                          BindingResult bindingResult,
+                          RedirectAttributes redirectAttributes) throws IOException {
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("addBookDTO", addBookDTO);
+            redirectAttributes.addFlashAttribute(BINDING_RESULT_PATH.concat("addBookDTO"), bindingResult);
+
+            return "redirect:/books/add";
+        }
+
         Long id = this.bookService.addBook(addBookDTO);
 
         return String.format("redirect:/books/%d/about", id);

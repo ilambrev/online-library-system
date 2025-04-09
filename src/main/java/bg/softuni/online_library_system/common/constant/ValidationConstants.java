@@ -26,6 +26,26 @@ public final class ValidationConstants {
     public static final String WRONG_PASSWORD = "Wrong password. Try again.";
     public static final String SAME_CURRENT_AND_NEW_PASSWORD = "New password can not be the same as current password.";
 
+    // Add Book form
+    public static final String YEAR_IN_THE_FUTURE = "Year must not be in the future.";
+    public static final String YEAR_VALUE = "Year must be over 1000.";
+    public static final String YEAR_NOT_NULL = "Year must be provided.";
+    public static final String DESCRIPTION_REQUIRED = "Description is required.";
+    public static final String DESCRIPTION_SIZE = "Description must be between 5 and 1024 symbols.";
+    public static final String TITLE_REQUIRED = "Book title is required.";
+    public static final String TITLE_SIZE = "Book title must be between 2 and 100 symbols.";
+    public static final String PAGES_POSITIVE = "Pages number must be positive.";
+    public static final String PAGES_NOT_NULL = "Pages number must be provided.";
+    public static final String PUBLISHER_REQUIRED = "Publisher name is required.";
+    public static final String PUBLISHER_NAME_SIZE = "Publisher name must be between 2 and 100 symbols.";
+    public static final String ISB_PATTERN = "^(?:ISBN(?:-1[03])?:?\\ )?(?=[0-9X]{10}$|(?=(?:[0-9]+[-\\ ]){3})[-\\ 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[-\\ ]){4})[-\\ 0-9]{17}$)(?:97[89][-\\ ]?)?[0-9]{1,5}[-\\ ]?[0-9]+[-\\ ]?[0-9]+[-\\ ]?[0-9X]$";
+    public static final String ISBN_VALID_TYPE = "ISBN must be 10 or 13 digit valid number.";
+    public static final String ISBN_NOT_NULL = "ISBN must be provided.";
+    public static final String GENRE_NOT_NULL = "Genre must be provided.";
+
+    public static final String INVALID_FILE_SIZE = "File size must be less than 2MB.";
+    public static final String INVALID_FILE_TYPE = "Invalid file type. Only JPEG, PNG, and GIF are allowed.";
+
     private ValidationConstants() {
     }
 }

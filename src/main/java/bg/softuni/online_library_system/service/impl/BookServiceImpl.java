@@ -48,7 +48,6 @@ public class BookServiceImpl implements BookService {
     @Override
     public Long addBook(AddBookDTO addBookDTO) throws IOException {
         Pattern pattern = Pattern.compile("^\\d+$");
-        String imageUrl = this.cloudinaryService.uploadFile(addBookDTO.getImageFile(), BOOKS_IMAGES_DIRECTORY);
         AuthorEntity author = this.authorService.getAuthorById(Long.parseLong(addBookDTO.getAuthor()));
         BookGenreEntity genre = this.bookGenreService.getBookGenreByName(addBookDTO.getGenre());
         PublisherEntity publisher = this.publisherService.getPublisherByName(addBookDTO.getPublisher());
@@ -58,14 +57,21 @@ public class BookServiceImpl implements BookService {
         }
 
         BookEntity newBook = this.modelMapper.map(addBookDTO, BookEntity.class);
-        newBook.setImageURL(imageUrl)
-                .setCreated(LocalDateTime.now())
+        newBook.setCreated(LocalDateTime.now())
                 .setAvailable(true)
                 .setAuthor(author)
                 .setGenre(genre)
                 .setPublisher(publisher);
 
-        return this.bookRepository.save(newBook).getId();
+        if (addBookDTO.getImageFile().isEmpty()) {
+            newBook.setImageURL("/images/book.png");
+        } else {
+            String imageUrl = this.cloudinaryService.uploadFile(addBookDTO.getImageFile(), BOOKS_IMAGES_DIRECTORY);
+            newBook.setImageURL(imageUrl);
+        }
+
+        return 7L;
+//        return this.bookRepository.save(newBook).getId();
     }
 
     @Override
