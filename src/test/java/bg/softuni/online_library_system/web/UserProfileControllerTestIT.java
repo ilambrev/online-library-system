@@ -51,7 +51,7 @@ public class UserProfileControllerTestIT {
     private TestUtil testUtil;
 
     @BeforeEach
-    void setupSecurityContext() {
+    void setUp() {
         CustomUserDetails userDetails = CustomUserDetailsTestHelper.createMockUser();
         UsernamePasswordAuthenticationToken auth =
                 new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
@@ -73,6 +73,15 @@ public class UserProfileControllerTestIT {
         authorRepository.deleteAll();
         publisherRepository.deleteAll();
         userRepository.deleteAll();
+    }
+
+    @Test
+    void getUserProfileGet() throws Exception {
+        this.testUtil.createUser();
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/profile").with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("profile"));
     }
 
     @Test
