@@ -13,18 +13,24 @@
         <main>
             <div class="form-container">
                 <form class="form" th:action="@{/users/register}" th:method="post" th:object="${userRegistrationDTO}"
-                      autocomplete="off" enctype="multipart/form-data">
+                      autocomplete="off" enctype="multipart/form-data" novalidate>
                     <h2 class="form-heading">Register User</h2>
                     <div class="form-row-container">
                         <div class="input-field-container">
                             <label for="firstName">First name:</label>
                             <input type="text" id="firstName" placeholder="Type your first name..."
-                                   th:field="*{firstName}"/>
+                                   th:field="*{firstName}"
+                                   th:errorclass="'input-validation-error'"/>
+                            <p class="validation-error-message"
+                               th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Message</p>
                         </div>
                         <div class="input-field-container">
                             <label for="lastName">Last name:</label>
                             <input type="text" id="lastName" placeholder="Type your last name..."
-                                   th:field="*{lastName}"/>
+                                   th:field="*{lastName}"
+                                   th:errorclass="'input-validation-error'"/>
+                            <p class="validation-error-message"
+                               th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Message</p>
                         </div>
                     </div>
                     <div class="form-row-container">
@@ -39,7 +45,10 @@
                         <div class="input-field-container">
                             <label for="email">E-mail:</label>
                             <input type="email" id="email" placeholder="Type e-mail..."
-                                   th:field="*{email}"/>
+                                   th:field="*{email}"
+                                   th:errorclass="'input-validation-error'"/>
+                            <p class="validation-error-message"
+                               th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Message</p>
                         </div>
                     </div>
                     <div class="form-row-container">
@@ -64,7 +73,10 @@
                         <div class="input-field-container">
                             <label for="phoneNumber">Phone number:</label>
                             <input type="text" id="phoneNumber" placeholder="&#43;359812667788"
-                                   th:field="*{phoneNumber}"/>
+                                   th:field="*{phoneNumber}"
+                                   th:errorclass="'input-validation-error'"/>
+                            <p class="validation-error-message"
+                               th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Message</p>
                         </div>
                         <div class="input-field-container">
                             <p>Gender:</p>
@@ -74,21 +86,31 @@
                                            th:text="${#strings.capitalizeWords(#strings.toLowerCase(g))}">Male</label>
                                     <input type="radio" th:id="${#strings.toLowerCase(g)}"
                                            th:field="*{gender}"
-                                           th:value="${g}"/>
+                                           th:value="${g}"
+                                           th:errorclass="'input-validation-error'"/>
                                 </div>
                             </div>
+                            <p class="validation-error-message"
+                               th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">Message</p>
                         </div>
                     </div>
                     <div class="form-row-container">
                         <div class="input-field-container">
                             <label for="address">Address:</label>
                             <input type="text" id="address" placeholder="Sofia, Old Library, 27"
-                                   th:field="*{address}"/>
+                                   th:field="*{address}"
+                                   th:errorclass="'input-validation-error'"/>
+                            <p class="validation-error-message"
+                               th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Message</p>
                         </div>
                         <div class="input-field-container">
                             <label for="imageFile">User image:</label>
                             <input type="file" id="imageFile" multiple="multiple"
                                    th:field="*{imageFile}"/>
+                            <p class="validation-error-message"
+                               th:if="${isFileSizeExceeded}" th:text="${errorMessage}">Message</p>
+                            <p class="validation-error-message"
+                               th:if="${#fields.hasErrors('imageFile')}" th:errors="*{imageFile}">Message</p>
                         </div>
                     </div>
                     <div class="form-row-container">

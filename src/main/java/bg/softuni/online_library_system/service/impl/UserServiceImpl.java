@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean registerUser(UserRegistrationDTO userRegistrationDTO) throws IOException {
+    public void registerUser(UserRegistrationDTO userRegistrationDTO) throws IOException {
         UserRoleEntity userRole = this.userRoleRepository.findByRole(UserRoleEnum.USER);
         UserEntity newUser = this.modelMapper.map(userRegistrationDTO, UserEntity.class);
 
@@ -76,8 +76,6 @@ public class UserServiceImpl implements UserService {
         }
 
         this.userRepository.save(newUser);
-
-        return true;
     }
 
     @Override
@@ -89,14 +87,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean editUser(UserProfileDTO userProfileDTO, HttpServletRequest request,
-                            HttpServletResponse response) throws IOException {
+    public void editUser(UserProfileDTO userProfileDTO, HttpServletRequest request,
+                         HttpServletResponse response) throws IOException {
         UserEntity user = getUserByUsername(userProfileDTO.getUsername());
         if (user == null) {
-            return false;
-        }
-        if (!this.passwordEncoder.matches(userProfileDTO.getPassword(), user.getPassword())) {
-            return false;
+            throw new ObjectNotFoundException(String
+                    .format("User with username %s not found.", userProfileDTO.getUsername()));
         }
         if (!user.getFirstName().equals(userProfileDTO.getFirstName())) {
             user.setFirstName(userProfileDTO.getFirstName());
@@ -129,8 +125,6 @@ public class UserServiceImpl implements UserService {
         this.userRepository.save(user);
 
         refreshAuthenticatedUser(userProfileDTO.getUsername(), request, response);
-
-        return true;
     }
 
     @Override

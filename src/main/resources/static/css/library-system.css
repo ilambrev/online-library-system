@@ -249,11 +249,9 @@ footer {
 
 .radio-input-container {
     display: flex;
-    align-items: center;
     gap: 20px;
-    margin-top: 6px;
+    margin: 10px 0;
     width: 100%;
-    height: 100%;
 }
 
 .radio-input-container label {

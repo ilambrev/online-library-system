@@ -14,11 +14,11 @@ import java.io.IOException;
 
 public interface UserService {
 
-    boolean registerUser(UserRegistrationDTO userRegistrationDTO) throws IOException;
+    void registerUser(UserRegistrationDTO userRegistrationDTO) throws IOException;
 
     UserProfileDTO getUserProfileData(String username);
 
-    boolean editUser(UserProfileDTO userProfileDTO, HttpServletRequest request,
+    void editUser(UserProfileDTO userProfileDTO, HttpServletRequest request,
                      HttpServletResponse response) throws IOException;
 
     void changeUserPassword(String username, UserChangePasswordDTO userChangePasswordDTO);
