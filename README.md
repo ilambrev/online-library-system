@@ -49,6 +49,12 @@ The **Online Library System** is a web-based application built with **Spring MVC
 
 ---
 
+## Test Coverage
+
+![Screenshot](/assets/03-test-coverage.png)
+
+---
+
 ## Contributing
 Feel free to fork this repository, open an issue, or submit a pull request if you have any suggestions or improvements!
 
