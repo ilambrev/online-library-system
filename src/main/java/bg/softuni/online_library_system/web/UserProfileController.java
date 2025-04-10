@@ -44,12 +44,7 @@ public class UserProfileController {
     }
 
     @ModelAttribute
-    public void addProfileInfo(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
-        UserProfileDTO userProfileDTO = this.userService.getUserProfileData(userDetails.getUsername());
-
-        model.addAttribute("username", userDetails.getUsername());
-        model.addAttribute("role", userProfileDTO.getRole());
-        model.addAttribute("imageURL", userDetails.getImageURL());
+    public void addGenders(Model model) {
         model.addAttribute("genders", GenderEnum.values());
     }
 

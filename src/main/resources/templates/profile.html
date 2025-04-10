@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="~{/fragments/commons.html::head}">
     <title>The Old Library</title>
@@ -19,15 +21,14 @@
                     <div class="form-row-container">
                         <div class="profile-image-container">
                             <div class="profile-image-holder">
-                                <img th:src="${imageURL}" alt="User image"
-                                th:field="*{imageURL}">
+                                <img th:src="${#authentication.principal.imageURL}" alt="User image">
                             </div>
                             <div>
-                                <p th:text="${username}">username</p>
-                                <p th:switch="${role.name()}">[
-                                    <span th:case="'USER'">Reader</span>
-                                    <span th:case="'STAFF'">Librarian</span>
-                                    <span th:case="'ADMIN'">Administrator</span>
+                                <p th:text="${#authentication.principal.username}">username</p>
+                                <p>[
+                                    <span sec:authorize="hasRole('USER')">Reader</span>
+                                    <span sec:authorize="hasRole('STAFF')">Librarian</span>
+                                    <span sec:authorize="hasRole('ADMIN')">Administrator</span>
                                     ]</p>
                             </div>
                         </div>
