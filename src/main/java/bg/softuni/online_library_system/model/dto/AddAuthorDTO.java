@@ -1,15 +1,27 @@
 package bg.softuni.online_library_system.model.dto;
 
+import bg.softuni.online_library_system.model.validation.ValidImageType;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
+
+import static bg.softuni.online_library_system.common.constant.ValidationConstants.*;
 
 public class AddAuthorDTO {
 
+    @NotEmpty(message = FIRST_NAME_REQUIRED)
+    @Size(min = 2, max = 20, message = FIRST_NAME_LENGTH)
     private String firstName;
 
+    @NotEmpty(message = LAST_NAME_REQUIRED)
+    @Size(min = 2, max = 20, message = LAST_NAME_LENGTH)
     private String lastName;
 
+    @NotEmpty(message = PRESENTATION_REQUIRED)
+    @Size(min = 5, max = 1024, message = PRESENTATION_SIZE)
     private String presentation;
 
+    @ValidImageType(message = INVALID_FILE_TYPE)
     private MultipartFile imageFile;
 
     public AddAuthorDTO() {

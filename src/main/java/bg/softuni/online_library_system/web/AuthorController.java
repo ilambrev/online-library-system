@@ -3,13 +3,19 @@ package bg.softuni.online_library_system.web;
 import bg.softuni.online_library_system.model.dto.AddAuthorDTO;
 import bg.softuni.online_library_system.model.dto.AuthorDTO;
 import bg.softuni.online_library_system.service.AuthorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+
+import static bg.softuni.online_library_system.common.constant.ValidationConstants.BINDING_RESULT_PATH;
+import static bg.softuni.online_library_system.common.constant.ValidationConstants.INVALID_FILE_SIZE;
 
 @Controller
 @RequestMapping("/authors")
@@ -21,15 +27,32 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
+    @ModelAttribute
+    public void addErrorMessage(Model model) {
+        model.addAttribute("errorMessage", INVALID_FILE_SIZE);
+    }
+
     @GetMapping("/add")
     public String addAuthor(Model model) {
-        model.addAttribute("addAuthorDTO", new AddAuthorDTO());
+        if (!model.containsAttribute("addAuthorDTO")) {
+            model.addAttribute("addAuthorDTO", new AddAuthorDTO());
+        }
 
         return "author-add";
     }
 
     @PostMapping("/add")
-    public String addAuthor(AddAuthorDTO addAuthorDTO) throws IOException {
+    public String addAuthor(@Valid AddAuthorDTO addAuthorDTO,
+                            BindingResult bindingResult,
+                            RedirectAttributes redirectAttributes) throws IOException {
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("addAuthorDTO", addAuthorDTO);
+            redirectAttributes.addFlashAttribute(BINDING_RESULT_PATH.concat("addAuthorDTO"), bindingResult);
+
+            return "redirect:/authors/add";
+        }
+
         Long id = this.authorService.addAuthor(addAuthorDTO);
 
         return String.format("redirect:/authors/%d/about", id);
