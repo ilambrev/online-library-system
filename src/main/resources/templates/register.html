@@ -111,6 +111,7 @@
                                th:if="${isFileSizeExceeded}" th:text="${errorMessage}">Message</p>
                             <p class="validation-error-message"
                                th:if="${#fields.hasErrors('imageFile')}" th:errors="*{imageFile}">Message</p>
+                            <p class="validation-error-message" id="error" hidden>File size must be less than 2MB.</p>
                         </div>
                     </div>
                     <div class="form-row-container">
@@ -125,6 +126,7 @@
         <footer th:replace="~{/fragments/commons.html::footer}">
         </footer>
     </div>
+    <script th:src="@{/js/file-upload.js}"></script>
 </body>
 
 </html>

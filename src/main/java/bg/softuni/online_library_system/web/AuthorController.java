@@ -37,6 +37,9 @@ public class AuthorController {
         if (!model.containsAttribute("addAuthorDTO")) {
             model.addAttribute("addAuthorDTO", new AddAuthorDTO());
         }
+        if (!model.containsAttribute("isFileSizeExceeded")) {
+            model.addAttribute("isFileSizeExceeded", false);
+        }
 
         return "author-add";
     }
