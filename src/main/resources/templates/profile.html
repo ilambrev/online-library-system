@@ -117,7 +117,7 @@
                                th:if="${isFileSizeExceeded}" th:text="${errorMessage}">Message</p>
                             <p class="validation-error-message-profile"
                                th:if="${#fields.hasErrors('imageFile')}" th:errors="*{imageFile}">Message</p>
-                            <p class="validation-error-message" id="error" hidden>File size must be less than 2MB.</p>
+                            <p class="validation-error-message-profile" id="error" hidden>File size must be less than 2MB.</p>
                         </div>
                     </div>
                     <div class="profile-buttons-container">
