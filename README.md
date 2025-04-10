@@ -51,6 +51,8 @@ The **Online Library System** is a web-based application built with **Spring MVC
 
 ## Screenshots
 
+Screenshots were taken at Full HD resolution (1920 x 1080)
+
 ![Screenshot](/assets/04-home-page-user.png)
 
 ![Screenshot](/assets/05-profile-menu.png)
