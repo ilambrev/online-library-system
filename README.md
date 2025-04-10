@@ -49,6 +49,62 @@ The **Online Library System** is a web-based application built with **Spring MVC
 
 ---
 
+## Screenshots
+
+![Screenshot](/assets/04-home-page-user.png)
+
+![Screenshot](/assets/05-profile-menu.png)
+
+![Screenshot](/assets/06-authors.png)
+
+![Screenshot](/assets/07-author-about.png)
+
+![Screenshot](/assets/08-books.png)
+
+![Screenshot](/assets/09-book-about-unavailable.png)
+
+![Screenshot](/assets/10-book-about-available.png)
+
+![Screenshot](/assets/11-book-reserved.png)
+
+![Screenshot](/assets/12-user-cart.png)
+
+![Screenshot](/assets/13-user-profile.png)
+
+![Screenshot](/assets/14-user-profile-edit.png)
+
+![Screenshot](/assets/15-user-change-password-form.png)
+
+![Screenshot](/assets/16-user-reserved-books.png)
+
+![Screenshot](/assets/17-abot-library.png)
+
+![Screenshot](/assets/18-contacts.png)
+
+![Screenshot](/assets/19-staff-home-page.png)
+
+![Screenshot](/assets/20-staff-home-page.png)
+
+![Screenshot](/assets/21-staff-add-author.png)
+
+![Screenshot](/assets/22-staff-add-book.png)
+
+![Screenshot](/assets/23-staff-confirm-book-reservation.png)
+
+![Screenshot](/assets/24-user-borrowed-books.png)
+
+![Screenshot](/assets/25-staff-book-return.png)
+
+![Screenshot](/assets/26-admin-home-page.png)
+
+![Screenshot](/assets/27-admin-users.png)
+
+![Screenshot](/assets/28-admin-user-profile.png)
+
+![Screenshot](/assets/29-admin-user-profile-edit.png)
+
+---
+
 ## Test Coverage
 
 ![Screenshot](/assets/03-test-coverage.png)
