@@ -47,7 +47,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Long addBook(AddBookDTO addBookDTO) throws IOException {
-        Pattern pattern = Pattern.compile("^\\d+$");
         AuthorEntity author = this.authorService.getAuthorById(Long.parseLong(addBookDTO.getAuthor()));
         BookGenreEntity genre = this.bookGenreService.getBookGenreByName(addBookDTO.getGenre());
         PublisherEntity publisher = this.publisherService.getPublisherByName(addBookDTO.getPublisher());

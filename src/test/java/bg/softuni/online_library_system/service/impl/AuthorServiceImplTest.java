@@ -73,12 +73,15 @@ public class AuthorServiceImplTest {
     void testAddAuthorWhenCloudinaryUploadFailsThrowsIOException() throws IOException {
         MultipartFile mockFile = mock(MultipartFile.class);
         AddAuthorDTO testAddAuthorDTO = createTestAddAuthorDTO(mockFile);
+        AuthorEntity testAuthorEntity = createTestAuthor();
 
         when(mockCloudinaryService.uploadFile(mockFile, "authors"))
                 .thenThrow(new IOException());
 
+        when(mockModelMapper.map(testAddAuthorDTO, AuthorEntity.class))
+                .thenReturn(testAuthorEntity);
+
         assertThrows(IOException.class, () -> serviceToTest.addAuthor(testAddAuthorDTO));
-        verify(mockModelMapper, never()).map(any(), any());
         verify(mockAuthorRepository, never()).save(any());
     }
 

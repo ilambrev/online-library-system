@@ -36,9 +36,10 @@ public class AddBookDTO {
     private MultipartFile imageFile;
 
     @NotEmpty(message = AUTHOR_REQUIRED)
-    @Size(min = 5, max = 41, message = AUTHOR_NAME_LENGTH)
     @ExistingAuthor(message = NON_EXISTING_AUTHOR)
     private String author;
+
+    private String authorName;
 
     @NotNull(message = GENRE_NOT_NULL)
     private BookGenreEnum genre;
